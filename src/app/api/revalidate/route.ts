@@ -1,6 +1,6 @@
 import { timingSafeEqual } from 'node:crypto';
-import { revalidatePath, revalidateTag } from 'next/cache';
 import { NextResponse, type NextRequest } from 'next/server';
+import { revalidateSanityContent } from '@/src/sanity/revalidate';
 
 export const runtime = 'nodejs';
 
@@ -34,7 +34,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: 'Expected a JSON object webhook payload' }, { status: 400 });
   }
 
-  revalidateTag('sanity', { expire: 0 });
-  revalidatePath('/', 'layout');
-  return NextResponse.json({ revalidated: true, tag: 'sanity', path: '/' });
+  revalidateSanityContent();
+  return NextResponse.json({
+    revalidated: true,
+    tag: 'sanity',
+    paths: ['/', '/districts', '/assemblies', '/assemblies/[id]', '/sitemap.xml'],
+  });
 }

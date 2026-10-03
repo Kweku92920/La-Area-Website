@@ -3,11 +3,19 @@ import { assembliesData, districts, districtMinisters } from '../src/data/assemb
 import { leaders } from '../src/data/leaders';
 import { ministriesData } from '../src/app/ministries/data';
 
+function requiredEnv(name: string) {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+  return value;
+}
+
 const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId: requiredEnv('NEXT_PUBLIC_SANITY_PROJECT_ID'),
+  dataset: requiredEnv('NEXT_PUBLIC_SANITY_DATASET'),
   apiVersion: '2026-10-01',
-  token: process.env.SANITY_WRITE_TOKEN,
+  token: requiredEnv('SANITY_WRITE_TOKEN'),
   useCdn: false,
 });
 

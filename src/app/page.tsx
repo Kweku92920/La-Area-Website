@@ -358,6 +358,15 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
+        <div className="text-center mt-10">
+          <Link
+            href="/ministries"
+            className="inline-flex items-center justify-center space-x-2 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold px-7 py-3 rounded-lg transition shadow-sm"
+          >
+            <span>Get Involved</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
       </section>
 
       {/* ---------------- SCRIPTURE BANNER ---------------- */}
