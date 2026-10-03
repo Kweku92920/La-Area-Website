@@ -35,19 +35,11 @@ export default function SiteFooter() {
           </ul>
         </div>
         <div>
-          <h2 className="font-serif font-bold text-white uppercase text-xs tracking-wider mb-4">Worship With Us</h2>
+          <h2 className="font-serif font-bold text-white uppercase text-xs tracking-wider mb-4">Office Hours</h2>
           <div className="space-y-3">
             <div className="flex justify-between border-b border-slate-800 pb-2">
-              <span>Sunday Worship</span>
-              <span className="text-white font-medium">9:00 AM</span>
-            </div>
-            <div className="flex justify-between border-b border-slate-800 pb-2">
-              <span>Sunday Worship</span>
-              <span className="text-white font-medium">11:00 AM</span>
-            </div>
-            <div className="flex justify-between border-b border-slate-800 pb-2">
-              <span>Wednesday Bible Study</span>
-              <span className="text-white font-medium">7:00 PM</span>
+              <span>Monday – Friday</span>
+              <span className="text-white font-medium">8:00 AM – 4:30 PM</span>
             </div>
           </div>
         </div>
@@ -56,7 +48,7 @@ export default function SiteFooter() {
           <ul className="space-y-3">
             <li className="flex items-start space-x-2">
               <MapPin className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
-              <span>La Area Office</span>
+              <span>La Area Office, Accra, Ghana</span>
             </li>
             <li className="flex items-center space-x-2">
               <Phone className="w-4 h-4 text-amber-500 flex-shrink-0" />

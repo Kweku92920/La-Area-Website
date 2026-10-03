@@ -2,20 +2,28 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Search,
   MapPin,
-  User,
   Clock,
   ArrowRight,
 } from 'lucide-react';
-import { assembliesData, districts } from '../../data/assemblies';
+import { MINISTER_TBA } from '@/src/sanity/format';
+import type { DirectoryAssembly, DirectoryDistrict } from '@/src/sanity/queries';
 
 export default function LocalAssembliesPage({
   initialDistrict = 'All Districts',
+  assemblies: assembliesData,
+  districtList,
 }: {
   initialDistrict?: string;
+  assemblies: DirectoryAssembly[];
+  districtList: DirectoryDistrict[];
 }) {
+  const districts = ['All Districts', ...districtList.map((d) => d.name)];
+  const getDistrictMinister = (name: string) =>
+    districtList.find((d) => d.name === name)?.minister ?? MINISTER_TBA;
   const [selectedDistrict, setSelectedDistrict] = useState(initialDistrict);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -41,7 +49,7 @@ export default function LocalAssembliesPage({
 
         <div className="relative z-10 text-center px-4 max-w-3xl">
           <div className="text-xs uppercase tracking-widest text-stone-300 mb-3 flex items-center justify-center gap-2 font-medium">
-            <Link href="/" className="hover:underline">Home</Link> 
+            <Link href="/" className="">Home</Link> 
             <span>&rsaquo;</span> 
             <span className="text-stone-100">Local Assemblies</span>
           </div>
@@ -65,7 +73,7 @@ export default function LocalAssembliesPage({
           Local Assemblies
         </h2>
         <p className="text-stone-600 text-sm md:text-base max-w-lg mx-auto mt-3 leading-relaxed">
-          Discover 10 local assemblies across the LA Area. Filter by district or search by name, city, or pastor.
+          Discover {assembliesData.length} local assemblies across the LA Area. Filter by district or search by name, city, or pastor.
         </p>
       </section>
 
@@ -115,19 +123,36 @@ export default function LocalAssembliesPage({
 
         {/* 6. ASSEMBLIES GRID */}
         {filteredAssemblies.length > 0 ? (
+          <div className="space-y-14">
+            {districts.filter((d) => d !== 'All Districts' && filteredAssemblies.some((x) => x.district === d)).map((d) => (
+              <div key={d}>
+                <div className="mb-6 border-b border-stone-200 pb-3">
+                  <h3 className="font-serif text-2xl font-bold text-[#1C0D0D]">{d}</h3>
+                  <p className="mt-1 text-xs font-semibold text-[#8B2621]">District Minister: {getDistrictMinister(d)}</p>
+                </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredAssemblies.map((assembly) => (
+            {filteredAssemblies.filter((x) => x.district === d).map((assembly) => (
             <div 
               key={assembly.id} 
               className="bg-[#F6F2EC] rounded-2xl overflow-hidden border border-stone-200/70 hover:shadow-md transition duration-200 flex flex-col"
             >
               {/* Image Container with Badge */}
               <div className="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-emerald-950 to-stone-800 relative flex items-center justify-center">
-                <div className="flex flex-col items-center gap-2 text-center text-emerald-50/90">
-                  <MapPin className="h-8 w-8 text-amber-400" aria-hidden="true" />
-                  <span className="text-sm font-semibold">{assembly.location}</span>
-                </div>
-                <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-stone-800 text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-sm">
+                {assembly.image ? (
+                  <Image
+                    src={assembly.image}
+                    alt={`${assembly.name} assembly`}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="flex flex-col items-center gap-2 text-center text-emerald-50/90">
+                    <MapPin className="h-8 w-8 text-amber-400" aria-hidden="true" />
+                    <span className="text-sm font-semibold">{assembly.location}</span>
+                  </div>
+                )}
+                <span className="absolute top-3 left-3 z-10 bg-white/90 backdrop-blur-sm text-stone-800 text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-sm">
                   {assembly.district}
                 </span>
               </div>
@@ -143,10 +168,6 @@ export default function LocalAssembliesPage({
                     <MapPin className="w-3.5 h-3.5 text-stone-400 shrink-0" />
                     <span>{assembly.location}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <User className="w-3.5 h-3.5 text-stone-400 shrink-0" />
-                    <span>{assembly.pastor}</span>
-                  </div>
                   <div className="flex items-center gap-2 pt-1 text-stone-500">
                     <Clock className="w-3.5 h-3.5 text-stone-400 shrink-0" />
                     <span>{assembly.time}</span>
@@ -161,6 +182,9 @@ export default function LocalAssembliesPage({
                 </Link>
               </div>
             </div>
+            ))}
+          </div>
+              </div>
             ))}
           </div>
         ) : (

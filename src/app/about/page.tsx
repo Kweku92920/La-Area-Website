@@ -5,19 +5,18 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
       <section className="relative flex h-[360px] items-center justify-center overflow-hidden bg-slate-950 text-white">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-25 mix-blend-luminosity" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/40" />
         <div className="relative z-10 mx-auto max-w-3xl px-4 text-center">
-          <div className="mb-4 flex items-center justify-center space-x-2 text-xs font-medium text-slate-400">
-            <Link href="/" className="transition hover:text-white">Home</Link>
-            <ChevronRight className="h-3 w-3 text-slate-500" />
-            <span className="text-amber-400">About</span>
+         <div className="mb-3 flex items-center justify-center gap-2 text-xs font-medium uppercase tracking-widest text-stone-300">
+            <Link href="/" className="">Home</Link>
+            <span aria-hidden="true">&rsaquo;</span>
+            <span className="text-stone-100">About</span>
           </div>
           <h1 className="mb-4 font-serif text-4xl font-bold tracking-tight text-white sm:text-5xl">
             About the LA Area
           </h1>
           <p className="mx-auto max-w-xl text-base font-normal text-slate-300 sm:text-lg">
-            A vibrant, Spirit-filled church family serving the greater Los Angeles region.
+            A vibrant, Spirit-filled church family serving the Lord
           </p>
         </div>
       </section>
@@ -30,24 +29,24 @@ export default function AboutPage() {
               <span className="text-xs font-bold uppercase tracking-widest text-amber-700">Who We Are</span>
             </div>
             <h2 className="font-serif text-3xl font-bold leading-tight text-slate-900 sm:text-4xl">
-              A Church With a Heart for Our City
+              An Area Unleashed to Transform Soicety Through the Gospel and Power of the Holy Spirit
             </h2>
             <p className="text-sm leading-relaxed text-slate-600 md:text-base">
-              The Church of Pentecost – LA Area is a vibrant Christian community serving the greater Los Angeles region. Rooted in Scripture and led by the Holy Spirit, we exist to bring the love of Jesus Christ to every home, every neighborhood, and every life.
+              The Church of Pentecost – La Area is a vibrant Christian community serving under the Church Of Pentecost. Rooted in Scripture and led by the Holy Spirit, we exist to bring the love of Jesus Christ to every home, every neighborhood, and every life.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="aspect-[4/5] overflow-hidden rounded-2xl border border-slate-200 shadow-md">
               <img
-                src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=600&q=80"
-                alt="Church worship gathering"
+                src=""
+                alt="Picture 1"
                 className="h-full w-full object-cover"
               />
             </div>
             <div className="mt-6 aspect-[4/5] overflow-hidden rounded-2xl border border-slate-200 shadow-md">
               <img
-                src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80"
-                alt="Church community group"
+                src=""
+                alt="Picture 2"
                 className="h-full w-full object-cover"
               />
             </div>
@@ -58,7 +57,7 @@ export default function AboutPage() {
       <section className="border-y border-slate-200/80 bg-slate-100/70 px-4 py-20 text-center">
         <div className="mx-auto max-w-3xl space-y-6">
           <h2 className="font-serif text-3xl font-bold text-slate-900 sm:text-4xl">
-            Our Organizational Structure
+            Our Area Structure
           </h2>
           <p className="mx-auto max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
             We are organized as an Area, made up of districts, each overseeing a network of local assemblies across the region.

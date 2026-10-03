@@ -1,5 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
+import { sanityFetch, sanityFetchWithOptions } from '@/src/sanity/client';
+import { formatDate, youtubeThumb } from '@/src/sanity/format';
+import { nextEventQuery, latestSermonsQuery, type HomeEvent, type HomeSermon } from '@/src/sanity/queries';
 import {
   Phone,
   ArrowRight,
@@ -11,29 +14,31 @@ import {
   Heart,
 } from 'lucide-react';
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [event, sermons] = await Promise.all([
+    sanityFetchWithOptions<HomeEvent | null>(nextEventQuery, {}, { revalidate: false }),
+    sanityFetch<HomeSermon[]>(latestSermonsQuery),
+  ]);
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
-{/* ---------------- HERO SECTION ---------------- */}
+      {/* ---------------- HERO SECTION ---------------- */}
       <section className="relative min-h-[85vh] flex items-center justify-center bg-slate-950 text-white overflow-hidden">
         {/* Background Overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-luminosity"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&w=1920&q=80')"
+            backgroundImage: "url('/theme.jpg')"
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/40" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center py-24">
-          
-
           <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.15] text-white">
             The Church of Pentecost- La.
           </h1>
 
           <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
-            The Church of Pentecost – LA Area welcomes you to worship with us. Find
+            The Church of Pentecost – La Area welcomes you to worship with us. Find
             your nearest local assembly, grow in faith, and experience the love of Christ in
             community.
           </p>
@@ -75,13 +80,11 @@ export default function HomePage() {
           <div className="relative">
             <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200 relative aspect-[4/3]">
               <img
-                src="/AREA HEAD.jpg"
+                src="/AREA HEAD.png"
                 alt="Area Head"
                 className="w-full h-full object-cover"
               />
             </div>
-            {/* Stat Box */}
-            
           </div>
 
           {/* Right Column: Content */}
@@ -98,10 +101,8 @@ export default function HomePage() {
             </h2>
 
             <p className="text-slate-600 text-sm md:text-base leading-relaxed">
-              The Church of Pentecost – LA Area is a vibrant Christian community
-              serving the greater. Rooted in Scripture and led
-              by the Holy Spirit, we exist to bring the love of Jesus Christ to every
-              home, neighborhood, and nation.
+             The Church of Pentecost – La Area is an Area of The Church of Pentecost, serving the communities and local assemblies within the La Area.
+             Rooted in the Word of God and guided by the Holy Spirit, we are committed to spreading the Gospel of Jesus Christ, nurturing believers, strengthening families, and reaching communities with the transforming message of Christ.
             </p>
 
             <p className="text-slate-600 text-sm md:text-base leading-relaxed">
@@ -112,10 +113,10 @@ export default function HomePage() {
             <div className="pt-2">
               <Link
                 href="/about"
-                className="inline-flex items-center space-x-2 text-xs font-bold text-emerald-800 hover:text-emerald-900 transition"
+                className="group inline-flex items-center space-x-2 text-xs font-bold text-emerald-800 hover:text-emerald-900 transition"
               >
-                <span>Learn more about us</span>
-                <ArrowRight className="w-4 h-4" />
+                <span className="group-hover:underline underline-offset-4">Learn more about us</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1.5" />
               </Link>
             </div>
           </div>
@@ -158,47 +159,46 @@ export default function HomePage() {
             Gather With Us
           </h2>
           <p className="text-slate-600 text-sm mt-2">
-            Join us for worship, teaching, fellowship, and service across the LA Area.
+            Join us for worship, teaching, fellowship, and service across the La Area.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           {/* Main Featured Event */}
-          <div className="lg:col-span-12 relative rounded-2xl overflow-hidden shadow-lg border border-slate-200 flex flex-col justify-end min-h-[380px] group">
-            <img
-              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
-              alt="Youth Leadership Summit"
-              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent" />
-            <div className="relative p-6 text-white space-y-2">
-              <span className="bg-amber-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                Upcoming Event
-              </span>
-              <h3 className="font-serif text-2xl font-bold">Youth Leadership Summit</h3>
-              <div className="flex flex-wrap items-center gap-4 text-xs text-slate-300 pt-1">
-                <div className="flex items-center space-x-1.5">
-                  <Calendar className="w-3.5 h-3.5 text-amber-400" />
-                  <span>October 4, 2026</span>
-                </div>
-                <div className="flex items-center space-x-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Torrance Assembly</span>
+          {event ? (
+            <div className="lg:col-span-12 relative rounded-2xl overflow-hidden shadow-lg border border-slate-200 flex flex-col justify-end min-h-[380px] group bg-slate-900">
+              {event.image && (
+                <img
+                  src={`${event.image}?w=1600&auto=format`}
+                  alt={event.title}
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent" />
+              <div className="relative p-6 text-white space-y-2">
+                <span className="bg-amber-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                  Upcoming Event
+                </span>
+                <h3 className="font-serif text-2xl font-bold">{event.title}</h3>
+                <div className="flex flex-wrap items-center gap-4 text-xs text-slate-300 pt-1">
+                  <div className="flex items-center space-x-1.5">
+                    <Calendar className="w-3.5 h-3.5 text-amber-400" />
+                    <span>{formatDate(event.startDate)}</span>
+                  </div>
+                  {event.location && (
+                    <div className="flex items-center space-x-1.5">
+                      <MapPin className="w-3.5 h-3.5 text-amber-400" />
+                      <span>{event.location}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-          </div>
-
-        </div>
-
-        <div className="text-center mt-8">
-          <Link
-            href="/#events"
-            className="inline-flex items-center justify-center space-x-2 border border-slate-300 bg-white hover:bg-slate-50 text-xs font-bold text-slate-700 px-6 py-2.5 rounded-lg transition shadow-sm"
-          >
-            <span>View All Events</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
+          ) : (
+            <p className="lg:col-span-12 text-center text-sm text-slate-500">
+              No upcoming events right now. Check back soon.
+            </p>
+          )}
         </div>
       </section>
 
@@ -221,74 +221,30 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
-            <div className="relative aspect-video">
-              <img
-                src="https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=600&q=80"
-                alt="Sermon thumbnail"
-                className="w-full h-full object-cover"
-              />
-              <span className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-semibold px-2.5 py-1 rounded">
-                42 min
-              </span>
-            </div>
-            <div className="p-5">
-              <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-slate-400 uppercase mb-1">
-                <Calendar className="w-3 h-3 text-amber-500" />
-                <span>SEPTEMBER 7, 2026</span>
+          {sermons.map((s) => (
+            <div key={s.id} className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
+              <div className="relative aspect-video">
+                <img
+                  src={s.customThumb ?? youtubeThumb(s.youtubeUrl)}
+                  alt={s.title}
+                  className="w-full h-full object-cover"
+                />
+                {s.duration && (
+                  <span className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-semibold px-2.5 py-1 rounded">
+                    {s.duration}
+                  </span>
+                )}
               </div>
-              <h3 className="font-serif font-bold text-lg text-slate-900 leading-snug">
-                Walking in the Power of the Holy Spirit
-              </h3>
-              <p className="text-xs text-slate-500 mt-2 font-medium">Pastor Emmanuel Mensah</p>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
-            <div className="relative aspect-video">
-              <img
-                src="https://images.unsplash.com/photo-1499209974431-9dac3ada00d7?auto=format&fit=crop&w=600&q=80"
-                alt="Sermon thumbnail"
-                className="w-full h-full object-cover"
-              />
-              <span className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-semibold px-2.5 py-1 rounded">
-                38 min
-              </span>
-            </div>
-            <div className="p-5">
-              <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-slate-400 uppercase mb-1">
-                <Calendar className="w-3 h-3 text-amber-500" />
-                <span>AUGUST 31, 2026</span>
+              <div className="p-5">
+                <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-slate-400 uppercase mb-1">
+                  <Calendar className="w-3 h-3 text-amber-500" />
+                  <span>{formatDate(s.date)}</span>
+                </div>
+                <h3 className="font-serif font-bold text-lg text-slate-900 leading-snug">{s.title}</h3>
+                <p className="text-xs text-slate-500 mt-2 font-medium">{s.speaker}</p>
               </div>
-              <h3 className="font-serif font-bold text-lg text-slate-900 leading-snug">
-                The Heart of True Worship
-              </h3>
-              <p className="text-xs text-slate-500 mt-2 font-medium">Pastor Daniel Osei</p>
             </div>
-          </div>
-
-          <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
-            <div className="relative aspect-video">
-              <img
-                src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80"
-                alt="Sermon thumbnail"
-                className="w-full h-full object-cover"
-              />
-              <span className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-semibold px-2.5 py-1 rounded">
-                45 min
-              </span>
-            </div>
-            <div className="p-5">
-              <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-slate-400 uppercase mb-1">
-                <Calendar className="w-3 h-3 text-amber-500" />
-                <span>AUGUST 24, 2026</span>
-              </div>
-              <h3 className="font-serif font-bold text-lg text-slate-900 leading-snug">
-                Faith for the Impossible
-              </h3>
-              <p className="text-xs text-slate-500 mt-2 font-medium">Pastor Samuel Appiah</p>
-            </div>
-          </div>
+          ))}
         </div>
 
         <div className="text-center mt-10">
@@ -320,22 +276,24 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
             <div className="aspect-[4/3]">
               <img
-                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80"
+                src="/pemem-pic.jpg"
                 alt="Men's Ministry"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="p-5">
-              <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-800 flex items-center justify-center mb-3 font-bold text-sm">
-                ♂
+              <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-800 flex items-center justify-center mb-3 font-bold text-sm overflow-hidden">
+                <img src="/Pemem.png" alt="PEMEM" className="w-full h-full object-cover" />
               </div>
               <h3 className="font-serif font-bold text-lg text-slate-900 mb-2">Men&apos;s Ministry</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Equipping men to lead their families and communities with godly character and integrity.
+                Man!!!! The Image and the Glory Of God!<br />
+                Man!!!! Be Strong and Courageous!!<br />
+                Man!!!! We are firmly established!!!
               </p>
             </div>
           </div>
@@ -343,18 +301,18 @@ export default function HomePage() {
           <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
             <div className="aspect-[4/3]">
               <img
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80"
-                alt="Women&apos;s Ministry"
+                src="/women-pic.jpg"
+                alt="Women's Ministry"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="p-5">
               <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-800 flex items-center justify-center mb-3 font-bold text-sm">
-                ♀
+                <img src="/Women.png" alt="WOMEN" className="w-full h-full object-cover" />
               </div>
               <h3 className="font-serif font-bold text-lg text-slate-900 mb-2">Women&apos;s Ministry</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Empowering women to grow in faith, serve with love, and support one another in every season.
+                Kronkron!!!, Ma Awurade.
               </p>
             </div>
           </div>
@@ -362,18 +320,40 @@ export default function HomePage() {
           <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
             <div className="aspect-[4/3]">
               <img
-                src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80"
+                src="/youth-pic.jpg"
                 alt="Youth Ministry"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="p-5">
               <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center mb-3">
-                <Flame className="w-4 h-4" />
+               <img src="/Youth.jpg" alt="YOUTH" className="w-full h-full object-cover" />
               </div>
               <h3 className="font-serif font-bold text-lg text-slate-900 mb-2">Youth Ministry</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Raising the next generation of passionate, Spirit-filled young leaders for Christ.
+                Youth!!!! Arise and Shine<br />
+                Youth!!!! Remember Your Creator Now<br />
+                Youth!!!! Empowered to Live For Christ Everywhere
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
+            <div className="aspect-[4/3]">
+              <img
+                src="/children-pic.jpg"
+                alt="Children Ministry"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="p-5">
+              <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center mb-3">
+                <img src="/Children.jpg" alt="CHILDREN" className="w-full h-full object-cover" />
+              </div>
+              <h3 className="font-serif font-bold text-lg text-slate-900 mb-2">Children Ministry</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Jesus!!!!, Friend of Little Children<br />
+                Jesus!!!!, The One who welcomes all Children unto Himself<br />
               </p>
             </div>
           </div>
@@ -392,6 +372,6 @@ export default function HomePage() {
         </div>
       </section>
       
-</div>
+    </div>
   );
 }

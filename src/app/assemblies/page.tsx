@@ -1,5 +1,6 @@
 import LocalAssembliesPage from './AssemblyDirectory';
-import { districts } from '../../data/assemblies';
+import { sanityFetch } from '@/src/sanity/client';
+import { directoryQuery, type DirectoryAssembly, type DirectoryDistrict } from '@/src/sanity/queries';
 
 export default async function AssembliesPage({
   searchParams,
@@ -7,10 +8,21 @@ export default async function AssembliesPage({
   searchParams: Promise<{ district?: string | string[] }>;
 }) {
   const { district } = await searchParams;
+  const { assemblies, districts } = await sanityFetch<{
+    assemblies: DirectoryAssembly[];
+    districts: DirectoryDistrict[];
+  }>(directoryQuery);
+
   const selectedDistrict =
-    typeof district === 'string' && districts.includes(district)
+    typeof district === 'string' && districts.some((d) => d.name === district)
       ? district
       : 'All Districts';
 
-  return <LocalAssembliesPage initialDistrict={selectedDistrict} />;
+  return (
+    <LocalAssembliesPage
+      initialDistrict={selectedDistrict}
+      assemblies={assemblies}
+      districtList={districts}
+    />
+  );
 }

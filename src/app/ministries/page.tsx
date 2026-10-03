@@ -1,85 +1,123 @@
 import Link from 'next/link';
-import { ministriesData } from './data';
+import { sanityFetch } from '@/src/sanity/client';
+import { ministriesQuery, type MinistryItem } from '@/src/sanity/queries';
+import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
 
-export default function MinistriesPage() {
+const ministryPages: Record<string, string> = {
+  'youth-ministry': '/youth',
+  'womens-ministry': '/women',
+  'mens-ministry': '/men',
+  'childrens-ministry': '/children',
+};
+
+export default async function MinistriesPage() {
+  const ministriesData = await sanityFetch<MinistryItem[]>(ministriesQuery);
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-800">
-      {/* Hero Section */}
-      <div className="relative bg-stone-900 py-20 px-6 text-center text-white">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-overlay"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80&w=1600')` }}
-        />
-       
-<div className="relative max-w-3xl mx-auto space-y-4">
-  <p className="text-xs uppercase tracking-widest text-amber-400 font-medium">
-    <Link href="/" className="hover:underline hover:text-white transition-colors">
-      Home
-    </Link> 
-    <span className="mx-1">&gt;</span> Ministries
-  </p>
-  <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight">Ministries</h1>
-  <p className="text-stone-300 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
-    Every member has a place to serve, grow, and belong. Explore our ministries and discover where God is calling you.
-  </p>
-</div>
-      </div>
+    <div className="min-h-screen bg-[#FAF8F5] text-stone-800">
+      <section className="relative flex h-[340px] items-center justify-center overflow-hidden bg-stone-900 text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-900/30 via-stone-900 to-[#1C0D0D]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1C0D0D] via-black/40 to-[#1C0D0D]/60" />
+        <div className="relative z-10 mx-auto max-w-3xl px-4 text-center">
+          <p className="mb-3 text-xs font-medium uppercase tracking-widest text-stone-300">
+            <Link href="/" className="hover:text-white">Home</Link>
+            <span className="mx-2">&rsaquo;</span>
+            <span className="text-white">Ministries</span>
+          </p>
+          <h1 className="mb-4 font-serif text-4xl font-bold tracking-tight md:text-6xl">Our Ministries</h1>
+          <p className="mx-auto max-w-2xl text-sm leading-relaxed text-stone-300 md:text-base">
+            Discover opportunities to grow in faith, serve, and build community across the La Area.
+          </p>
+        </div>
+      </section>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <div className="flex items-center justify-center space-x-3">
-            <span className="h-px w-12 bg-amber-600/60" />
-            <span className="text-xs uppercase tracking-widest text-amber-700 font-semibold">Serve &amp; Belong</span>
-            <span className="h-px w-12 bg-amber-600/60" />
+      <section className="mx-auto max-w-7xl px-6 py-16 md:px-8">
+        <div className="mx-auto mb-12 max-w-2xl text-center">
+          <div className="mb-2 flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest text-[#B8860B]">
+            <span className="h-px w-8 bg-[#B8860B]/40" />
+            Serve &amp; Belong
+            <span className="h-px w-8 bg-[#B8860B]/40" />
           </div>
-          <h2 className="text-3xl font-serif font-bold text-stone-900">A Ministry for Everyone</h2>
-          <p className="text-stone-600 text-sm md:text-base leading-relaxed">
-            Our ministries exist to help every person encounter God, build community, and use their gifts to serve others.
+          <h2 className="font-serif text-3xl font-bold text-[#1C0D0D] md:text-4xl">A Ministry for Everyone</h2>
+          <p className="mt-3 text-sm leading-relaxed text-stone-600 md:text-base">
+            Explore the ways to connect, grow, and serve in the La Area.
           </p>
         </div>
 
-        {/* Ministries Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {ministriesData.map((ministry) => (
-            <div 
+            <div
               key={ministry.id}
-              className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-stone-200/70 flex flex-col justify-between"
+              id={ministry.id}
+              className="flex flex-col justify-between overflow-hidden rounded-2xl border border-stone-200/70 bg-white shadow-sm transition hover:shadow-md"
             >
               <div>
-                {/* Image container with overlay badge */}
                 <div className="relative h-52 overflow-hidden bg-stone-100">
-                  <img 
-                    src={ministry.image} 
-                    alt={ministry.title}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                  <div className="absolute bottom-3 left-3 w-10 h-10 rounded-xl bg-amber-500/90 backdrop-blur-sm text-white flex items-center justify-center text-lg shadow">
-                    {ministry.icon}
-                  </div>
+                  {ministry.image ? (
+                    <Image
+                      src={ministry.image}
+                      alt={ministry.title}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, 100vw"
+                      className="object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  ) : (
+                    <div className="h-full w-full bg-stone-200" aria-hidden="true" />
+                  )}
                 </div>
 
-                {/* Content */}
-                <div className="p-6 space-y-2">
-                  <h3 className="text-xl font-serif font-semibold text-stone-900">{ministry.title}</h3>
-                  <p className="text-stone-600 text-sm leading-relaxed">{ministry.description}</p>
+                <div className="space-y-2 p-6">
+                  <h3 className="font-serif text-xl font-bold text-[#1C0D0D]">{ministry.title}</h3>
+                  <p className="text-sm leading-relaxed text-stone-600">{ministry.description}</p>
                 </div>
+                {ministry.leader && (
+                  <div className="mx-6 mb-5 flex items-center gap-3 border-t border-stone-200 pt-4">
+                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-emerald-950 to-stone-800">
+                      {ministry.leader.photo ? (
+                        <Image
+                          src={ministry.leader.photo}
+                          alt={ministry.leader.name}
+                          fill
+                          sizes="48px"
+                          className="object-cover"
+                        />
+                      ) : (
+                        <span className="flex h-full items-center justify-center font-serif font-bold text-amber-100">
+                          {ministry.leader.name.split(' ').filter(Boolean).slice(0, 2).map((part) => part[0]).join('')}
+                        </span>
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-semibold text-[#1C0D0D]">{ministry.leader.name}</p>
+                      <p className="truncate text-xs text-[#8B2621]">{ministry.leader.role}</p>
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* Action Link */}
               <div className="px-6 pb-6 pt-2">
-                <a
-                  href={`mailto:info@coplaarea.org?subject=${encodeURIComponent(`Getting involved: ${ministry.title}`)}`}
-                  className="inline-flex items-center text-sm font-semibold text-stone-900 hover:text-amber-700 transition-colors group"
-                >
-                  Get involved 
-                  <span className="ml-2 transform transition-transform group-hover:translate-x-1">&rarr;</span>
-                </a>
+                {ministryPages[ministry.id] ? (
+                  <Link
+                    href={ministryPages[ministry.id]}
+                    className="group inline-flex items-center text-sm font-bold text-[#8B2621] transition-colors hover:text-[#721F1B]"
+                  >
+                    Get involved
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                ) : (
+                  <a
+                    href={`mailto:info@coplaarea.org?subject=${encodeURIComponent(`Getting involved: ${ministry.title}`)}`}
+                    className="group inline-flex items-center text-sm font-bold text-[#8B2621] transition-colors hover:text-[#721F1B]"
+                  >
+                    Get involved
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </a>
+                )}
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

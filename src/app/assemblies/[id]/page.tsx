@@ -4,16 +4,17 @@ import {
   ArrowLeft, 
   Clock, 
   MapPin, 
-  User, 
   Phone, 
   Mail, 
   Navigation, 
   ChevronRight 
 } from 'lucide-react';
-import { assembliesData } from '../../../data/assemblies';
+import { sanityFetch } from '@/src/sanity/client';
+import { MINISTER_TBA } from '@/src/sanity/format';
+import { assemblyBySlugQuery, assemblySlugsQuery, type AssemblyDetail } from '@/src/sanity/queries';
 
-export function generateStaticParams() {
-  return assembliesData.map(({ id }) => ({ id }));
+export async function generateStaticParams() {
+  return sanityFetch<{ id: string }[]>(assemblySlugsQuery);
 }
 
 export default async function AssemblyDetailPage({
@@ -22,7 +23,7 @@ export default async function AssemblyDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const assembly = assembliesData.find((item) => item.id === id);
+  const assembly = await sanityFetch<AssemblyDetail | null>(assemblyBySlugQuery, { id });
 
   if (!assembly) {
     notFound();
@@ -33,8 +34,8 @@ export default async function AssemblyDetailPage({
     ? assembly.time 
     : [assembly.time || "Sunday Worship - 9:00 AM"];
 
-  const phone = (assembly as any).phone || "";
-  const email = (assembly as any).email || `${assembly.id}@coplaarea.org`;
+  const phone = assembly.phone || "";
+  const email = assembly.email || `${assembly.id}@coplaarea.org`;
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-stone-800">
@@ -111,36 +112,14 @@ export default async function AssemblyDetailPage({
             
             {/* Pastor Card */}
             <div className="rounded-2xl border border-stone-200/80 bg-white p-6 shadow-sm">
-              <h2 className="font-serif text-lg font-bold text-stone-900 mb-4">Pastor</h2>
-              <div className="flex items-center gap-3 text-stone-700">
-                <div className="p-2.5 rounded-xl bg-amber-50 text-amber-800">
-                  <User className="h-5 w-5" />
-                </div>
-                <span className="text-sm md:text-base font-medium text-stone-800">
-                  {assembly.pastor}
-                </span>
+              
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-stone-400">District Minister</p>
+                <p className="mt-1 text-sm font-medium text-[#8B2621]">{(assembly.districtMinister ?? MINISTER_TBA)}</p>
+                <p className="text-xs text-stone-500">{assembly.district} District</p>
               </div>
             </div>
-
-            {/* Contact Card */}
-            <div className="rounded-2xl border border-stone-200/80 bg-white p-6 shadow-sm">
-              <h2 className="font-serif text-lg font-bold text-stone-900 mb-4">Contact</h2>
-              <div className="space-y-4 text-sm text-stone-600">
-                <div className="flex items-start gap-3">
-                  <MapPin className="h-5 w-5 text-amber-700 shrink-0 mt-0.5" />
-                  <span>{assembly.location}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Phone className="h-5 w-5 text-amber-700 shrink-0" />
-                  <a href={`tel:${phone}`} className="hover:text-amber-800 transition-colors">{phone}</a>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Mail className="h-5 w-5 text-amber-700 shrink-0" />
-                  <a href={`mailto:${email}`} className="hover:text-amber-800 transition-colors truncate">{email}</a>
-                </div>
-              </div>
-            </div>
-
+            
             {/* Get Directions Button */}
             <a 
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(assembly.location)}`}
