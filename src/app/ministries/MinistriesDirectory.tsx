@@ -83,7 +83,7 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
 
   return (
     <>
-      <section className="mx-auto max-w-7xl px-6 pb-8 md:px-8">
+      <section className="mx-auto max-w-7xl px-0 pb-6 sm:pb-8">
         <div className="flex flex-col items-center justify-between gap-5 rounded-[1.6rem] border border-slate-200/80 bg-white/80 p-4 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.3)] backdrop-blur-md md:flex-row md:p-5">
           <label htmlFor="ministry-search" className="relative w-full md:max-w-sm">
             <span className="sr-only">Search ministries by keyword or sector</span>
@@ -133,9 +133,9 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
         </p>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-20 md:px-8" aria-label="Ministry directory">
+      <section className="mx-auto max-w-7xl px-0 pb-20" aria-label="Ministry directory">
         {filteredMinistries.length ? (
-          <div className="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
             {filteredMinistries.map((ministry) => {
               const sector = getSector(ministry);
               const SectorIcon = getSectorIcon(sector);
@@ -144,9 +144,9 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
                 <article
                   key={ministry.id}
                   id={ministry.id}
-                  className="group flex flex-col overflow-hidden rounded-[1.6rem] border border-white/80 bg-white/75 shadow-[0_18px_50px_-24px_rgba(50,35,28,0.24)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white hover:shadow-[0_24px_60px_-22px_rgba(50,35,28,0.3)]"
+                  className="group flex w-full min-w-0 flex-col overflow-hidden rounded-[1.4rem] border border-white/80 bg-white/75 shadow-[0_18px_50px_-24px_rgba(50,35,28,0.24)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white hover:shadow-[0_24px_60px_-22px_rgba(50,35,28,0.3)] sm:rounded-[1.6rem]"
                 >
-                  <div className="relative aspect-[16/10] overflow-hidden bg-[radial-gradient(ellipse_at_18%_8%,rgba(255,255,255,0.24),transparent_38%),linear-gradient(135deg,#31514a_0%,#1e3433_58%,#171821_100%)]">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-[radial-gradient(ellipse_at_18%_8%,rgba(255,255,255,0.24),transparent_38%),linear-gradient(135deg,#31514a_0%,#1e3433_58%,#171821_100%)]">
                     {ministry.image && (
                       <Image
                         src={ministry.image}

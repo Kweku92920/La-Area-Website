@@ -23,7 +23,7 @@ export default async function MinistriesPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16 md:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto mb-12 max-w-2xl text-center">
           <div className="mb-2 flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest text-[#B8860B]">
             <span className="h-px w-8 bg-[#B8860B]/40" />
