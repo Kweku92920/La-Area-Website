@@ -11,6 +11,7 @@ const ministry: MinistryPageContent = {
   galleryId: 'youth-ministry',
   title: 'Youth Ministry',
   tagline: 'Youth!. Arise and Shine. Remember Your Creator Now. Empowered to Live for Christ Everywhere.',
+  showTagline: false,
 
   image: '/Youth.jpg',
   gradient: 'from-slate-900/80 via-slate-900/70 to-slate-950',
