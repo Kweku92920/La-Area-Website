@@ -11,6 +11,7 @@ const ministry: MinistryPageContent = {
   galleryId: 'mens-ministry',
   title: "Men's Ministry",
   tagline: 'Man!! The Image and the Glory of God.  Be Strong And Courageous. We are Firmly Established',
+  showTagline: false,
   image: '/Pemem.png',
   gradient: 'from-amber-800/80 via-stone-900/75 to-stone-950',
   accent: 'text-amber-700',

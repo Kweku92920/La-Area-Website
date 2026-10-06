@@ -11,6 +11,7 @@ const ministry: MinistryPageContent = {
   galleryId: 'childrens-ministry',
   title: 'Children’s Ministry',
   tagline: 'Jesus! Friend Of Little Children',
+  showTagline: false,
   image: '/Children.jpg',
   gradient: 'from-sky-700/80 via-indigo-950/70 to-stone-950',
   accent: 'text-sky-600',

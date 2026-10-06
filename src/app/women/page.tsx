@@ -11,6 +11,7 @@ const ministry: MinistryPageContent = {
   galleryId: 'womens-ministry',
   title: 'Women’s Ministry',
   tagline: 'Kronkron, Ma Awurade. Virteous Ladies! We Live For Christ',
+  showTagline: false,
   image: '/Women.png',
   gradient: 'from-rose-700/80 via-fuchsia-950/70 to-stone-950',
   accent: 'text-rose-600',

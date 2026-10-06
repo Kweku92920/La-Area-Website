@@ -10,6 +10,7 @@ export type MinistryPageContent = {
   galleryId: string;
   title: string;
   tagline: string;
+  showTagline?: boolean;
   image: string;
   gradient: string;
   accent: string;
@@ -50,7 +51,9 @@ export default function MinistryPageClient({
             {ministry.title}
           </p>
           <h1 className="font-serif text-4xl font-bold tracking-tight md:text-6xl">{ministry.title}</h1>
-          <p className="text-base italic text-slate-200/90 md:text-lg">{ministry.tagline}</p>
+          {ministry.showTagline !== false && (
+            <p className="text-base italic text-slate-200/90 md:text-lg">{ministry.tagline}</p>
+          )}
         </div>
       </section>
 
