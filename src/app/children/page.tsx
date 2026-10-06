@@ -1,11 +1,16 @@
 import { sanityFetch } from '@/src/sanity/client';
-import { ministryGalleryQuery, ministryLeaderQuery, type GalleryPhotoItem, type MinistryLeaderProfile } from '@/src/sanity/queries';
+import {
+  ministryGalleryQuery,
+  ministryLeadershipQuery,
+  type GalleryPhotoItem,
+  type MinistryLeadershipSet,
+} from '@/src/sanity/queries';
 import MinistryPageClient, { type MinistryPageContent } from '../ministries/MinistryPageClient';
 
 const ministry: MinistryPageContent = {
   galleryId: 'childrens-ministry',
   title: 'Children’s Ministry',
-  tagline: 'Friend Of Little Children',
+  tagline: 'Jesus! Friend Of Little Children',
   image: '/Children.jpg',
   gradient: 'from-sky-700/80 via-indigo-950/70 to-stone-950',
   accent: 'text-sky-600',
@@ -23,9 +28,21 @@ const ministry: MinistryPageContent = {
 };
 
 export default async function ChildrenMinistryPage() {
-  const [gallery, leader] = await Promise.all([
+  const [gallery, leadership] = await Promise.all([
     sanityFetch<GalleryPhotoItem[] | null>(ministryGalleryQuery, { id: ministry.galleryId }),
-    sanityFetch<MinistryLeaderProfile | null>(ministryLeaderQuery, { id: ministry.galleryId }),
+    sanityFetch<MinistryLeadershipSet | null>(ministryLeadershipQuery, { id: ministry.galleryId }),
   ]);
-  return <MinistryPageClient ministry={ministry} gallery={gallery ?? []} leader={leader} />;
+  return (
+    <MinistryPageClient
+      ministry={ministry}
+      gallery={gallery ?? []}
+      leader={null}
+      leadership={[
+        { title: 'Leader', profile: leadership?.leadershipByCategory?.children?.leader ?? null },
+        { title: 'Assistant Leader', profile: leadership?.leadershipByCategory?.children?.assistantLeader ?? null },
+        { title: 'Secretary', profile: leadership?.leadershipByCategory?.children?.secretary ?? null },
+      ]}
+      mottoStatements={[ministry.tagline]}
+    />
+  );
 }

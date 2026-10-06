@@ -4,14 +4,10 @@ import { sanityFetch, sanityFetchWithOptions } from '@/src/sanity/client';
 import { formatDate, youtubeThumb } from '@/src/sanity/format';
 import { nextEventQuery, latestSermonsQuery, type HomeEvent, type HomeSermon } from '@/src/sanity/queries';
 import {
-  Phone,
   ArrowRight,
-  Flame,
   Calendar,
   MapPin,
-  Clock,
   Play,
-  Heart,
 } from 'lucide-react';
 
 export default async function HomePage() {
@@ -22,51 +18,56 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
       {/* ---------------- HERO SECTION ---------------- */}
-      <section className="relative min-h-[85vh] flex items-center justify-center bg-slate-950 text-white overflow-hidden">
+      <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden bg-slate-950 text-white">
         {/* Background Overlay */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-luminosity"
+          className="absolute inset-0 scale-105 bg-cover bg-center bg-no-repeat opacity-40 mix-blend-luminosity"
           style={{
             backgroundImage: "url('/theme.jpg')"
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/40" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_20%,rgba(245,158,11,0.12),transparent_55%)]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-slate-950/45" />
 
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center py-24">
-          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.15] text-white">
+        <div className="relative z-10 mx-auto max-w-4xl px-4 py-28 text-center sm:py-32">
+          <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/80 backdrop-blur-md">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+            Welcome to LA Area
+          </span>
+          <h1 className="mb-6 font-serif text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-6xl md:text-7xl">
             The Church of Pentecost- La.
           </h1>
 
-          <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+          <p className="mx-auto mb-10 max-w-2xl text-base font-normal leading-relaxed text-slate-200/85 sm:text-lg">
             The Church of Pentecost – La Area welcomes you to worship with us. Find
             your nearest local assembly, grow in faith, and experience the love of Christ in
             community.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+          <div className="mb-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/assemblies"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold px-8 py-3.5 rounded-lg transition shadow-lg shadow-amber-600/20"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-amber-500/30 bg-amber-600 px-8 py-3.5 font-semibold text-white shadow-[0_12px_36px_-12px_rgba(217,119,6,0.65)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-700 sm:w-auto"
             >
               <span>Find a Local Assembly</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/sermons"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-slate-100 font-semibold px-8 py-3.5 rounded-lg backdrop-blur-sm transition"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-700 bg-slate-800/80 px-8 py-3.5 font-semibold text-slate-100 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-slate-800 sm:w-auto"
             >
-              <Play className="w-4 h-4 fill-current text-amber-400" />
+              <Play className="h-4 w-4 fill-current text-amber-400" />
               <span>Watch Sermons</span>
             </Link>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-8 text-xs font-medium text-slate-300/90 border-t border-slate-800/80 pt-8">
-            <div className="flex items-center space-x-2">
-              <Calendar className="w-4 h-4 text-amber-500" />
+          <div className="flex flex-wrap items-center justify-center gap-3 border-t border-white/10 pt-7 text-xs font-medium text-slate-200/85">
+            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2.5 backdrop-blur-md">
+              <Calendar className="h-4 w-4 text-amber-500" />
               <span>Monday - Fridays 8:30 AM & 4:00 PM</span>
             </div>
-            <div className="flex items-center space-x-2">
-              <MapPin className="w-4 h-4 text-amber-500" />
+            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2.5 backdrop-blur-md">
+              <MapPin className="h-4 w-4 text-amber-500" />
               <span>La Area Office</span>
             </div>
           </div>
@@ -78,12 +79,13 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left Column: Image with Overlay Badge */}
           <div className="relative">
-            <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200 relative aspect-[4/3]">
+            <div className="group relative aspect-[4/3] overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white shadow-[0_24px_60px_-24px_rgba(15,23,42,0.24)]">
               <img
                 src="/AREA HEAD.png"
                 alt="Area Head"
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
+              <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-slate-950/35 via-transparent to-transparent" />
             </div>
           </div>
 
@@ -113,7 +115,7 @@ export default async function HomePage() {
             <div className="pt-2">
               <Link
                 href="/about"
-                className="group inline-flex items-center space-x-2 text-xs font-bold text-emerald-800 hover:text-emerald-900 transition"
+                className="group inline-flex items-center gap-2 text-xs font-bold text-emerald-800 transition hover:text-emerald-900"
               >
                 <span className="group-hover:underline underline-offset-4">Learn more about us</span>
                 <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1.5" />
@@ -125,22 +127,22 @@ export default async function HomePage() {
 
       {/* ---------------- STATS COUNTER BAR ---------------- */}
       <section className="max-w-7xl mx-auto px-4 md:px-8 mb-20">
-        <div className="bg-slate-900 text-white rounded-2xl py-10 px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center shadow-xl border border-slate-800">
-          <div className="border-r border-slate-800 last:border-0">
-            <div className="font-serif text-3xl sm:text-4xl font-bold text-amber-500">81</div>
-            <div className="text-xs text-slate-400 mt-1 font-medium">Local Assemblies</div>
+        <div className="grid grid-cols-2 gap-8 rounded-[1.6rem] border border-slate-800 bg-slate-900 px-8 py-10 text-center text-white shadow-[0_24px_60px_-24px_rgba(15,23,42,0.45)] md:grid-cols-4">
+        <div className="border-r border-slate-800 last:border-0">
+          <div className="font-serif text-3xl font-bold text-amber-500 sm:text-4xl">81</div>
+          <div className="mt-1 text-xs font-medium text-slate-400">Local Assemblies</div>
           </div>
-          <div className="border-r border-slate-800 last:border-0">
-            <div className="font-serif text-3xl sm:text-4xl font-bold text-amber-500">24</div>
-            <div className="text-xs text-slate-400 mt-1 font-medium">Districts</div>
+        <div className="border-r border-slate-800 last:border-0">
+          <div className="font-serif text-3xl font-bold text-amber-500 sm:text-4xl">24</div>
+          <div className="mt-1 text-xs font-medium text-slate-400">Districts</div>
           </div>
-          <div className="border-r border-slate-800 last:border-0">
-            <div className="font-serif text-3xl sm:text-4xl font-bold text-amber-500">40+</div>
-            <div className="text-xs text-slate-400 mt-1 font-medium">Years of Ministry</div>
+        <div className="border-r border-slate-800 last:border-0">
+          <div className="font-serif text-3xl font-bold text-amber-500 sm:text-4xl">40+</div>
+          <div className="mt-1 text-xs font-medium text-slate-400">Years of Ministry</div>
           </div>
           <div>
-            <div className="font-serif text-3xl sm:text-4xl font-bold text-amber-500">58,000+</div>
-            <div className="text-xs text-slate-400 mt-1 font-medium">Members & Families</div>
+          <div className="font-serif text-3xl font-bold text-amber-500 sm:text-4xl">58,000+</div>
+          <div className="mt-1 text-xs font-medium text-slate-400">Members & Families</div>
           </div>
         </div>
       </section>
@@ -166,28 +168,28 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           {/* Main Featured Event */}
           {event ? (
-            <div className="lg:col-span-12 relative rounded-2xl overflow-hidden shadow-lg border border-slate-200 flex flex-col justify-end min-h-[380px] group bg-slate-900">
+            <div className="group relative lg:col-span-12 flex min-h-[380px] flex-col justify-end overflow-hidden rounded-[1.6rem] border border-slate-200 bg-[radial-gradient(ellipse_at_18%_8%,rgba(245,158,11,0.16),transparent_38%),linear-gradient(135deg,#334155_0%,#1e293b_58%,#0f172a_100%)] shadow-[0_24px_60px_-24px_rgba(15,23,42,0.32)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_70px_-24px_rgba(15,23,42,0.4)]">
               {event.image && (
                 <img
                   src={`${event.image}?w=1600&auto=format`}
                   alt={event.title}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent" />
-              <div className="relative p-6 text-white space-y-2">
-                <span className="bg-amber-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+              <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-black/10" />
+              <div className="relative space-y-3 p-6 text-white sm:p-8">
+                <span className="inline-flex rounded-full border border-amber-400/25 bg-amber-600/90 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white backdrop-blur-md">
                   Upcoming Event
                 </span>
-                <h3 className="font-serif text-2xl font-bold">{event.title}</h3>
-                <div className="flex flex-wrap items-center gap-4 text-xs text-slate-300 pt-1">
-                  <div className="flex items-center space-x-1.5">
-                    <Calendar className="w-3.5 h-3.5 text-amber-400" />
+                <h3 className="font-serif text-2xl font-semibold tracking-tight sm:text-3xl">{event.title}</h3>
+                <div className="flex flex-wrap items-center gap-2 pt-1 text-xs text-slate-100/85">
+                  <div className="flex items-center gap-2 rounded-full border border-white/15 bg-slate-950/40 px-3 py-2 backdrop-blur-md">
+                    <Calendar className="h-3.5 w-3.5 text-amber-400" />
                     <span>{formatDate(event.startDate)}</span>
                   </div>
                   {event.location && (
-                    <div className="flex items-center space-x-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-amber-400" />
+                    <div className="flex items-center gap-2 rounded-full border border-white/15 bg-slate-950/40 px-3 py-2 backdrop-blur-md">
+                      <MapPin className="h-3.5 w-3.5 text-amber-400" />
                       <span>{event.location}</span>
                     </div>
                   )}
@@ -222,26 +224,29 @@ export default async function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {sermons.map((s) => (
-            <div key={s.id} className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
-              <div className="relative aspect-video">
+            <div key={s.id} className="group overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white shadow-[0_18px_50px_-24px_rgba(15,23,42,0.2)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_24px_60px_-22px_rgba(15,23,42,0.28)]">
+              <div className="relative aspect-video overflow-hidden bg-slate-900">
                 <img
                   src={s.customThumb ?? youtubeThumb(s.youtubeUrl)}
                   alt={s.title}
-                  className="w-full h-full object-cover"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
+                <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-black/10" />
                 {s.duration && (
-                  <span className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-semibold px-2.5 py-1 rounded">
+                  <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/35 px-3 py-1.5 text-[10px] font-semibold text-white backdrop-blur-md">
                     {s.duration}
                   </span>
                 )}
               </div>
-              <div className="p-5">
-                <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-slate-400 uppercase mb-1">
-                  <Calendar className="w-3 h-3 text-amber-500" />
+              <div className="p-5 sm:p-6">
+                <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-amber-500/15 bg-amber-50 px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-amber-700">
+                  <Calendar className="h-3.5 w-3.5 text-amber-600" />
                   <span>{formatDate(s.date)}</span>
                 </div>
-                <h3 className="font-serif font-bold text-lg text-slate-900 leading-snug">{s.title}</h3>
-                <p className="text-xs text-slate-500 mt-2 font-medium">{s.speaker}</p>
+                <h3 className="font-serif text-lg font-semibold leading-snug tracking-tight text-slate-900">{s.title}</h3>
+                <p className="mt-3 inline-flex max-w-full items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-600">
+                  <span className="truncate">{s.speaker}</span>
+                </p>
               </div>
             </div>
           ))}
@@ -250,7 +255,7 @@ export default async function HomePage() {
         <div className="text-center mt-10">
           <Link
             href="/sermons"
-            className="inline-flex items-center justify-center space-x-2 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold px-7 py-3 rounded-lg transition shadow-sm"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-800 px-7 py-3 text-xs font-bold text-white shadow-[0_10px_30px_-12px_rgba(6,78,59,0.55)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald-900"
           >
             <span>Browse Sermon Library</span>
             <ArrowRight className="w-4 h-4" />
@@ -277,20 +282,21 @@ export default async function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
-            <div className="aspect-[4/3]">
+          <div className="group overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white shadow-[0_18px_50px_-24px_rgba(15,23,42,0.2)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_24px_60px_-22px_rgba(15,23,42,0.28)]">
+          <div className="relative aspect-[4/3] overflow-hidden bg-stone-200">
               <img
                 src="/pemem-pic.jpg"
                 alt="Men's Ministry"
-                className="w-full h-full object-cover"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
+            <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-black/5" />
+          </div>
+          <div className="p-5">
+            <div className="mb-3 flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl border border-white bg-white/80 text-sm font-bold text-emerald-800 shadow-sm">
+              <img src="/Pemem.png" alt="PEMEM" className="w-full h-full object-cover" />
             </div>
-            <div className="p-5">
-              <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-800 flex items-center justify-center mb-3 font-bold text-sm overflow-hidden">
-                <img src="/Pemem.png" alt="PEMEM" className="w-full h-full object-cover" />
-              </div>
-              <h3 className="font-serif font-bold text-lg text-slate-900 mb-2">Men&apos;s Ministry</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+            <h3 className="mb-2 font-serif text-lg font-semibold tracking-tight text-slate-900">Men&apos;s Ministry</h3>
+            <p className="text-xs leading-relaxed text-slate-600">
                 Man!!!! The Image and the Glory Of God!<br />
                 Man!!!! Be Strong and Courageous!!<br />
                 Man!!!! We are firmly established!!!
@@ -298,39 +304,41 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
-            <div className="aspect-[4/3]">
+          <div className="group overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white shadow-[0_18px_50px_-24px_rgba(15,23,42,0.2)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_24px_60px_-22px_rgba(15,23,42,0.28)]">
+            <div className="relative aspect-[4/3] overflow-hidden bg-stone-200">
               <img
                 src="/women-pic.jpg"
                 alt="Women's Ministry"
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
+              <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-black/5" />
             </div>
             <div className="p-5">
-              <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-800 flex items-center justify-center mb-3 font-bold text-sm">
+              <div className="mb-3 flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl border border-white bg-white/80 text-sm font-bold text-emerald-800 shadow-sm">
                 <img src="/Women.png" alt="WOMEN" className="w-full h-full object-cover" />
               </div>
-              <h3 className="font-serif font-bold text-lg text-slate-900 mb-2">Women&apos;s Ministry</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <h3 className="mb-2 font-serif text-lg font-semibold tracking-tight text-slate-900">Women&apos;s Ministry</h3>
+              <p className="text-xs leading-relaxed text-slate-600">
                 Kronkron!!!, Ma Awurade.
               </p>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
-            <div className="aspect-[4/3]">
+          <div className="group overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white shadow-[0_18px_50px_-24px_rgba(15,23,42,0.2)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_24px_60px_-22px_rgba(15,23,42,0.28)]">
+            <div className="relative aspect-[4/3] overflow-hidden bg-stone-200">
               <img
                 src="/youth-pic.jpg"
                 alt="Youth Ministry"
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
+              <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-black/5" />
             </div>
             <div className="p-5">
-              <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center mb-3">
+              <div className="mb-3 flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl border border-white bg-white/80 text-sm font-bold text-amber-700 shadow-sm">
                <img src="/Youth.jpg" alt="YOUTH" className="w-full h-full object-cover" />
               </div>
-              <h3 className="font-serif font-bold text-lg text-slate-900 mb-2">Youth Ministry</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <h3 className="mb-2 font-serif text-lg font-semibold tracking-tight text-slate-900">Youth Ministry</h3>
+              <p className="text-xs leading-relaxed text-slate-600">
                 Youth!!!! Arise and Shine<br />
                 Youth!!!! Remember Your Creator Now<br />
                 Youth!!!! Empowered to Live For Christ Everywhere
@@ -338,20 +346,21 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
-            <div className="aspect-[4/3]">
+          <div className="group overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white shadow-[0_18px_50px_-24px_rgba(15,23,42,0.2)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_24px_60px_-22px_rgba(15,23,42,0.28)]">
+            <div className="relative aspect-[4/3] overflow-hidden bg-stone-200">
               <img
                 src="/children-pic.jpg"
                 alt="Children Ministry"
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
+              <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-black/5" />
             </div>
             <div className="p-5">
-              <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center mb-3">
+              <div className="mb-3 flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl border border-white bg-white/80 text-sm font-bold text-amber-700 shadow-sm">
                 <img src="/Children.jpg" alt="CHILDREN" className="w-full h-full object-cover" />
               </div>
-              <h3 className="font-serif font-bold text-lg text-slate-900 mb-2">Children Ministry</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <h3 className="mb-2 font-serif text-lg font-semibold tracking-tight text-slate-900">Children Ministry</h3>
+              <p className="text-xs leading-relaxed text-slate-600">
                 Jesus!!!!, Friend of Little Children<br />
                 Jesus!!!!, The One who welcomes all Children unto Himself<br />
               </p>
@@ -361,7 +370,7 @@ export default async function HomePage() {
         <div className="text-center mt-10">
           <Link
             href="/ministries"
-            className="inline-flex items-center justify-center space-x-2 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold px-7 py-3 rounded-lg transition shadow-sm"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-800 px-7 py-3 text-xs font-bold text-white shadow-[0_10px_30px_-12px_rgba(6,78,59,0.55)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald-900"
           >
             <span>Get Involved</span>
             <ArrowRight className="w-4 h-4" />
@@ -370,12 +379,13 @@ export default async function HomePage() {
       </section>
 
       {/* ---------------- SCRIPTURE BANNER ---------------- */}
-      <section className="bg-emerald-900 text-white py-16 px-4 text-center">
-        <div className="max-w-3xl mx-auto space-y-3">
-          <blockquote className="font-serif text-2xl sm:text-3xl font-semibold leading-relaxed text-emerald-50">
+      <section className="relative overflow-hidden border-t border-emerald-950/20 bg-emerald-900 px-4 py-16 text-center text-white">
+        <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(16,185,129,0.22),transparent_65%)]" />
+        <div className="relative mx-auto max-w-3xl space-y-3">
+          <blockquote className="font-serif text-2xl font-semibold leading-relaxed text-emerald-50 sm:text-3xl">
             “Go into all the world and preach the gospel to every creature.”
           </blockquote>
-          <p className="text-xs font-bold tracking-widest text-amber-400 uppercase pt-2">
+          <p className="pt-2 text-xs font-bold uppercase tracking-widest text-amber-400">
             — MARK 16:15
           </p>
         </div>

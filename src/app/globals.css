@@ -25,3 +25,9 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
 }
+
+@keyframes ministry-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}

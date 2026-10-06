@@ -67,20 +67,25 @@ export default function SermonsView({ sermons }: { sermons: Sermon[] }) {
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-slate-800 font-sans">
-      {/* HERO */}
-      <section className="relative h-[360px] w-full flex items-center justify-center bg-stone-900 text-white overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-40 mix-blend-overlay">
-          <img src="https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1600&q=80" alt="Open Bible on table" className="w-full h-full object-cover" />
+      <section className="relative flex min-h-[370px] w-full items-center justify-center overflow-hidden bg-[#1C0D0D] px-5 py-16 text-white sm:min-h-[410px]">
+        <div aria-hidden="true" className="absolute inset-0 opacity-35">
+          <img src="https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1600&q=80" alt="" className="h-full w-full object-cover" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1C0D0D] via-black/50 to-[#1C0D0D]/70 z-0" />
-        <div className="relative z-10 text-center px-4 max-w-3xl">
-          <div className="text-xs uppercase tracking-widest text-stone-300 mb-3 flex items-center justify-center gap-2 font-medium">
-            <Link href="/" className="">Home</Link>
-            <span>&rsaquo;</span>
-            <span className="text-stone-100">Sermons</span>
+        <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(184,134,11,0.3),transparent_54%)]" />
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-[#1C0D0D]/75 via-[#1C0D0D]/65 to-[#1C0D0D]" />
+        <div aria-hidden="true" className="absolute -right-24 -top-44 h-[28rem] w-[28rem] rounded-full border border-white/[0.08] sm:-right-10" />
+        <div aria-hidden="true" className="absolute -right-12 -top-32 h-[22rem] w-[22rem] rounded-full border border-amber-200/[0.1]" />
+        <div className="relative z-10 mx-auto max-w-3xl text-center">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-stone-200 backdrop-blur-md sm:text-xs">
+            <Link href="/" className="transition hover:text-amber-300">Home</Link>
+            <span aria-hidden="true" className="text-white/40">/</span>
+            <span className="text-white">Sermons</span>
           </div>
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight">Sermons &amp; Media</h1>
-          <p className="text-stone-300 text-sm md:text-base font-normal max-w-xl mx-auto leading-relaxed">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.28em] text-amber-300 sm:text-xs">
+            Messages · Worship · Teaching
+          </p>
+          <h1 className="mb-4 font-serif text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">Sermons &amp; Media</h1>
+          <p className="mx-auto max-w-xl text-sm leading-relaxed text-stone-300 sm:text-base">
             Be encouraged and equipped by messages from our pastors and leaders.
           </p>
         </div>
@@ -143,40 +148,69 @@ export default function SermonsView({ sermons }: { sermons: Sermon[] }) {
             {filteredSermons.map((sermon) => (
               <div
                 key={sermon.id}
-                className="bg-[#F6F2EC] rounded-2xl overflow-hidden border border-stone-200/70 hover:shadow-lg transition duration-200 flex flex-col group cursor-pointer"
+                role="button"
+                tabIndex={0}
+                aria-label={`Play sermon: ${sermon.title}`}
+                className="group flex cursor-pointer flex-col overflow-hidden rounded-[1.6rem] border border-white/80 bg-white/75 shadow-[0_18px_50px_-24px_rgba(50,35,28,0.24)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white hover:shadow-[0_24px_60px_-22px_rgba(50,35,28,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B2621]/40 focus-visible:ring-offset-2"
                 onClick={() => setActiveSermon(sermon)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    setActiveSermon(sermon);
+                  }
+                }}
               >
-                <div className="aspect-[16/10] w-full overflow-hidden bg-stone-300 relative">
-                  <img src={sermon.thumbnail} alt={sermon.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                    <div className="w-14 h-14 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                      <Play className="w-6 h-6 text-[#8B2621] fill-current ml-1" />
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-stone-900">
+                  <img
+                    src={sermon.thumbnail}
+                    alt=""
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#1C0D0D]/65 via-black/10 to-black/10 transition-colors duration-300 group-hover:from-[#1C0D0D]/75">
+                    <div className="flex h-full items-center justify-center">
+                      <span className="grid h-14 w-14 place-items-center rounded-full border border-white/30 bg-white/90 text-[#8B2621] shadow-xl backdrop-blur-md transition-transform duration-300 group-hover:scale-110">
+                        <Play className="ml-0.5 h-6 w-6 fill-current" />
+                      </span>
                     </div>
                   </div>
                   {sermon.duration && (
-                    <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-stone-800 text-[11px] font-medium px-2.5 py-0.5 rounded-full shadow-sm">
+                    <span className="absolute right-4 top-4 rounded-full border border-white/20 bg-black/35 px-3 py-1.5 text-[10px] font-semibold text-white shadow-sm backdrop-blur-md">
                       {sermon.duration}
                     </span>
                   )}
                 </div>
-                <div className="p-6 flex flex-col flex-grow">
-                  <div className="flex items-center gap-1.5 text-[10px] font-bold tracking-widest text-[#8B2621] uppercase mb-2">
-                    <Calendar className="w-3 h-3 text-[#8B2621]" />
-                    <span>{formatDate(sermon.date)}</span>
-                  </div>
-                  <h3 className="font-serif font-bold text-xl text-[#1C0D0D] leading-snug mb-1">{sermon.title}</h3>
-                  <p className="text-xs font-medium text-stone-500 mb-4">{sermon.speaker}</p>
-                  <p className="text-xs text-stone-600 leading-relaxed mb-6 flex-grow">{sermon.description}</p>
-                  <div className="flex items-center gap-4 text-[11px] text-stone-500 pt-3 border-t border-stone-200/60 font-medium">
-                    {sermon.series && (
-                      <span className="flex items-center gap-1.5">
-                        <Folder className="w-3 h-3 text-stone-400" />
-                        {sermon.series}
-                      </span>
-                    )}
-                    <span className="flex items-center gap-1.5">
-                      <Tag className="w-3 h-3 text-stone-400" />
+                <div className="flex flex-grow flex-col p-5 sm:p-6">
+                  <div className="mb-3 flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-[#B8860B]/15 bg-[#B8860B]/[0.08] px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-[#795812]">
+                      <Calendar aria-hidden="true" className="h-3.5 w-3.5 text-[#B8860B]" />
+                      {formatDate(sermon.date)}
+                    </span>
+                    <span className="inline-flex items-center gap-2 rounded-full border border-[#8B2621]/10 bg-[#8B2621]/[0.06] px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-[#70221e]">
+                      <Tag aria-hidden="true" className="h-3.5 w-3.5 text-[#8B2621]" />
                       {sermon.category}
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-xl font-semibold leading-snug tracking-tight text-[#1C0D0D]">
+                    {sermon.title}
+                  </h3>
+                  <p className="mt-3 inline-flex max-w-full items-center gap-2 self-start rounded-full border border-[#8B2621]/10 bg-[#8B2621]/[0.06] px-3 py-2 text-xs font-medium text-[#70221e]">
+                    <span className="truncate">{sermon.speaker}</span>
+                  </p>
+                  {sermon.description && (
+                    <p className="mt-4 flex-grow text-sm leading-relaxed text-stone-600">
+                      {sermon.description}
+                    </p>
+                  )}
+                  {sermon.series && (
+                    <div className="mt-5 flex items-center gap-2 border-t border-stone-200/70 pt-4 text-xs font-medium text-stone-600">
+                      <Folder aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-stone-400" />
+                      <span className="truncate">{sermon.series}</span>
+                    </div>
+                  )}
+                  <div className="mt-5 inline-flex w-full items-center justify-between rounded-full border border-[#8B2621]/10 bg-[#8B2621]/[0.04] py-2 pl-4 pr-2 text-sm font-semibold text-[#70221e] transition-all duration-300 group-hover:border-[#8B2621]/20 group-hover:bg-[#8B2621] group-hover:text-white">
+                    <span>Watch sermon</span>
+                    <span className="grid h-8 w-8 place-items-center rounded-full bg-white text-[#8B2621] shadow-sm transition-transform duration-300 group-hover:translate-x-0.5">
+                      <Play aria-hidden="true" className="ml-0.5 h-3.5 w-3.5 fill-current" />
                     </span>
                   </div>
                 </div>

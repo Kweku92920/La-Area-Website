@@ -1,5 +1,17 @@
-export type Leader = { _id: string; name: string; role: string; location: string };
-export const leadersQuery = `*[_type=="leader"] | order(order asc){_id, name, role, "location": coalesce(location, "")}`;
+export type Leader = {
+  _id: string;
+  name: string;
+  role: string;
+  location: string;
+  bio: string;
+  photo: string | null;
+};
+export const leadersQuery = `*[_type=="leader"] | order(order asc){
+  _id, name, role,
+  "location": coalesce(location, ""),
+  "bio": coalesce(bio, ""),
+  "photo": photo.asset->url
+}`;
 
 export type DirectoryAssembly = {
   id: string;
@@ -43,19 +55,24 @@ export const assemblySlugsQuery = `*[_type=="assembly" && defined(slug.current)]
 export type DistrictItem = {
   name: string;
   pastor: string | null;
+  image: string | null;
   assemblies: { slug: string; name: string }[];
 };
 export const districtsQuery = `*[_type=="district"] | order(name asc){
-  name, "pastor": pastor->name,
+  name, "pastor": pastor->name, "image": image.asset->url,
   "assemblies": *[_type=="assembly" && references(^._id)] | order(name asc){"slug": slug.current, name}
 }`;
 
 export type MinistryItem = {
   id: string;
   title: string;
+  sector: string;
   description: string;
   image: string | null;
   leader: MinistryLeaderProfile | null;
+  assistantLeader: MinistryLeaderProfile | null;
+  secretary: MinistryLeaderProfile | null;
+  leadershipByCategory: MinistryCategoryLeadership | null;
 };
 export type MinistryLeaderProfile = {
   name: string;
@@ -64,11 +81,77 @@ export type MinistryLeaderProfile = {
   bio: string;
   photo: string | null;
 };
+export type MinistryRoleProfile = {
+  name: string;
+  image: string | null;
+};
+export type MinistryRoleGroup = {
+  leader: MinistryRoleProfile | null;
+  assistantLeader: MinistryRoleProfile | null;
+  secretary: MinistryRoleProfile | null;
+};
+export type MinistryCategoryLeadership = {
+  women: MinistryRoleGroup | null;
+  men: MinistryRoleGroup | null;
+  children: MinistryRoleGroup | null;
+  youth: MinistryRoleGroup | null;
+};
+export type MinistryLeadershipSet = {
+  leadershipByCategory: MinistryCategoryLeadership | null;
+};
+export type MinistryDetailItem = MinistryItem & {
+  heroImage: string | null;
+  gallery: GalleryPhotoItem[];
+};
+const ministryCategoryLeadershipProjection = `"leadershipByCategory": {
+  "women": leadershipByCategory.women{
+    "leader": leader{name, "image": image.asset->url},
+    "assistantLeader": assistantLeader{name, "image": image.asset->url},
+    "secretary": secretary{name, "image": image.asset->url}
+  },
+  "men": leadershipByCategory.men{
+    "leader": leader{name, "image": image.asset->url},
+    "assistantLeader": assistantLeader{name, "image": image.asset->url},
+    "secretary": secretary{name, "image": image.asset->url}
+  },
+  "children": leadershipByCategory.children{
+    "leader": leader{name, "image": image.asset->url},
+    "assistantLeader": assistantLeader{name, "image": image.asset->url},
+    "secretary": secretary{name, "image": image.asset->url}
+  },
+  "youth": leadershipByCategory.youth{
+    "leader": leader{name, "image": image.asset->url},
+    "assistantLeader": assistantLeader{name, "image": image.asset->url},
+    "secretary": secretary{name, "image": image.asset->url}
+  }
+}`;
 export const ministriesQuery = `*[_type=="ministry"] | order(order asc){
-  "id": slug.current, title, "description": coalesce(description, ""),
+  "id": slug.current, title, "sector": coalesce(sector, ""),
+  "description": coalesce(description, ""),
   "image": image.asset->url,
   "leader": leader->{name, role, "location": coalesce(location, ""),
-    "bio": coalesce(bio, ""), "photo": photo.asset->url}
+    "bio": coalesce(bio, ""), "photo": photo.asset->url},
+  "assistantLeader": assistantLeader->{name, role, "location": coalesce(location, ""),
+    "bio": coalesce(bio, ""), "photo": photo.asset->url},
+  "secretary": secretary->{name, role, "location": coalesce(location, ""),
+    "bio": coalesce(bio, ""), "photo": photo.asset->url},
+  ${ministryCategoryLeadershipProjection}
+}`;
+export const ministryDetailQuery = `*[_type=="ministry" && slug.current==$id][0]{
+  "id": slug.current, title, "sector": coalesce(sector, ""),
+  "description": coalesce(description, ""),
+  "image": image.asset->url, "heroImage": heroImage.asset->url,
+  "leader": leader->{name, role, "location": coalesce(location, ""),
+    "bio": coalesce(bio, ""), "photo": photo.asset->url},
+  "assistantLeader": assistantLeader->{name, role, "location": coalesce(location, ""),
+    "bio": coalesce(bio, ""), "photo": photo.asset->url},
+  "secretary": secretary->{name, role, "location": coalesce(location, ""),
+    "bio": coalesce(bio, ""), "photo": photo.asset->url},
+  ${ministryCategoryLeadershipProjection},
+  "gallery": gallery[defined(asset)]{"url": asset->url, caption}
+}`;
+export const ministryLeadershipQuery = `*[_type=="ministry" && slug.current==$id][0]{
+  ${ministryCategoryLeadershipProjection}
 }`;
 export const ministryLeaderQuery = `*[_type=="ministry" && slug.current==$id][0].leader->{
   name, role, "location": coalesce(location, ""),

@@ -7,7 +7,8 @@ import {
   Search,
   MapPin,
   Clock,
-  ArrowRight,
+  UserRound,
+  ArrowUpRight,
 } from 'lucide-react';
 import { MINISTER_TBA } from '@/src/sanity/format';
 import type { DirectoryAssembly, DirectoryDistrict } from '@/src/sanity/queries';
@@ -40,23 +41,25 @@ export default function LocalAssembliesPage({
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-stone-800 font-sans">
-      {/* HERO BANNER SECTION */}
-      <section className="relative h-[380px] w-full flex items-center justify-center bg-stone-900 text-white overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-45 mix-blend-overlay">
-          <div className="w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-900/30 via-stone-900 to-[#1C0D0D]" />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1C0D0D] via-black/40 to-[#1C0D0D]/60 z-0" />
+      <section className="relative flex min-h-[370px] w-full items-center justify-center overflow-hidden bg-[#1C0D0D] px-5 py-16 text-white sm:min-h-[410px]">
+        <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(184,134,11,0.24),transparent_52%),radial-gradient(ellipse_at_8%_100%,rgba(139,38,33,0.38),transparent_48%)]" />
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-[#1C0D0D]/35 via-[#1C0D0D]/20 to-[#1C0D0D]" />
+        <div aria-hidden="true" className="absolute -right-24 -top-44 h-[28rem] w-[28rem] rounded-full border border-white/[0.07] sm:-right-10" />
+        <div aria-hidden="true" className="absolute -right-12 -top-32 h-[22rem] w-[22rem] rounded-full border border-amber-200/[0.08]" />
 
-        <div className="relative z-10 text-center px-4 max-w-3xl">
-          <div className="text-xs uppercase tracking-widest text-stone-300 mb-3 flex items-center justify-center gap-2 font-medium">
-            <Link href="/" className="">Home</Link> 
-            <span>&rsaquo;</span> 
-            <span className="text-stone-100">Local Assemblies</span>
+        <div className="relative z-10 mx-auto max-w-3xl text-center">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-stone-200 backdrop-blur-md sm:text-xs">
+            <Link href="/" className="transition hover:text-amber-300">Home</Link>
+            <span aria-hidden="true" className="text-white/40">/</span>
+            <span className="text-white">Local Assemblies</span>
           </div>
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.28em] text-amber-300 sm:text-xs">
+            Find your church community
+          </p>
+          <h1 className="mb-4 font-serif text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
             Find a Local Assembly
           </h1>
-          <p className="text-stone-300 text-sm md:text-base font-normal max-w-xl mx-auto leading-relaxed">
+          <p className="mx-auto max-w-xl text-sm leading-relaxed text-stone-300 sm:text-base">
             Search and discover the local assembly nearest you &mdash; service times, directions, and contact details.
           </p>
         </div>
@@ -134,51 +137,62 @@ export default function LocalAssembliesPage({
             {filteredAssemblies.filter((x) => x.district === d).map((assembly) => (
             <div 
               key={assembly.id} 
-              className="bg-[#F6F2EC] rounded-2xl overflow-hidden border border-stone-200/70 hover:shadow-md transition duration-200 flex flex-col"
+              className="group overflow-hidden rounded-[1.6rem] border border-white/80 bg-white/75 shadow-[0_18px_50px_-24px_rgba(50,35,28,0.24)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white hover:shadow-[0_24px_60px_-22px_rgba(50,35,28,0.3)] flex flex-col"
             >
-              {/* Image Container with Badge */}
-              <div className="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-emerald-950 to-stone-800 relative flex items-center justify-center">
+              <div className="relative aspect-[16/10] w-full overflow-hidden bg-[radial-gradient(ellipse_at_18%_8%,rgba(255,255,255,0.28),transparent_38%),linear-gradient(135deg,#31514a_0%,#1e3433_58%,#171821_100%)]">
                 {assembly.image ? (
                   <Image
                     src={assembly.image}
                     alt={`${assembly.name} assembly`}
                     fill
                     sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 ) : (
-                  <div className="flex flex-col items-center gap-2 text-center text-emerald-50/90">
-                    <MapPin className="h-8 w-8 text-amber-400" aria-hidden="true" />
-                    <span className="text-sm font-semibold">{assembly.location}</span>
-                  </div>
+                  <>
+                    <div aria-hidden="true" className="absolute -right-12 -top-20 h-64 w-64 rounded-full border border-white/10 bg-white/[0.04] shadow-[0_0_90px_rgba(218,175,112,0.16)]" />
+                    <div aria-hidden="true" className="absolute -bottom-28 -left-8 h-64 w-64 rounded-full border border-[#d9b777]/25 bg-[#d9b777]/[0.08]" />
+                    <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(120deg,transparent_20%,rgba(255,255,255,0.08)_50%,transparent_70%)]" />
+                  </>
                 )}
-                <span className="absolute top-3 left-3 z-10 bg-white/90 backdrop-blur-sm text-stone-800 text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-sm">
+                <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#101715]/80 via-[#101715]/10 to-black/10" />
+                <span className="absolute left-5 top-5 rounded-full border border-white/20 bg-black/20 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/90 backdrop-blur-md">
                   {assembly.district}
                 </span>
+                <div className="absolute bottom-5 left-5 right-5">
+                  <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/65">
+                    Local assembly
+                  </p>
+                  <h4 className="text-2xl font-semibold leading-tight tracking-tight text-white sm:text-[1.7rem]">
+                    {assembly.name}
+                  </h4>
+                </div>
               </div>
 
-              {/* Card Body */}
-              <div className="p-6 flex flex-col flex-grow">
-                <h3 className="font-serif font-bold text-xl text-[#1C0D0D] mb-3">
-                  {assembly.name}
-                </h3>
-
-                <div className="space-y-2 text-xs text-stone-600 mb-6 flex-grow">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-3.5 h-3.5 text-stone-400 shrink-0" />
-                    <span>{assembly.location}</span>
-                  </div>
-                  <div className="flex items-center gap-2 pt-1 text-stone-500">
-                    <Clock className="w-3.5 h-3.5 text-stone-400 shrink-0" />
-                    <span>{assembly.time}</span>
-                  </div>
+              <div className="flex flex-grow flex-col p-5 sm:p-6">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-stone-200/80 bg-stone-50/90 px-3 py-2 text-xs font-medium text-stone-600">
+                    <MapPin aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-stone-400" />
+                    <span className="truncate">{assembly.location || 'Location to be announced'}</span>
+                  </span>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[#B8860B]/15 bg-[#B8860B]/[0.08] px-3 py-2 text-xs font-medium text-[#795812]">
+                    <Clock aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
+                    {assembly.time}
+                  </span>
+                  <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-[#8B2621]/10 bg-[#8B2621]/[0.06] px-3 py-2 text-xs font-medium text-[#70221e]">
+                    <UserRound aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-[#8B2621]" />
+                    <span className="truncate">{assembly.pastor || MINISTER_TBA}</span>
+                  </span>
                 </div>
 
                 <Link 
                   href={`/assemblies/${assembly.id}`}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#8B2621] hover:text-[#721F1B] transition pt-2 border-t border-stone-200/60"
+                  className="mt-5 inline-flex w-full items-center justify-between rounded-full border border-[#8B2621]/10 bg-[#8B2621]/[0.04] py-2 pl-4 pr-2 text-sm font-semibold text-[#70221e] transition-all duration-300 hover:border-[#8B2621]/20 hover:bg-[#8B2621] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B2621]/40 focus-visible:ring-offset-2"
                 >
-                  View details <ArrowRight className="w-3.5 h-3.5" />
+                  <span>View assembly details</span>
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-white text-[#8B2621] shadow-sm transition-transform duration-300 group-hover:translate-x-0.5">
+                    <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+                  </span>
                 </Link>
               </div>
             </div>

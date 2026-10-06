@@ -1,11 +1,16 @@
 import { sanityFetch } from '@/src/sanity/client';
-import { ministryGalleryQuery, ministryLeaderQuery, type GalleryPhotoItem, type MinistryLeaderProfile } from '@/src/sanity/queries';
+import {
+  ministryGalleryQuery,
+  ministryLeadershipQuery,
+  type GalleryPhotoItem,
+  type MinistryLeadershipSet,
+} from '@/src/sanity/queries';
 import MinistryPageClient, { type MinistryPageContent } from '../ministries/MinistryPageClient';
 
 const ministry: MinistryPageContent = {
   galleryId: 'mens-ministry',
   title: "Men's Ministry",
-  tagline: 'The Image and the Glory of God.',
+  tagline: 'Man!! The Image and the Glory of God.  Be Strong And Courageous. We are Firmly Established',
   image: '/Pemem.png',
   gradient: 'from-amber-800/80 via-stone-900/75 to-stone-950',
   accent: 'text-amber-700',
@@ -23,9 +28,21 @@ const ministry: MinistryPageContent = {
 };
 
 export default async function MenMinistryPage() {
-  const [gallery, leader] = await Promise.all([
+  const [gallery, leadership] = await Promise.all([
     sanityFetch<GalleryPhotoItem[] | null>(ministryGalleryQuery, { id: ministry.galleryId }),
-    sanityFetch<MinistryLeaderProfile | null>(ministryLeaderQuery, { id: ministry.galleryId }),
+    sanityFetch<MinistryLeadershipSet | null>(ministryLeadershipQuery, { id: ministry.galleryId }),
   ]);
-  return <MinistryPageClient ministry={ministry} gallery={gallery ?? []} leader={leader} />;
+  return (
+    <MinistryPageClient
+      ministry={ministry}
+      gallery={gallery ?? []}
+      leader={null}
+      leadership={[
+        { title: 'Leader', profile: leadership?.leadershipByCategory?.men?.leader ?? null },
+        { title: 'Assistant Leader', profile: leadership?.leadershipByCategory?.men?.assistantLeader ?? null },
+        { title: 'Secretary', profile: leadership?.leadershipByCategory?.men?.secretary ?? null },
+      ]}
+      mottoStatements={[ministry.tagline]}
+    />
+  );
 }

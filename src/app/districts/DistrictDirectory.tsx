@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, MapPin, Search, Users } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowUpRight, MapPin, Search, Users, UserRound } from 'lucide-react';
 import { districtLabel, MINISTER_TBA } from '@/src/sanity/format';
 import type { DistrictItem } from '@/src/sanity/queries';
 
@@ -50,35 +51,61 @@ export default function DistrictDirectory({ districts }: { districts: DistrictIt
           {filteredDistricts.map((district) => (
             <article
               key={district.name}
-              className="rounded-2xl border border-stone-200/70 bg-[#F6F2EC] p-6 transition hover:shadow-md"
+              className="group overflow-hidden rounded-[1.6rem] border border-white/80 bg-white/75 shadow-[0_18px_50px_-24px_rgba(50,35,28,0.24)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white hover:shadow-[0_24px_60px_-22px_rgba(50,35,28,0.3)]"
             >
-              <h3 className="font-serif text-xl font-bold text-[#1C0D0D]">
-                {districtLabel(district.name)}
-              </h3>
-              <p className="mt-2 text-xs font-semibold text-[#8B2621]">
-                {district.pastor ?? MINISTER_TBA}
-              </p>
-              <div className="mt-5 space-y-3 text-xs text-stone-600">
-                <div className="flex items-start gap-2">
-                  <MapPin aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-stone-400" />
-                  <span>LA Area</span>
+              <div className="relative aspect-[16/10] overflow-hidden bg-[radial-gradient(ellipse_at_18%_8%,rgba(255,255,255,0.28),transparent_38%),linear-gradient(135deg,#762d27_0%,#3d1c20_58%,#171821_100%)]">
+                {district.image ? (
+                  <Image
+                    src={district.image}
+                    alt={`${districtLabel(district.name)} community`}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <>
+                    <div aria-hidden="true" className="absolute -right-12 -top-20 h-64 w-64 rounded-full border border-white/10 bg-white/[0.04] shadow-[0_0_90px_rgba(218,175,112,0.16)]" />
+                    <div aria-hidden="true" className="absolute -bottom-28 -left-8 h-64 w-64 rounded-full border border-[#d9b777]/25 bg-[#d9b777]/[0.08]" />
+                    <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(120deg,transparent_20%,rgba(255,255,255,0.08)_50%,transparent_70%)]" />
+                  </>
+                )}
+                <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#160f14]/80 via-[#160f14]/10 to-black/10" />
+                <div className="absolute bottom-5 left-5 right-5">
+                  <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/65">
+                    District
+                  </p>
+                  <h3 className="text-2xl font-semibold leading-tight tracking-tight text-white sm:text-[1.7rem]">
+                    {districtLabel(district.name)}
+                  </h3>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Users aria-hidden="true" className="h-4 w-4 shrink-0 text-stone-400" />
-                  <span>{district.assemblies.length} local assemblies</span>
-                </div>
-                <ul className="ml-6 list-disc space-y-1 marker:text-[#B8860B]">
-                  {district.assemblies.map((assembly) => (
-                    <li key={assembly.slug}>{assembly.name}</li>
-                  ))}
-                </ul>
               </div>
-              <Link
-                href={`/assemblies?district=${encodeURIComponent(district.name)}`}
-                className="mt-6 inline-flex w-full items-center gap-1.5 border-t border-stone-200/70 pt-4 text-xs font-semibold text-[#8B2621] transition hover:text-[#721F1B]"
-              >
-                View assemblies <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
-              </Link>
+
+              <div className="p-5 sm:p-6">
+                <div className="flex min-h-12 flex-wrap items-center gap-2">
+                  <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-[#8B2621]/10 bg-[#8B2621]/[0.06] px-3 py-2 text-xs font-medium text-[#70221e]">
+                    <UserRound aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-[#8B2621]" />
+                    <span className="truncate">{district.pastor ?? MINISTER_TBA}</span>
+                  </span>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-stone-200/80 bg-stone-50/90 px-3 py-2 text-xs font-medium text-stone-600">
+                    <MapPin aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-stone-400" />
+                    LA Area
+                  </span>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[#B8860B]/15 bg-[#B8860B]/[0.08] px-3 py-2 text-xs font-medium text-[#795812]">
+                    <Users aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
+                    {district.assemblies.length} {district.assemblies.length === 1 ? 'assembly' : 'assemblies'}
+                  </span>
+                </div>
+
+                <Link
+                  href={`/assemblies?district=${encodeURIComponent(district.name)}`}
+                  className="mt-5 inline-flex w-full items-center justify-between rounded-full border border-[#8B2621]/10 bg-[#8B2621]/[0.04] py-2 pl-4 pr-2 text-sm font-semibold text-[#70221e] transition-all duration-300 hover:border-[#8B2621]/20 hover:bg-[#8B2621] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B2621]/40 focus-visible:ring-offset-2"
+                >
+                  <span>Explore assemblies</span>
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-white text-[#8B2621] shadow-sm transition-transform duration-300 group-hover:translate-x-0.5">
+                    <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+                  </span>
+                </Link>
+              </div>
             </article>
           ))}
         </div>

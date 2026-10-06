@@ -1,11 +1,16 @@
 import { sanityFetch } from '@/src/sanity/client';
-import { ministryGalleryQuery, ministryLeaderQuery, type GalleryPhotoItem, type MinistryLeaderProfile } from '@/src/sanity/queries';
+import {
+  ministryGalleryQuery,
+  ministryLeadershipQuery,
+  type GalleryPhotoItem,
+  type MinistryLeadershipSet,
+} from '@/src/sanity/queries';
 import MinistryPageClient, { type MinistryPageContent } from '../ministries/MinistryPageClient';
 
 const ministry: MinistryPageContent = {
   galleryId: 'womens-ministry',
   title: 'Women’s Ministry',
-  tagline: 'Kronkron,  Ma Awurade.',
+  tagline: 'Kronkron, Ma Awurade. Virteous Ladies! We Live For Christ',
   image: '/Women.png',
   gradient: 'from-rose-700/80 via-fuchsia-950/70 to-stone-950',
   accent: 'text-rose-600',
@@ -23,9 +28,21 @@ const ministry: MinistryPageContent = {
 };
 
 export default async function WomenMinistryPage() {
-  const [gallery, leader] = await Promise.all([
+  const [gallery, leadership] = await Promise.all([
     sanityFetch<GalleryPhotoItem[] | null>(ministryGalleryQuery, { id: ministry.galleryId }),
-    sanityFetch<MinistryLeaderProfile | null>(ministryLeaderQuery, { id: ministry.galleryId }),
+    sanityFetch<MinistryLeadershipSet | null>(ministryLeadershipQuery, { id: ministry.galleryId }),
   ]);
-  return <MinistryPageClient ministry={ministry} gallery={gallery ?? []} leader={leader} />;
+  return (
+    <MinistryPageClient
+      ministry={ministry}
+      gallery={gallery ?? []}
+      leader={null}
+      leadership={[
+        { title: 'Leader', profile: leadership?.leadershipByCategory?.women?.leader ?? null },
+        { title: 'Assistant Leader', profile: leadership?.leadershipByCategory?.women?.assistantLeader ?? null },
+        { title: 'Secretary', profile: leadership?.leadershipByCategory?.women?.secretary ?? null },
+      ]}
+      mottoStatements={[ministry.tagline]}
+    />
+  );
 }
