@@ -49,7 +49,7 @@ const getSectorIcon = (sector: string) => {
     case 'women':
       return HeartHandshake;
     case 'youth':
-      return Sparkles;
+      return UsersRound;
     default:
       return UsersRound;
   }
