@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { UserRound } from 'lucide-react';
 import type {
+  MinistryLeaderImage,
   MinistryLeaderProfile as Leader,
   MinistryRoleProfile,
 } from '@/src/sanity/queries';
@@ -41,10 +42,10 @@ export default function MinistryLeaderProfile({
             className="group overflow-hidden rounded-[1.6rem] border border-white/80 bg-white/80 shadow-[0_18px_50px_-24px_rgba(15,23,42,0.24)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_-22px_rgba(15,23,42,0.3)]"
           >
             <div className="relative aspect-[4/3] overflow-hidden bg-[radial-gradient(ellipse_at_18%_8%,rgba(245,158,11,0.15),transparent_38%),linear-gradient(135deg,#334155_0%,#1e293b_58%,#0f172a_100%)]">
-              {profile && ('image' in profile ? profile.image : profile.photo) ? (
+              {profile && ('image' in profile ? profile.image : profile.photo?.url) ? (
                 <Image
-                  src={('image' in profile ? profile.image : profile.photo)!}
-                  alt={profile.name}
+                  src={('image' in profile ? profile.image : profile.photo?.url)!}
+                  alt={'photo' in profile ? profile.photo?.alt || profile.name : profile.name}
                   fill
                   sizes="(min-width: 1280px) 28vw, (min-width: 768px) 45vw, 100vw"
                   className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
@@ -92,10 +93,65 @@ export default function MinistryLeaderProfile({
                   Add this person&apos;s full name and picture in the ministry settings in Sanity Studio.
                 </p>
               )}
+              {profile && 'photo' in profile && (
+                <>
+                  <MinistryLeaderGallery images={profile.gallery} />
+                  {profile.documents.length > 0 && (
+                    <ul className="mt-5 space-y-2 border-t border-slate-200 pt-4">
+                      {profile.documents.map((document) => (
+                        document.url ? (
+                          <li key={`${document.title}-${document.url}`}>
+                            <a
+                              href={document.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-sm font-medium text-emerald-800 underline-offset-4 hover:underline"
+                            >
+                              {document.title}
+                            </a>
+                            {document.description && (
+                              <p className="mt-1 text-xs leading-relaxed text-slate-500">{document.description}</p>
+                            )}
+                          </li>
+                        ) : null
+                      ))}
+                    </ul>
+                  )}
+                </>
+              )}
             </div>
           </article>
         ))}
       </div>
     </section>
+  );
+}
+
+function MinistryLeaderGallery({ images }: { images: MinistryLeaderImage[] }) {
+  const availableImages = images.filter((image) => image.url);
+  if (availableImages.length === 0) return null;
+
+  return (
+    <div className="mt-5 border-t border-slate-200 pt-4">
+      <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Gallery</h4>
+      <div className="grid grid-cols-2 gap-2">
+        {availableImages.map((image, index) => (
+          <figure key={`${image.url}-${index}`} className="relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-100">
+            <Image
+              src={image.url!}
+              alt={image.alt}
+              fill
+              sizes="(min-width: 768px) 20vw, 45vw"
+              className="object-cover"
+            />
+            {image.caption && (
+              <figcaption className="absolute inset-x-0 bottom-0 bg-slate-950/70 px-2 py-1 text-xs text-white">
+                {image.caption}
+              </figcaption>
+            )}
+          </figure>
+        ))}
+      </div>
+    </div>
   );
 }

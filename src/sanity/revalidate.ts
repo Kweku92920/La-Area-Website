@@ -7,7 +7,7 @@ const typeToPaths: Record<string, string[]> = {
   event: ['/', '/sermons', '/assemblies', '/districts'],
   sermon: ['/', '/sermons'],
   siteSettings: ['/', '/sitemap.xml'],
-  ministryLeader: ['/leadership', '/ministries', '/youth', '/women', '/men', '/children', '/'],
+  ministryLeader: ['/leadership', '/ministries', '/ministries/[id]', '/youth', '/women', '/men', '/children', '/'],
   ministry: ['/ministries', '/ministries/[id]', '/youth', '/women', '/men', '/children', '/'],
 };
 
@@ -20,7 +20,7 @@ export function revalidateSanityContent(documentType?: string, slug?: string | n
   }
 
   for (const tag of tags) {
-    revalidateTag(tag, 'default');
+    revalidateTag(tag, { expire: 0 });
   }
 
   const paths = typeToPaths[resolvedType] ?? ['/'];

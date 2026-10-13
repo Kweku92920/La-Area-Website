@@ -70,7 +70,7 @@ export default function SiteHeader() {
                 <Link href="/leadership" className="group/link flex items-center justify-between rounded-xl px-3 py-2.5 text-slate-700 transition hover:bg-amber-50 hover:text-emerald-900">
                   Leadership <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5 text-slate-300 transition group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-hover/link:text-emerald-700" />
                 </Link>
-                <Link href="/#tenets" className="group/link flex items-center justify-between rounded-xl px-3 py-2.5 text-slate-700 transition hover:bg-amber-50 hover:text-emerald-900">
+                <Link href="/tenets" className="group/link flex items-center justify-between rounded-xl px-3 py-2.5 text-slate-700 transition hover:bg-amber-50 hover:text-emerald-900">
                   Tenets <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5 text-slate-300 transition group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-hover/link:text-emerald-700" />
                 </Link>
               </div>
@@ -155,9 +155,10 @@ export default function SiteHeader() {
               <p className="px-3 pt-2 text-xs font-bold uppercase tracking-widest text-amber-700">About</p>
               <Link href="/about" onClick={closeMenu} className="block rounded-xl px-3 py-2.5 transition hover:bg-amber-50 hover:text-emerald-900">About Us</Link>
               <Link href="/leadership" onClick={closeMenu} className="block rounded-xl px-3 py-2.5 transition hover:bg-amber-50 hover:text-emerald-900">Leadership</Link>
+              <Link href="/tenets" onClick={closeMenu} className="block rounded-xl px-3 py-2.5 transition hover:bg-amber-50 hover:text-emerald-900">Tenets</Link>
               <Link href="/districts" onClick={closeMenu} className="block rounded-xl px-3 py-2.5 transition hover:bg-amber-50 hover:text-emerald-900">Districts</Link>
               <Link href="/assemblies" onClick={closeMenu} className="block rounded-xl px-3 py-2.5 transition hover:bg-amber-50 hover:text-emerald-900">Assemblies</Link>
-              <Link href="/#tenets" onClick={closeMenu} className="block rounded-xl px-3 py-2.5 transition hover:bg-amber-50 hover:text-emerald-900">Tenets</Link>
+              <Link href="/tenets" onClick={closeMenu} className="block rounded-xl px-3 py-2.5 transition hover:bg-amber-50 hover:text-emerald-900">Tenets</Link>
               <p className="px-3 pt-3 text-xs font-bold uppercase tracking-widest text-amber-700">Ministries</p>
         
               <Link href="/ministries#youth-ministry" onClick={closeMenu} className="block rounded-xl px-3 py-2.5 transition hover:bg-amber-50 hover:text-emerald-900">Youth Ministry</Link>
@@ -168,9 +169,8 @@ export default function SiteHeader() {
               <p className="px-3 pt-3 text-xs font-bold uppercase tracking-widest text-amber-700">Media</p>
               <Link href="/sermons" onClick={closeMenu} className="block rounded-xl px-3 py-2.5 transition hover:bg-amber-50 hover:text-emerald-900">Sermons</Link>
               <Link href="/#events" onClick={closeMenu} className="block rounded-xl px-3 py-2.5 transition hover:bg-amber-50 hover:text-emerald-900">Events</Link>
-              <Link href="/#gallery" onClick={closeMenu} className="block rounded-xl px-3 py-2.5 transition hover:bg-amber-50 hover:text-emerald-900">Gallery</Link>
-              <Link href="/#live-streaming" onClick={closeMenu} className="block rounded-xl px-3 py-2.5 transition hover:bg-amber-50 hover:text-emerald-900">Live Streaming</Link>
-
+              <Link href="/gallery" onClick={closeMenu} className="block rounded-xl px-3 py-2.5 transition hover:bg-amber-50 hover:text-emerald-900">Gallery</Link>
+             
               <Link
                 href="/assemblies"
                 onClick={closeMenu}

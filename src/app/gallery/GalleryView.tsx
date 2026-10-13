@@ -1,7 +1,8 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 
 type GalleryImage = {
@@ -15,36 +16,27 @@ const CATEGORIES = ['All', 'Worship', 'Fellowship', 'Choir', 'Youth', 'Outreach'
 type Category = (typeof CATEGORIES)[number];
 
 const IMAGES: GalleryImage[] = [
-  // Worship
   { src: 'https://images.pexels.com/photos/29422232/pexels-photo-29422232.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Congregation in worship during a Sunday service', category: 'Worship', span: 'wide' },
   { src: 'https://images.pexels.com/photos/34504327/pexels-photo-34504327.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Hands raised in praise during worship', category: 'Worship', span: 'tall' },
   { src: 'https://images.pexels.com/photos/34328505/pexels-photo-34328505.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Lively worship service with stage lighting', category: 'Worship', span: 'wide' },
   { src: 'https://images.pexels.com/photos/13899687/pexels-photo-13899687.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Congregation standing in prayer together', category: 'Worship', span: 'tall' },
   { src: 'https://images.pexels.com/photos/12618113/pexels-photo-12618113.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Sunlit church interior filled with worshippers', category: 'Worship', span: 'tall' },
   { src: 'https://images.pexels.com/photos/34623696/pexels-photo-34623696.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Church congregation participating in worship', category: 'Worship', span: 'normal' },
-
-  // Fellowship
   { src: 'https://images.pexels.com/photos/29422233/pexels-photo-29422233.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Congregation seated with choir and instruments', category: 'Fellowship', span: 'wide' },
   { src: 'https://images.pexels.com/photos/35555142/pexels-photo-35555142.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Couple sharing a heartfelt moment at church', category: 'Fellowship', span: 'normal' },
   { src: 'https://images.pexels.com/photos/34328517/pexels-photo-34328517.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Hands raised in vibrant worship under stage lights', category: 'Fellowship', span: 'wide' },
   { src: 'https://images.pexels.com/photos/10823376/pexels-photo-10823376.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Large congregation gathered in a wooden church interior', category: 'Fellowship', span: 'normal' },
   { src: 'https://images.pexels.com/photos/34680729/pexels-photo-34680729.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Senior woman singing during a church service', category: 'Fellowship', span: 'tall' },
-
-  // Choir
   { src: 'https://images.pexels.com/photos/8815025/pexels-photo-8815025.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Choir singers in red robes clapping and singing', category: 'Choir', span: 'wide' },
   { src: 'https://images.pexels.com/photos/14990429/pexels-photo-14990429.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Choir singing passionately in harmony', category: 'Choir', span: 'normal' },
   { src: 'https://images.pexels.com/photos/8815017/pexels-photo-8815017.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Diverse choir singing during a church service', category: 'Choir', span: 'wide' },
   { src: 'https://images.pexels.com/photos/7567340/pexels-photo-7567340.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Conductor leading a choir in practice', category: 'Choir', span: 'tall' },
-
-  // Youth
   { src: 'https://images.pexels.com/photos/21782665/pexels-photo-21782665.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Young man reading the Bible in a prayer group', category: 'Youth', span: 'wide' },
   { src: 'https://images.pexels.com/photos/8674206/pexels-photo-8674206.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Three people reading Bibles together at church', category: 'Youth', span: 'normal' },
   { src: 'https://images.pexels.com/photos/6860826/pexels-photo-6860826.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Bible study discussion group', category: 'Youth', span: 'wide' },
   { src: 'https://images.pexels.com/photos/6860380/pexels-photo-6860380.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Group praying and singing with guitar', category: 'Youth', span: 'normal' },
   { src: 'https://images.pexels.com/photos/23015910/pexels-photo-23015910.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Young adults gathered for a religious event', category: 'Youth', span: 'tall' },
-
-  // Outreach
-  { src: '/pemem-pic.jpg', alt: "Men's Ministry gathering — PEMEM", category: 'Outreach', span: 'normal' },
+  { src: '/pemem-pic.jpg', alt: "Men's Ministry gathering - PEMEM", category: 'Outreach', span: 'normal' },
   { src: '/women-pic.jpg', alt: "Women's Ministry fellowship gathering", category: 'Outreach', span: 'normal' },
   { src: '/youth-pic.jpg', alt: 'Youth Ministry celebration', category: 'Outreach', span: 'normal' },
   { src: '/children-pic.jpg', alt: 'Children Ministry at the La Area', category: 'Outreach', span: 'normal' },
@@ -59,6 +51,9 @@ const spanClass: Record<NonNullable<GalleryImage['span']>, string> = {
 export default function GalleryView() {
   const [activeCategory, setActiveCategory] = useState<Category>('All');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const lightboxRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
 
   const filteredImages = useMemo(
     () =>
@@ -82,20 +77,52 @@ export default function GalleryView() {
     );
   }, [filteredImages.length]);
 
+  const isLightboxOpen = lightboxIndex !== null;
+
   useEffect(() => {
-    if (lightboxIndex === null) return;
+    if (!isLightboxOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft') goPrev();
-      if (e.key === 'ArrowRight') goNext();
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeLightbox();
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goPrev();
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        goNext();
+      }
+      if (e.key === 'Tab') {
+        const focusable = lightboxRef.current?.querySelectorAll<HTMLElement>(
+          'button:not([disabled])',
+        );
+        if (!focusable?.length) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
+
+    closeButtonRef.current?.focus();
     document.addEventListener('keydown', handleKey);
     document.body.style.overflow = 'hidden';
     return () => {
       document.removeEventListener('keydown', handleKey);
-      document.body.style.overflow = '';
+      document.body.style.overflow = previousOverflow;
+      if (triggerRef.current?.isConnected) triggerRef.current.focus();
     };
-  }, [lightboxIndex, closeLightbox, goPrev, goNext]);
+  }, [isLightboxOpen, closeLightbox, goPrev, goNext]);
 
   const counts = useMemo(() => {
     const map: Record<string, number> = { All: IMAGES.length };
@@ -108,7 +135,6 @@ export default function GalleryView() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
-      {/* ---------- HERO ---------- */}
       <section className="relative isolate flex min-h-[440px] items-center justify-center overflow-hidden bg-slate-950 text-white">
         <div className="absolute inset-0">
           <div
@@ -129,12 +155,11 @@ export default function GalleryView() {
             Gallery
           </h1>
           <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-200/85 sm:text-lg">
-            Moments of worship, fellowship, and service across the La Area — a visual journey of faith in action.
+            Moments of worship, fellowship, and service across the La Area - a visual journey of faith in action.
           </p>
         </div>
       </section>
 
-      {/* ---------- FILTER BAR ---------- */}
       <section className="sticky top-[64px] z-30 border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center gap-2 overflow-x-auto px-4 py-4 md:px-8">
           {CATEGORIES.map((cat) => {
@@ -164,35 +189,34 @@ export default function GalleryView() {
         </div>
       </section>
 
-      {/* ---------- MASONRY GRID ---------- */}
       <section className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
         <div className="grid auto-rows-[220px] grid-cols-2 gap-4 sm:grid-cols-3 md:gap-5 lg:grid-cols-4">
           {filteredImages.map((img, index) => (
             <button
               key={`${img.src}-${index}`}
               type="button"
-              onClick={() => setLightboxIndex(index)}
+              onClick={(event) => {
+                triggerRef.current = event.currentTarget;
+                setLightboxIndex(index);
+              }}
+              aria-label={`View image: ${img.alt}`}
               className={`group relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-[0_12px_36px_-20px_rgba(15,23,42,0.25)] transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_20px_50px_-20px_rgba(15,23,42,0.35)] ${spanClass[img.span ?? 'normal']}`}
             >
-              <img
+              <Image
                 src={img.src}
                 alt={img.alt}
-                loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                fill
+                unoptimized
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-90" />
-
-              {/* Category badge */}
               <span className="absolute left-3 top-3 rounded-full border border-white/20 bg-black/40 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-white backdrop-blur-md">
                 {img.category}
               </span>
-
-              {/* Zoom icon */}
               <span className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full border border-white/20 bg-black/40 text-white opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100">
                 <ZoomIn className="h-4 w-4" />
               </span>
-
-              {/* Caption */}
               <div className="absolute inset-x-0 bottom-0 p-3 text-left">
                 <p className="translate-y-2 text-xs font-medium leading-snug text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                   {img.alt}
@@ -207,7 +231,6 @@ export default function GalleryView() {
         )}
       </section>
 
-      {/* ---------- CTA ---------- */}
       <section className="relative overflow-hidden border-t border-emerald-950/20 bg-emerald-900 px-4 py-14 text-center text-white">
         <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(16,185,129,0.22),transparent_65%)]" />
         <div className="relative mx-auto max-w-2xl space-y-5">
@@ -227,17 +250,17 @@ export default function GalleryView() {
         </div>
       </section>
 
-      {/* ---------- LIGHTBOX ---------- */}
       {lightboxIndex !== null && (
         <div
+          ref={lightboxRef}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 backdrop-blur-md"
           onClick={closeLightbox}
           role="dialog"
           aria-modal="true"
           aria-label="Image viewer"
         >
-          {/* Close */}
           <button
+            ref={closeButtonRef}
             type="button"
             onClick={closeLightbox}
             className="absolute right-4 top-4 z-10 grid h-11 w-11 place-items-center rounded-full border border-white/20 bg-white/10 text-white transition hover:bg-white/20"
@@ -245,8 +268,6 @@ export default function GalleryView() {
           >
             <X className="h-5 w-5" />
           </button>
-
-          {/* Prev */}
           <button
             type="button"
             onClick={(e) => { e.stopPropagation(); goPrev(); }}
@@ -255,8 +276,6 @@ export default function GalleryView() {
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
-
-          {/* Next */}
           <button
             type="button"
             onClick={(e) => { e.stopPropagation(); goNext(); }}
@@ -265,16 +284,17 @@ export default function GalleryView() {
           >
             <ChevronRight className="h-6 w-6" />
           </button>
-
-          {/* Image */}
           <div
             className="relative mx-auto max-h-[85vh] max-w-5xl px-16"
             onClick={(e) => e.stopPropagation()}
           >
-            <img
+            <Image
               src={filteredImages[lightboxIndex].src}
               alt={filteredImages[lightboxIndex].alt}
-              className="mx-auto max-h-[78vh] rounded-2xl object-contain shadow-2xl"
+              width={1200}
+              height={800}
+              unoptimized
+              className="mx-auto max-h-[78vh] w-auto max-w-full rounded-2xl object-contain shadow-2xl"
             />
             <div className="mt-4 text-center">
               <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-white/80">

@@ -79,7 +79,19 @@ export type MinistryLeaderProfile = {
   role: string;
   location: string;
   bio: string;
-  photo: string | null;
+  photo: MinistryLeaderImage | null;
+  gallery: MinistryLeaderImage[];
+  documents: MinistryLeaderDocument[];
+};
+export type MinistryLeaderImage = {
+  url: string | null;
+  alt: string;
+  caption?: string | null;
+};
+export type MinistryLeaderDocument = {
+  url: string | null;
+  title: string;
+  description: string | null;
 };
 export type MinistryRoleProfile = {
   name: string;
@@ -125,28 +137,27 @@ const ministryCategoryLeadershipProjection = `"leadershipByCategory": {
     "secretary": secretary{name, "image": image.asset->url}
   }
 }`;
+const ministryLeaderProjection = `name, role, "location": coalesce(location, ""),
+  "bio": coalesce(bio, ""),
+  "photo": photo{..., "url": asset->url, alt},
+  "gallery": gallery[]{..., "url": asset->url, alt, caption},
+  "documents": documents[]{..., "url": asset->url, title, description}`;
 export const ministriesQuery = `*[_type=="ministry"] | order(order asc){
   "id": slug.current, title, "sector": coalesce(sector, ""),
   "description": coalesce(description, ""),
   "image": image.asset->url,
-  "leader": leader->{name, role, "location": coalesce(location, ""),
-    "bio": coalesce(bio, ""), "photo": photo.asset->url},
-  "assistantLeader": assistantLeader->{name, role, "location": coalesce(location, ""),
-    "bio": coalesce(bio, ""), "photo": photo.asset->url},
-  "secretary": secretary->{name, role, "location": coalesce(location, ""),
-    "bio": coalesce(bio, ""), "photo": photo.asset->url},
+  "leader": leader->{${ministryLeaderProjection}},
+  "assistantLeader": assistantLeader->{${ministryLeaderProjection}},
+  "secretary": secretary->{${ministryLeaderProjection}},
   ${ministryCategoryLeadershipProjection}
 }`;
 export const ministryDetailQuery = `*[_type=="ministry" && slug.current==$id][0]{
   "id": slug.current, title, "sector": coalesce(sector, ""),
   "description": coalesce(description, ""),
   "image": image.asset->url, "heroImage": heroImage.asset->url,
-  "leader": leader->{name, role, "location": coalesce(location, ""),
-    "bio": coalesce(bio, ""), "photo": photo.asset->url},
-  "assistantLeader": assistantLeader->{name, role, "location": coalesce(location, ""),
-    "bio": coalesce(bio, ""), "photo": photo.asset->url},
-  "secretary": secretary->{name, role, "location": coalesce(location, ""),
-    "bio": coalesce(bio, ""), "photo": photo.asset->url},
+  "leader": leader->{${ministryLeaderProjection}},
+  "assistantLeader": assistantLeader->{${ministryLeaderProjection}},
+  "secretary": secretary->{${ministryLeaderProjection}},
   ${ministryCategoryLeadershipProjection},
   "gallery": gallery[defined(asset)]{"url": asset->url, caption}
 }`;
@@ -154,8 +165,10 @@ export const ministryLeadershipQuery = `*[_type=="ministry" && slug.current==$id
   ${ministryCategoryLeadershipProjection}
 }`;
 export const ministryLeaderQuery = `*[_type=="ministry" && slug.current==$id][0].leader->{
-  name, role, "location": coalesce(location, ""),
-  "bio": coalesce(bio, ""), "photo": photo.asset->url
+  ${ministryLeaderProjection}
+}`;
+export const ministryLeadersQuery = `*[_type=="ministryLeader"] | order(order asc){
+  _id, ${ministryLeaderProjection}
 }`;
 
 export type RawSermon = {
