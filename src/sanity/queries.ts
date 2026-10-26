@@ -382,3 +382,106 @@ export const galleryItemsQuery = groq`*[_type=="galleryItem" && defined(image.as
     hotspot
   }
 }`;
+
+export type NewsImage = {
+  asset: {
+    _id: string;
+    url: string;
+    metadata?: {
+      lqip?: string;
+      dimensions?: { width?: number; height?: number; aspectRatio?: number };
+    };
+  };
+  alt: string;
+  crop?: Record<string, unknown>;
+  hotspot?: Record<string, unknown>;
+};
+
+export type NewsItem = {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  category: string;
+  publishedAt: string;
+  featured: boolean;
+  featuredImage: NewsImage | null;
+  body: PortableTextBlock[] | null;
+};
+
+const newsImageProjection = `{
+  asset->{
+    _id,
+    url,
+    metadata { lqip, dimensions { width, height, aspectRatio } }
+  },
+  "alt": coalesce(alt, "La Area church news"),
+  crop,
+  hotspot
+}`;
+
+const newsBodyProjection = `[]{
+  _key,
+  _type,
+  style,
+  children,
+  markDefs,
+  level,
+  listItem,
+  "asset": select(_type == "image" => asset->{_id, url, metadata { lqip, dimensions { width, height, aspectRatio } }}),
+  "alt": select(_type == "image" => coalesce(alt, "Article image")),
+  "caption": select(_type == "image" => caption),
+  "tone": select(_type == "callout" => coalesce(tone, "info")),
+  "title": select(_type == "callout" => title),
+  "body": select(_type == "callout" => body)
+}`;
+
+export const newsItemsQuery = groq`*[_type=="newsItem" && defined(slug.current) && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc, _createdAt desc){
+  "id": _id,
+  "title": coalesce(title, "Untitled news"),
+  "slug": slug.current,
+  "excerpt": coalesce(excerpt, ""),
+  "category": coalesce(category, "News"),
+  publishedAt,
+  "featured": coalesce(featured, false),
+  "featuredImage": featuredImage${newsImageProjection},
+  "body": null
+}`;
+
+export const recentNewsQuery = groq`*[_type=="newsItem" && defined(slug.current) && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc, _createdAt desc)[0...4]{
+  "id": _id,
+  "title": coalesce(title, "Untitled news"),
+  "slug": slug.current,
+  "excerpt": coalesce(excerpt, ""),
+  "category": coalesce(category, "News"),
+  publishedAt,
+  "featured": coalesce(featured, false),
+  "featuredImage": featuredImage${newsImageProjection},
+  "body": null
+}`;
+
+export const featuredNewsQuery = groq`*[_type=="newsItem" && featured == true && defined(slug.current) && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc)[0...3]{
+  "id": _id,
+  "title": coalesce(title, "Untitled news"),
+  "slug": slug.current,
+  "excerpt": coalesce(excerpt, ""),
+  "category": coalesce(category, "News"),
+  publishedAt,
+  "featured": true,
+  "featuredImage": featuredImage${newsImageProjection},
+  "body": null
+}`;
+
+export const newsBySlugQuery = groq`*[_type=="newsItem" && slug.current==$slug && defined(publishedAt) && publishedAt <= now()][0]{
+  "id": _id,
+  "title": coalesce(title, "Untitled news"),
+  "slug": slug.current,
+  "excerpt": coalesce(excerpt, ""),
+  "category": coalesce(category, "News"),
+  publishedAt,
+  "featured": coalesce(featured, false),
+  "featuredImage": featuredImage${newsImageProjection},
+  "body": body${newsBodyProjection}
+}`;
+
+export const newsSlugsQuery = groq`*[_type=="newsItem" && defined(slug.current) && defined(publishedAt) && publishedAt <= now()]{"slug": slug.current}`;

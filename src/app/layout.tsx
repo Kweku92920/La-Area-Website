@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
+import { Bricolage_Grotesque } from "next/font/google";
 import SiteFooter from "./components/SiteFooter";
 import SiteHeader from "./components/SiteHeader";
 import "./globals.css";
 import { sanityFetchSafe } from "@/src/sanity/fetch";
 import { scripturesQuery, siteSettingsQuery, type Scripture, type SiteSettings } from "@/src/sanity/queries";
+
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-bricolage",
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
+});
 
 const fallbackSettings: SiteSettings = {
   title: "The Church of Pentecost - LA Area",
@@ -49,19 +57,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   });
 
   return (
-    <html lang="en" className="h-full antialiased">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Clarity+City:ital,wght@0,100..900;1,100..900&family=Forum&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={`${bricolage.variable} h-full antialiased`}>
+      <head />
       <body className="flex min-h-full flex-col bg-[#f7f4ed] text-[#1c2923] antialiased">
         <SiteHeader logoUrl={settings.logo} />
         <main className="flex-1">{children}</main>

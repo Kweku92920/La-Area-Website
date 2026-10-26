@@ -20,9 +20,11 @@ npm run build
 Configure these variables in `.env.local` and in the deployment environment:
 
 ```dotenv
-NEXT_PUBLIC_SANITY_PROJECT_ID=
-NEXT_PUBLIC_SANITY_DATASET=
+NEXT_PUBLIC_SANITY_PROJECT_ID=eflw1ex3
+NEXT_PUBLIC_SANITY_DATASET=production
+NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
 NEXT_PUBLIC_SITE_URL=https://coplaarea.org
+SANITY_API_READ_TOKEN=
 SANITY_WRITE_TOKEN=
 SANITY_REVALIDATE_SECRET=
 ```
@@ -47,7 +49,7 @@ For immediate cache refresh after publishing, unpublishing, or deleting:
 
    ```groq
    !(_id in path("drafts.**")) &&
-   _type in ["district", "assembly", "event", "leader", "ministry", "sermon"]
+   _type in ["district", "assembly", "event", "leader", "ministry", "sermon", "galleryItem", "newsItem"]
    ```
 
 3. Set its URL to `https://<your-site-host>/api/revalidate` and add an

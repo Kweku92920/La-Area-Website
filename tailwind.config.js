@@ -4,10 +4,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Clarity City"', '"Montserrat"', 'sans-serif'],
-        jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
-        serif: ['"Forum"', '"Clarity City"', '"Montserrat"', 'sans-serif'],
-        mono: ['"Clarity City"', '"Montserrat"', 'sans-serif'],
+        sans: ['var(--font-bricolage)', 'sans-serif'],
+        serif: ['var(--font-bricolage)', 'sans-serif'],
+        heading: ['var(--font-bricolage)', 'sans-serif'],
+        mono: ['var(--font-bricolage)', 'sans-serif'],
       },
     },
   },

@@ -155,11 +155,11 @@ const components: PortableTextComponents = {
   },
 };
 
-export default function RichText({ value }: { value: PortableTextBlock[] | null | undefined }) {
+export default function RichText({ value, dark = false }: { value: PortableTextBlock[] | null | undefined; dark?: boolean }) {
   if (!Array.isArray(value) || value.length === 0) return null;
 
   return (
-    <div className="prose prose-slate max-w-none dark:prose-invert">
+    <div className={`${dark ? 'dark prose-invert' : ''} prose prose-slate max-w-none`}>
       <PortableText value={value} components={components} />
     </div>
   );

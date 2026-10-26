@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 
 const navLinkClass =
-  'rounded-full border border-slate-200 px-5 py-2 font-jakarta font-semibold transition-all duration-200 hover:border-amber-600 hover:text-emerald-900';
+  'rounded-full border border-slate-200 px-5 py-2 font-sans font-semibold transition-all duration-200 hover:border-amber-600 hover:text-emerald-900';
 const dropdownLinkClass =
   'group/link flex items-center justify-between px-3 py-2.5 text-slate-700 transition hover:bg-[#f7f0df] hover:text-emerald-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-emerald-300';
 const dropdownPanelClass =
@@ -81,7 +81,7 @@ export default function SiteHeader({ logoUrl }: { logoUrl?: string | null }) {
 
         <nav aria-label="Main navigation" className="hidden items-center gap-1 text-sm font-medium text-slate-700 dark:text-slate-300 lg:flex">
           <div className="group relative py-2">
-              <button type="button" onClick={() => toggleDropdown('about')} className="flex items-center gap-1.5 rounded-full border border-slate-200 px-5 py-2 font-jakarta font-semibold transition-all duration-200 hover:border-amber-600 hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400" aria-haspopup="true" aria-expanded={activeDropdown === 'about'}>
+              <button type="button" onClick={() => toggleDropdown('about')} className="flex items-center gap-1.5 rounded-full border border-slate-200 px-5 py-2 font-sans font-semibold transition-all duration-200 hover:border-amber-600 hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400" aria-haspopup="true" aria-expanded={activeDropdown === 'about'}>
               <span>About</span>
               <ChevronDown className={`h-3.5 w-3.5 text-slate-400 transition-transform duration-200 dark:text-slate-500 ${activeDropdown === 'about' ? 'rotate-180' : ''}`} />
             </button>
@@ -102,7 +102,7 @@ export default function SiteHeader({ logoUrl }: { logoUrl?: string | null }) {
           <Link href="/assemblies" className={`${navLinkClass} ${isActive('/assemblies') ? 'border-emerald-800/15 bg-emerald-50 text-emerald-900 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300' : ''}`}>Assemblies</Link>
 
           <div className="group relative py-2">
-            <button type="button" onClick={() => toggleDropdown('ministries')} className="flex items-center gap-1.5 rounded-full border border-slate-200 px-5 py-2 font-jakarta font-semibold transition-all duration-200 hover:border-amber-600 hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400" aria-haspopup="true" aria-expanded={activeDropdown === 'ministries'}>
+            <button type="button" onClick={() => toggleDropdown('ministries')} className="flex items-center gap-1.5 rounded-full border border-slate-200 px-5 py-2 font-sans font-semibold transition-all duration-200 hover:border-amber-600 hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400" aria-haspopup="true" aria-expanded={activeDropdown === 'ministries'}>
               <span>Ministries</span>
               <ChevronDown className={`h-3.5 w-3.5 text-slate-400 transition-transform duration-200 dark:text-slate-500 ${activeDropdown === 'ministries' ? 'rotate-180' : ''}`} />
             </button>
@@ -124,7 +124,7 @@ export default function SiteHeader({ logoUrl }: { logoUrl?: string | null }) {
           </div>
 
           <div className="group relative py-2">
-            <button type="button" onClick={() => toggleDropdown('media')} className="flex items-center gap-1.5 rounded-full border border-slate-200 px-5 py-2 font-jakarta font-semibold transition-all duration-200 hover:border-amber-600 hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400" aria-haspopup="true" aria-expanded={activeDropdown === 'media'}>
+            <button type="button" onClick={() => toggleDropdown('media')} className="flex items-center gap-1.5 rounded-full border border-slate-200 px-5 py-2 font-sans font-semibold transition-all duration-200 hover:border-amber-600 hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400" aria-haspopup="true" aria-expanded={activeDropdown === 'media'}>
               <span>Media</span>
               <ChevronDown className={`h-3.5 w-3.5 text-slate-400 transition-transform duration-200 dark:text-slate-500 ${activeDropdown === 'media' ? 'rotate-180' : ''}`} />
             </button>
@@ -136,8 +136,11 @@ export default function SiteHeader({ logoUrl }: { logoUrl?: string | null }) {
               <Link href="/#gallery" className={dropdownLinkClass}>
                 Gallery <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5 text-slate-300 transition group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-hover/link:text-emerald-700 dark:text-slate-500 dark:group-hover/link:text-emerald-300" />
               </Link>
-              <Link href="/#live-streaming" className={dropdownLinkClass}>
-                Live Streaming <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5 text-slate-300 transition group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-hover/link:text-emerald-700 dark:text-slate-500 dark:group-hover/link:text-emerald-300" />
+              <Link href="/news" className={dropdownLinkClass}>
+                News <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5 text-slate-300 transition group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-hover/link:text-emerald-700 dark:text-slate-500 dark:group-hover/link:text-emerald-300" />
+              </Link>
+               <Link href="/news" className={dropdownLinkClass}>
+                Articles <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5 text-slate-300 transition group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-hover/link:text-emerald-700 dark:text-slate-500 dark:group-hover/link:text-emerald-300" />
               </Link>
             </div>
           </div>
@@ -193,6 +196,7 @@ export default function SiteHeader({ logoUrl }: { logoUrl?: string | null }) {
           <Link href="/sermons" onClick={closeMenu} className={mobileLinkClass}>Sermons</Link>
           <Link href="/#events" onClick={closeMenu} className={mobileLinkClass}>Events</Link>
           <Link href="/gallery" onClick={closeMenu} className={mobileLinkClass}>Gallery</Link>
+          <Link href="/news" onClick={closeMenu} className={mobileLinkClass}>News</Link>
           <Link
             href="/assemblies"
             onClick={closeMenu}

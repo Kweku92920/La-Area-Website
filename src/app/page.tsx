@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { sanityFetchSafe } from '@/src/sanity/fetch';
 import { formatDate, youtubeThumb } from '@/src/sanity/format';
-import { nextEventQuery, latestSermonsQuery, type HomeEvent, type HomeSermon } from '@/src/sanity/queries';
+import { nextEventQuery, latestSermonsQuery, recentNewsQuery, type HomeEvent, type HomeSermon, type NewsItem } from '@/src/sanity/queries';
+import NewsPreview from './news/NewsPreview';
 import {
   ArrowRight,
   Calendar,
@@ -14,9 +15,10 @@ import {
 } from 'lucide-react';
 
 export default async function HomePage() {
-  const [event, sermons] = await Promise.all([
+  const [event, sermons, recentNews] = await Promise.all([
     sanityFetchSafe<HomeEvent | null>(nextEventQuery, {}, null, { revalidate: false, documentType: 'event' }),
     sanityFetchSafe<HomeSermon[]>(latestSermonsQuery, {}, [], { documentType: 'sermon' }),
+    sanityFetchSafe<NewsItem[]>(recentNewsQuery, {}, [], { revalidate: false, documentType: 'newsItem' }),
   ]);
 
   return (
@@ -50,23 +52,18 @@ export default async function HomePage() {
          <div className="mb-14 flex flex-col items-center justify-center gap-4 sm:flex-row">
   <Link
     href="/assemblies"
-    className="group inline-flex w-full items-center justify-center gap-3 rounded-md bg-amber-500 px-8 py-4 text-sm font-semibold text-[#17362c] transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-400 sm:w-auto"
+    className="group inline-flex w-full items-center justify-center gap-3 rounded-md border border-white/45 bg-white/10 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20 sm:w-auto"
   >
     <span>Find a Local Assembly</span>
     <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
   </Link>
-  <Link
-    href="/sermons"
-    className="group inline-flex w-full items-center justify-center gap-3 rounded-md border border-white/45 bg-white/10 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20 sm:w-auto"
-  >
-    <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-500 text-slate-950">
-      <Play className="h-3 w-3 fill-current ml-0.5" />
-    </div>
+  <Link href="/sermons" className="group inline-flex w-full items-center justify-center gap-3 rounded-md border border-white/45 bg-white/10 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20 sm:w-auto">
+    <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-500 text-slate-950"><Play className="ml-0.5 h-3 w-3 fill-current" /></div>
     <span>Watch Latest Sermons</span>
   </Link>
 </div>
 
-          <div className="inline-flex flex-wrap items-center justify-center gap-4 rounded-2xl border border-white/10 bg-slate-900/60 p-4 backdrop-blur-xl text-xs font-medium text-slate-300">
+          <div className="inline-flex flex-wrap items-center justify-center gap-4 rounded-2xl border border-white/45 bg-white/10 p-4 text-xs font-medium text-white backdrop-blur-sm">
             <div className="flex items-center gap-2 px-3 py-1">
               <Calendar className="h-4 w-4 text-green-400" />
               <span>Office Hours: Mon - Fri, 9:00 AM & 4:00 PM</span>
@@ -229,6 +226,8 @@ export default async function HomePage() {
           )}
         </div>
       </section>
+
+      <NewsPreview articles={recentNews} />
 
      {/* ---------------- SERMONS & MEDIA ---------------- */}
       <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
