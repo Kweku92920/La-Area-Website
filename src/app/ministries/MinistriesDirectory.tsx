@@ -67,15 +67,13 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
   );
   const query = searchQuery.trim().toLowerCase();
   const filteredMinistries = ministries.filter((ministry) => {
+    const ministryLeaders = ministry.leaders ?? [];
     const sector = getSector(ministry);
     const matchesSector = selectedSector === 'all' || sector === selectedSector;
     const matchesSearch = [
       ministry.title,
       ministry.description,
-      ministry.leader?.name ?? '',
-      ministry.leader?.role ?? '',
-      ministry.assistantLeader?.name ?? '',
-      ministry.secretary?.name ?? '',
+      ...ministryLeaders.flatMap((leader) => [leader.name, leader.title, leader.bio]),
       sectorNames[sector] ?? sector,
     ].some((value) => value.toLowerCase().includes(query));
     return matchesSector && matchesSearch;
@@ -84,7 +82,7 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
   return (
     <>
       <section className="mx-auto max-w-7xl px-0 pb-6 sm:pb-8">
-        <div className="flex flex-col items-center justify-between gap-5 rounded-[1.6rem] border border-slate-200/80 bg-white/80 p-4 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.3)] backdrop-blur-md md:flex-row md:p-5">
+        <div className="flex flex-col items-center justify-between gap-5 rounded-[1.6rem] border border-slate-200/80 bg-white p-4 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.3)] backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/80 md:flex-row md:p-5">
           <label htmlFor="ministry-search" className="relative w-full md:max-w-sm">
             <span className="sr-only">Search ministries by keyword or sector</span>
             <Search aria-hidden="true" className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
@@ -94,7 +92,7 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
               placeholder="Search ministries or sectors..."
-              className="w-full rounded-full border border-slate-200 bg-slate-50/80 py-3 pl-11 pr-4 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-emerald-700/40 focus:bg-white focus:ring-2 focus:ring-emerald-800/10"
+              className="w-full rounded-full border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-emerald-700/40 focus:bg-white focus:ring-2 focus:ring-emerald-800/10 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
             />
           </label>
           <div className="flex w-full flex-wrap items-center gap-2 md:w-auto md:justify-end" aria-label="Filter by ministry sector">
@@ -137,6 +135,7 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
         {filteredMinistries.length ? (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
             {filteredMinistries.map((ministry) => {
+              const primaryLeader = ministry.leaders?.[0];
               const sector = getSector(ministry);
               const SectorIcon = getSectorIcon(sector);
               const href = ministryPages[ministry.id] ?? `/ministries/${ministry.id}`;
@@ -144,9 +143,9 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
                 <article
                   key={ministry.id}
                   id={ministry.id}
-                  className="group flex w-full min-w-0 flex-col overflow-hidden rounded-[1.4rem] border border-white/80 bg-white/75 shadow-[0_18px_50px_-24px_rgba(50,35,28,0.24)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white hover:shadow-[0_24px_60px_-22px_rgba(50,35,28,0.3)] sm:rounded-[1.6rem]"
+                  className="group flex w-full min-w-0 flex-col overflow-hidden rounded-[1.4rem] border border-slate-200/80 bg-white shadow-[0_18px_50px_-24px_rgba(50,35,28,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-emerald-700/25 hover:shadow-[0_24px_60px_-22px_rgba(50,35,28,0.26)] dark:border-slate-800 dark:bg-slate-900 sm:rounded-[1.6rem]"
                 >
-                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-[radial-gradient(ellipse_at_18%_8%,rgba(255,255,255,0.24),transparent_38%),linear-gradient(135deg,#31514a_0%,#1e3433_58%,#171821_100%)]">
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-[radial-gradient(ellipse_at_18%_8%,rgba(255,255,255,0.24),transparent_38%),linear-gradient(135deg,#31514a_0%,#1e3433_58%,#171821_100%)]">
                     {ministry.image && (
                       <Image
                         src={ministry.image}
@@ -168,29 +167,29 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
                       <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/65">
                         {sectorNames[sector] ?? 'Community'} ministry
                       </p>
-                      <h3 className="text-2xl font-semibold leading-tight tracking-tight text-white sm:text-[1.7rem]">
+                    <h3 className="text-2xl font-semibold leading-tight tracking-tight text-white sm:text-[1.8rem]">
                         {ministry.title}
                       </h3>
                     </div>
                   </div>
 
                   <div className="flex flex-grow flex-col p-5 sm:p-6">
-                    <p className="flex-grow text-sm leading-relaxed text-stone-600">{ministry.description}</p>
+                    <p className="flex-grow text-sm leading-relaxed text-stone-600 dark:text-slate-300">{ministry.description}</p>
                     <div className="mt-4 flex flex-wrap items-center gap-2">
-                      <span className="inline-flex items-center gap-2 rounded-full border border-emerald-800/10 bg-emerald-800/[0.05] px-3 py-2 text-xs font-medium text-emerald-900">
+                      <span className="inline-flex items-center gap-2 rounded-full border border-emerald-800/10 bg-emerald-800/[0.05] px-3 py-2 text-xs font-medium text-emerald-900 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200">
                         <SectorIcon aria-hidden="true" className="h-3.5 w-3.5 text-emerald-700" />
                         {sectorNames[sector] ?? 'Community'}
                       </span>
-                      {ministry.leader && (
-                        <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-amber-600/15 bg-amber-500/[0.08] px-3 py-2 text-xs font-medium text-amber-900">
+                      {primaryLeader && (
+                        <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-amber-600/15 bg-amber-500/[0.08] px-3 py-2 text-xs font-medium text-amber-900 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-200">
                           <UserRound aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-amber-700" />
-                          <span className="truncate">{ministry.leader.name}</span>
+                          <span className="truncate">{primaryLeader.name}</span>
                         </span>
                       )}
                     </div>
                     <Link
                       href={href}
-                      className="mt-5 inline-flex w-full items-center justify-between rounded-full border border-emerald-800/15 bg-emerald-800/[0.04] py-2 pl-4 pr-2 text-sm font-semibold text-emerald-900 transition-all duration-300 hover:border-emerald-800/20 hover:bg-emerald-800 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-800/40 focus-visible:ring-offset-2"
+                      className="mt-5 inline-flex w-full items-center justify-between rounded-full border border-emerald-800/15 bg-emerald-800/[0.04] py-2 pl-4 pr-2 text-sm font-semibold text-emerald-900 transition-all duration-300 hover:border-emerald-800/20 hover:bg-emerald-800 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-800/40 focus-visible:ring-offset-2 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200"
                     >
                       <span>Get involved</span>
                       <span className="grid h-8 w-8 place-items-center rounded-full bg-white text-emerald-800 shadow-sm transition-transform duration-300 group-hover:translate-x-0.5">

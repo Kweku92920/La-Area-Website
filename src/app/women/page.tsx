@@ -1,4 +1,4 @@
-import { sanityFetch } from '@/src/sanity/client';
+import { sanityFetch } from '@/src/sanity/fetch';
 import {
   ministryGalleryQuery,
   ministryLeadershipQuery,
@@ -14,7 +14,7 @@ const ministry: MinistryPageContent = {
   showTagline: false,
   image: '/Women.png',
   gradient: 'from-rose-700/80 via-fuchsia-950/70 to-stone-950',
-  accent: 'text-rose-600',
+  accent: 'text-rose-700 dark:text-rose-300',
   accentBg: 'bg-rose-500',
   intro: 'A warm sisterhood empowering women to grow in faith, serve with love and support one another in every season of life.',
   scripture: {
@@ -38,6 +38,7 @@ export default async function WomenMinistryPage() {
       ministry={ministry}
       gallery={gallery ?? []}
       leader={null}
+      leaders={leadership?.leaders ?? []}
       leadership={[
         { title: 'Leader', profile: leadership?.leadershipByCategory?.women?.leader ?? null },
         { title: 'Assistant Leader', profile: leadership?.leadershipByCategory?.women?.assistantLeader ?? null },

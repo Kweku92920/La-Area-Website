@@ -11,6 +11,7 @@ import {
   ExternalLink,
   Search,
 } from 'lucide-react';
+import Breadcrumb from '../components/Breadcrumb';
 
 export type Sermon = {
   id: string;
@@ -76,11 +77,7 @@ export default function SermonsView({ sermons }: { sermons: Sermon[] }) {
         <div aria-hidden="true" className="absolute -right-24 -top-44 h-[28rem] w-[28rem] rounded-full border border-white/[0.08] sm:-right-10" />
         <div aria-hidden="true" className="absolute -right-12 -top-32 h-[22rem] w-[22rem] rounded-full border border-amber-200/[0.1]" />
         <div className="relative z-10 mx-auto max-w-3xl text-center">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-stone-200 backdrop-blur-md sm:text-xs">
-            <Link href="/" className="transition hover:text-amber-300">Home</Link>
-            <span aria-hidden="true" className="text-white/40">/</span>
-            <span className="text-white">Sermons</span>
-          </div>
+          <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Sermons' }]} />
           <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.28em] text-amber-300 sm:text-xs">
             Messages · Worship · Teaching
           </p>

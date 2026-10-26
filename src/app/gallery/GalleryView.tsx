@@ -4,52 +4,20 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
+import Breadcrumb from '../components/Breadcrumb';
+import type { GalleryItem } from '@/src/sanity/queries';
 
-type GalleryImage = {
-  src: string;
-  alt: string;
-  category: string;
-  span?: 'tall' | 'wide' | 'normal';
+const formatDate = (date: string) => {
+  if (!date) return '';
+  return new Intl.DateTimeFormat('en-GH', {dateStyle: 'medium'}).format(new Date(`${date}T00:00:00`));
 };
 
-const CATEGORIES = ['All', 'Worship', 'Fellowship', 'Choir', 'Youth', 'Outreach'] as const;
-type Category = (typeof CATEGORIES)[number];
-
-const IMAGES: GalleryImage[] = [
-  { src: 'https://images.pexels.com/photos/29422232/pexels-photo-29422232.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Congregation in worship during a Sunday service', category: 'Worship', span: 'wide' },
-  { src: 'https://images.pexels.com/photos/34504327/pexels-photo-34504327.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Hands raised in praise during worship', category: 'Worship', span: 'tall' },
-  { src: 'https://images.pexels.com/photos/34328505/pexels-photo-34328505.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Lively worship service with stage lighting', category: 'Worship', span: 'wide' },
-  { src: 'https://images.pexels.com/photos/13899687/pexels-photo-13899687.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Congregation standing in prayer together', category: 'Worship', span: 'tall' },
-  { src: 'https://images.pexels.com/photos/12618113/pexels-photo-12618113.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Sunlit church interior filled with worshippers', category: 'Worship', span: 'tall' },
-  { src: 'https://images.pexels.com/photos/34623696/pexels-photo-34623696.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Church congregation participating in worship', category: 'Worship', span: 'normal' },
-  { src: 'https://images.pexels.com/photos/29422233/pexels-photo-29422233.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Congregation seated with choir and instruments', category: 'Fellowship', span: 'wide' },
-  { src: 'https://images.pexels.com/photos/35555142/pexels-photo-35555142.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Couple sharing a heartfelt moment at church', category: 'Fellowship', span: 'normal' },
-  { src: 'https://images.pexels.com/photos/34328517/pexels-photo-34328517.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Hands raised in vibrant worship under stage lights', category: 'Fellowship', span: 'wide' },
-  { src: 'https://images.pexels.com/photos/10823376/pexels-photo-10823376.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Large congregation gathered in a wooden church interior', category: 'Fellowship', span: 'normal' },
-  { src: 'https://images.pexels.com/photos/34680729/pexels-photo-34680729.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Senior woman singing during a church service', category: 'Fellowship', span: 'tall' },
-  { src: 'https://images.pexels.com/photos/8815025/pexels-photo-8815025.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Choir singers in red robes clapping and singing', category: 'Choir', span: 'wide' },
-  { src: 'https://images.pexels.com/photos/14990429/pexels-photo-14990429.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Choir singing passionately in harmony', category: 'Choir', span: 'normal' },
-  { src: 'https://images.pexels.com/photos/8815017/pexels-photo-8815017.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Diverse choir singing during a church service', category: 'Choir', span: 'wide' },
-  { src: 'https://images.pexels.com/photos/7567340/pexels-photo-7567340.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Conductor leading a choir in practice', category: 'Choir', span: 'tall' },
-  { src: 'https://images.pexels.com/photos/21782665/pexels-photo-21782665.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Young man reading the Bible in a prayer group', category: 'Youth', span: 'wide' },
-  { src: 'https://images.pexels.com/photos/8674206/pexels-photo-8674206.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Three people reading Bibles together at church', category: 'Youth', span: 'normal' },
-  { src: 'https://images.pexels.com/photos/6860826/pexels-photo-6860826.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Bible study discussion group', category: 'Youth', span: 'wide' },
-  { src: 'https://images.pexels.com/photos/6860380/pexels-photo-6860380.jpeg?auto=compress&cs=tinysrgb&w=1200', alt: 'Group praying and singing with guitar', category: 'Youth', span: 'normal' },
-  { src: 'https://images.pexels.com/photos/23015910/pexels-photo-23015910.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Young adults gathered for a religious event', category: 'Youth', span: 'tall' },
-  { src: '/pemem-pic.jpg', alt: "Men's Ministry gathering - PEMEM", category: 'Outreach', span: 'normal' },
-  { src: '/women-pic.jpg', alt: "Women's Ministry fellowship gathering", category: 'Outreach', span: 'normal' },
-  { src: '/youth-pic.jpg', alt: 'Youth Ministry celebration', category: 'Outreach', span: 'normal' },
-  { src: '/children-pic.jpg', alt: 'Children Ministry at the La Area', category: 'Outreach', span: 'normal' },
-];
-
-const spanClass: Record<NonNullable<GalleryImage['span']>, string> = {
-  tall: 'row-span-2',
-  wide: 'sm:col-span-2',
-  normal: '',
-};
-
-export default function GalleryView() {
-  const [activeCategory, setActiveCategory] = useState<Category>('All');
+export default function GalleryView({ items }: { items: GalleryItem[] }) {
+  const categories = useMemo(
+    () => ['All', ...Array.from(new Set(items.map((item) => item.category).filter(Boolean))).sort()],
+    [items],
+  );
+  const [activeCategory, setActiveCategory] = useState('All');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const lightboxRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -57,10 +25,8 @@ export default function GalleryView() {
 
   const filteredImages = useMemo(
     () =>
-      activeCategory === 'All'
-        ? IMAGES
-        : IMAGES.filter((img) => img.category === activeCategory),
-    [activeCategory],
+      activeCategory === 'All' ? items : items.filter((item) => item.category === activeCategory),
+    [activeCategory, items],
   );
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
@@ -125,36 +91,31 @@ export default function GalleryView() {
   }, [isLightboxOpen, closeLightbox, goPrev, goNext]);
 
   const counts = useMemo(() => {
-    const map: Record<string, number> = { All: IMAGES.length };
-    for (const cat of CATEGORIES) {
+    const map: Record<string, number> = { All: items.length };
+    for (const cat of categories) {
       if (cat === 'All') continue;
-      map[cat] = IMAGES.filter((img) => img.category === cat).length;
+      map[cat] = items.filter((item) => item.category === cat).length;
     }
     return map;
-  }, []);
+  }, [categories, items]);
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
-      <section className="relative isolate flex min-h-[440px] items-center justify-center overflow-hidden bg-slate-950 text-white">
-        <div className="absolute inset-0">
-          <div
-            className="absolute inset-0 scale-105 bg-cover bg-center opacity-40"
-            style={{ backgroundImage: "url('/theme.jpg')" }}
-          />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_20%,rgba(245,158,11,0.12),transparent_55%)]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-slate-950/45" />
-        </div>
+      <section className="relative flex min-h-[370px] w-full items-center justify-center overflow-hidden bg-[#0A1120] px-5 py-16 text-white sm:min-h-[410px]">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(16,185,129,0.22),transparent_52%),radial-gradient(ellipse_at_8%_100%,rgba(15,23,42,0.6),transparent_48%)]"
+        />
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-[#0A1120]/40 via-[#0A1120]/20 to-[#0A1120]" />
+        <div aria-hidden="true" className="absolute -left-28 -top-44 h-[28rem] w-[28rem] rounded-full border border-white/[0.07]" />
+        <div aria-hidden="true" className="absolute -left-12 -top-32 h-[22rem] w-[22rem] rounded-full border border-emerald-500/[0.12]" />
 
-        <div className="relative z-10 mx-auto max-w-4xl px-4 py-24 text-center sm:py-28">
-          <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/80 backdrop-blur-md">
-            <Link href="/" className="transition hover:text-amber-300">Home</Link>
-            <span aria-hidden="true" className="text-white/40">/</span>
-            <span className="text-white">Gallery</span>
-          </p>
-          <h1 className="mb-5 font-serif text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-6xl">
+        <div className="relative z-10 mx-auto max-w-3xl text-center">
+          <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Gallery' }]} />
+          <h1 className="mb-4 font-serif text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
             Gallery
           </h1>
-          <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-200/85 sm:text-lg">
+          <p className="mx-auto max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">
             Moments of worship, fellowship, and service across the La Area - a visual journey of faith in action.
           </p>
         </div>
@@ -162,7 +123,7 @@ export default function GalleryView() {
 
       <section className="sticky top-[64px] z-30 border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center gap-2 overflow-x-auto px-4 py-4 md:px-8">
-          {CATEGORIES.map((cat) => {
+          {categories.map((cat) => {
             const isActive = activeCategory === cat;
             return (
               <button
@@ -193,21 +154,22 @@ export default function GalleryView() {
         <div className="grid auto-rows-[220px] grid-cols-2 gap-4 sm:grid-cols-3 md:gap-5 lg:grid-cols-4">
           {filteredImages.map((img, index) => (
             <button
-              key={`${img.src}-${index}`}
+              key={img.id}
               type="button"
               onClick={(event) => {
                 triggerRef.current = event.currentTarget;
                 setLightboxIndex(index);
               }}
-              aria-label={`View image: ${img.alt}`}
-              className={`group relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-[0_12px_36px_-20px_rgba(15,23,42,0.25)] transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_20px_50px_-20px_rgba(15,23,42,0.35)] ${spanClass[img.span ?? 'normal']}`}
+                aria-label={`View image: ${img.title}`}
+              className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-[0_12px_36px_-20px_rgba(15,23,42,0.25)] transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_20px_50px_-20px_rgba(15,23,42,0.35)]"
             >
               <Image
-                src={img.src}
-                alt={img.alt}
+                src={img.image.url}
+                alt={img.image.alt}
                 fill
-                unoptimized
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                placeholder={img.image.lqip ? 'blur' : 'empty'}
+                blurDataURL={img.image.lqip ?? undefined}
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-90" />
@@ -219,8 +181,9 @@ export default function GalleryView() {
               </span>
               <div className="absolute inset-x-0 bottom-0 p-3 text-left">
                 <p className="translate-y-2 text-xs font-medium leading-snug text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                  {img.alt}
+                  {img.title}
                 </p>
+                <p className="mt-1 text-[10px] uppercase tracking-wider text-white/65">{formatDate(img.date)}</p>
               </div>
             </button>
           ))}
@@ -289,11 +252,10 @@ export default function GalleryView() {
             onClick={(e) => e.stopPropagation()}
           >
             <Image
-              src={filteredImages[lightboxIndex].src}
-              alt={filteredImages[lightboxIndex].alt}
+              src={filteredImages[lightboxIndex].image.url}
+              alt={filteredImages[lightboxIndex].image.alt}
               width={1200}
               height={800}
-              unoptimized
               className="mx-auto max-h-[78vh] w-auto max-w-full rounded-2xl object-contain shadow-2xl"
             />
             <div className="mt-4 text-center">
@@ -301,8 +263,9 @@ export default function GalleryView() {
                 {filteredImages[lightboxIndex].category}
               </span>
               <p className="mt-3 text-sm leading-relaxed text-slate-200">
-                {filteredImages[lightboxIndex].alt}
+                {filteredImages[lightboxIndex].title}
               </p>
+              <p className="mt-1 text-xs text-slate-400">{formatDate(filteredImages[lightboxIndex].date)}</p>
               <p className="mt-1 text-xs text-slate-400">
                 {lightboxIndex + 1} of {filteredImages.length}
               </p>

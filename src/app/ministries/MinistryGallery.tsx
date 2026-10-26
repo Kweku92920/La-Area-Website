@@ -47,7 +47,7 @@ export default function MinistryGallery({
           <span className={`text-xs font-bold uppercase tracking-widest ${accent}`}>Gallery</span>
           <span className={`h-0.5 w-8 ${accentBg}`} />
         </div>
-        <h2 className="mt-3 font-serif text-3xl font-bold tracking-tight text-slate-900">Moments Together</h2>
+        <h2 className="mt-3 font-serif text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Moments Together</h2>
       </div>
 
       {photos.length > 0 ? (
@@ -58,7 +58,7 @@ export default function MinistryGallery({
               type="button"
               onClick={() => setActive(i)}
               aria-label={p.caption ? `Open photo: ${p.caption}` : `Open photo ${i + 1}`}
-              className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white bg-slate-200 shadow-[0_16px_40px_-24px_rgba(15,23,42,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+              className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-slate-200 bg-slate-200 shadow-[0_16px_40px_-24px_rgba(15,23,42,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:border-slate-800 dark:bg-slate-800 dark:focus-visible:ring-slate-500"
             >
               <img
                 src={`${p.url}?w=700&auto=format`}
@@ -75,7 +75,7 @@ export default function MinistryGallery({
           ))}
         </div>
       ) : (
-        <p className="rounded-2xl border border-dashed border-stone-300 bg-white/70 px-6 py-10 text-center text-sm text-stone-500">
+        <p className="rounded-2xl border border-dashed border-slate-300 bg-white/70 px-6 py-10 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-400">
           Photos from this ministry will appear here.
         </p>
       )}

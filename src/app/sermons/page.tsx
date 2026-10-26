@@ -1,5 +1,5 @@
 import SermonsView, { type Sermon } from './SermonsView';
-import { sanityFetch } from '@/src/sanity/client';
+import { sanityFetch } from '@/src/sanity/fetch';
 import { youtubeId, youtubeThumb } from '@/src/sanity/format';
 import { sermonsQuery, type RawSermon } from '@/src/sanity/queries';
 

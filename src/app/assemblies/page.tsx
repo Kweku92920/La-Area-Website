@@ -1,5 +1,5 @@
 import LocalAssembliesPage from './AssemblyDirectory';
-import { sanityFetch } from '@/src/sanity/client';
+import { sanityFetch } from '@/src/sanity/fetch';
 import { directoryQuery, type DirectoryAssembly, type DirectoryDistrict } from '@/src/sanity/queries';
 
 export default async function AssembliesPage({

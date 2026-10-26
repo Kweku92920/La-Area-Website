@@ -1,4 +1,4 @@
-import { sanityFetch } from '@/src/sanity/client';
+import { sanityFetch } from '@/src/sanity/fetch';
 import {
   ministryGalleryQuery,
   ministryLeadershipQuery,
@@ -15,7 +15,7 @@ const ministry: MinistryPageContent = {
 
   image: '/Youth.jpg',
   gradient: 'from-slate-900/80 via-slate-900/70 to-slate-950',
-  accent: 'text-amber-700',
+  accent: 'text-amber-700 dark:text-amber-300',
   accentBg: 'bg-amber-500',
   intro: 'A vibrant community of young people discovering their purpose in Christ, building real friendships and rising up as leaders in church and society.',
   scripture: {
@@ -39,6 +39,7 @@ export default async function YouthMinistryPage() {
       ministry={ministry}
       gallery={gallery ?? []}
       leader={null}
+      leaders={leadership?.leaders ?? []}
       leadership={[
         { title: 'Leader', profile: leadership?.leadershipByCategory?.youth?.leader ?? null },
         { title: 'Assistant Leader', profile: leadership?.leadershipByCategory?.youth?.assistantLeader ?? null },

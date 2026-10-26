@@ -1,5 +1,6 @@
 import 'server-only';
 import { createClient } from '@sanity/client';
+import { apiVersion, dataset, projectId } from './env';
 
 function requiredEnv(name: string) {
   const value = process.env[name];
@@ -10,9 +11,9 @@ function requiredEnv(name: string) {
 }
 
 export const sanityWriteClient = createClient({
-  projectId: requiredEnv('NEXT_PUBLIC_SANITY_PROJECT_ID'),
-  dataset: requiredEnv('NEXT_PUBLIC_SANITY_DATASET'),
-  apiVersion: '2026-10-01',
+  projectId,
+  dataset,
+  apiVersion,
   token: requiredEnv('SANITY_WRITE_TOKEN'),
   useCdn: false,
 });

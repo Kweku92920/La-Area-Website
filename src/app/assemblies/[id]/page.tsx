@@ -1,15 +1,12 @@
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { 
-  ArrowLeft, 
   Clock, 
   MapPin, 
-  Phone, 
-  Mail, 
   Navigation, 
-  ChevronRight 
+  UserRound
 } from 'lucide-react';
-import { sanityFetch } from '@/src/sanity/client';
+import Breadcrumb from '../../components/Breadcrumb';
+import { sanityFetch } from '@/src/sanity/fetch';
 import { MINISTER_TBA } from '@/src/sanity/format';
 import { assemblyBySlugQuery, assemblySlugsQuery, type AssemblyDetail } from '@/src/sanity/queries';
 
@@ -34,66 +31,63 @@ export default async function AssemblyDetailPage({
     ? assembly.time 
     : [assembly.time || "Sunday Worship - 9:00 AM"];
 
-  const phone = assembly.phone || "";
-  const email = assembly.email || `${assembly.id}@coplaarea.org`;
-
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-stone-800">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-emerald-950 via-stone-900 to-stone-950 px-6 py-24 text-white overflow-hidden">
-        {/* Optional background image overlay styling if available */}
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#34d399_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
-        
-        <div className="mx-auto max-w-6xl relative z-10">
-          {/* Breadcrumbs */}
-          <div className="mb-6 flex items-center gap-2 text-xs md:text-sm text-emerald-200/80">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
-            <ChevronRight className="h-3.5 w-3.5 text-emerald-400" />
-            <Link href="/assemblies" className="hover:text-white transition-colors">Local Assemblies</Link>
-            <ChevronRight className="h-3.5 w-3.5 text-emerald-400" />
-            <span className="text-white font-medium">{assembly.name}</span>
-          </div>
+    <div className="min-h-screen bg-white font-sans text-slate-900 dark:bg-slate-950 dark:text-slate-50">
+      {/* 1. Hero Section with Dark Navy & Emerald Accent Gradient */}
+      <section className="relative flex min-h-[370px] w-full items-center justify-center overflow-hidden bg-[#0A1120] px-6 py-20 text-white sm:min-h-[410px]">
+        <div 
+          aria-hidden="true" 
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(16,185,129,0.22),transparent_52%),radial-gradient(ellipse_at_8%_100%,rgba(15,23,42,0.6),transparent_48%)]" 
+        />
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-[#0A1120]/40 via-[#0A1120]/20 to-[#0A1120]" />
+        <div aria-hidden="true" className="absolute -left-28 -top-44 h-[28rem] w-[28rem] rounded-full border border-white/[0.07]" />
+        <div aria-hidden="true" className="absolute -left-12 -top-32 h-[22rem] w-[22rem] rounded-full border border-emerald-500/[0.12]" />
 
-          <div className="flex flex-col items-center text-center mt-4">
+        <div className="relative z-10 mx-auto max-w-5xl text-center">
+          <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Local Assemblies', href: '/assemblies' }, { label: assembly.name }]} />
+
+          <div className="flex flex-col items-center">
             {assembly.district && (
-              <span className="mb-4 inline-block rounded-full bg-amber-500/20 border border-amber-500/30 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-amber-300">
-                {assembly.district}
+              <span className="mb-4 inline-block rounded-full border border-emerald-500/30 bg-emerald-500/20 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-emerald-300">
+                {assembly.district} District
               </span>
             )}
-            <h1 className="font-serif text-4xl font-bold md:text-6xl tracking-tight text-white">
+            <h1 className="font-serif text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
               {assembly.name}
             </h1>
-            <p className="mt-4 flex items-center gap-1.5 text-emerald-100/90 text-sm md:text-base">
-              <MapPin className="h-4 w-4 text-amber-400" />
+            <p className="mt-4 flex items-center justify-center gap-1.5 text-sm text-slate-300 md:text-base">
+              <MapPin className="h-4 w-4 text-emerald-400 shrink-0" />
               {assembly.location}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Main Content Body */}
+      {/* 2. Main Content Body */}
       <section className="mx-auto max-w-6xl px-6 py-12 md:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           
           {/* Left Column (Service Times, Map) */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="space-y-8 lg:col-span-2">
             
             {/* Service Times Card */}
-            <div className="rounded-2xl border border-stone-200/80 bg-white p-8 shadow-sm">
-              <h2 className="font-serif text-xl font-bold text-stone-900 mb-6">Service Times</h2>
+            <div className="overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white p-6 shadow-[0_18px_50px_-24px_rgba(15,23,42,0.12)] dark:border-slate-800 dark:bg-slate-900/70 sm:p-8">
+              <h2 className="mb-6 font-serif text-xl font-bold text-slate-900 dark:text-slate-50">Service Times</h2>
               <div className="space-y-4">
                 {serviceTimes.map((timeStr: string, idx: number) => (
-                  <div key={idx} className="flex items-center gap-3 text-stone-700">
-                    <Clock className="h-5 w-5 text-amber-700 shrink-0" />
-                    <span className="text-sm md:text-base">{timeStr}</span>
+                  <div key={idx} className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                    <div className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-emerald-800/10 bg-emerald-800/[0.06] text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+                      <Clock className="h-4 w-4" />
+                    </div>
+                    <span className="text-sm font-medium sm:text-base">{timeStr}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Map View */}
-            <div className="rounded-2xl border border-stone-200/80 bg-white p-4 shadow-sm overflow-hidden">
-              <div className="w-full h-80 rounded-xl overflow-hidden border border-stone-100">
+            <div className="overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white p-4 shadow-[0_18px_50px_-24px_rgba(15,23,42,0.12)] dark:border-slate-800 dark:bg-slate-900/70">
+              <div className="h-80 w-full overflow-hidden rounded-xl border border-slate-100 dark:border-slate-800">
                 <iframe
                   title={`Map showing location of ${assembly.name}`}
                   width="100%"
@@ -107,16 +101,20 @@ export default async function AssemblyDetailPage({
 
           </div>
 
-          {/* Right Column (Pastor, Contact Info, Get Directions) */}
+          {/* Right Column (Minister, Get Directions) */}
           <div className="space-y-6">
             
-            {/* Pastor Card */}
-            <div className="rounded-2xl border border-stone-200/80 bg-white p-6 shadow-sm">
-              
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-stone-400">District Minister</p>
-                <p className="mt-1 text-sm font-medium text-[#8B2621]">{(assembly.districtMinister ?? MINISTER_TBA)}</p>
-                <p className="text-xs text-stone-500">{assembly.district} District</p>
+            {/* Pastor / Minister Card */}
+            <div className="overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white p-6 shadow-[0_18px_50px_-24px_rgba(15,23,42,0.12)] dark:border-slate-800 dark:bg-slate-900/70">
+              <div className="flex items-start gap-4">
+                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-emerald-800/10 bg-emerald-800/[0.06] text-emerald-800 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+                  <UserRound className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">District Minister</p>
+                  <p className="mt-0.5 text-base font-semibold text-emerald-900 dark:text-emerald-300">{(assembly.districtMinister ?? MINISTER_TBA)}</p>
+                  <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{assembly.district} District</p>
+                </div>
               </div>
             </div>
             
@@ -125,10 +123,10 @@ export default async function AssemblyDetailPage({
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(assembly.location)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#7C2D27] hover:bg-[#65231F] text-white py-4 px-6 font-medium shadow-md transition-colors text-center"
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-4 font-semibold text-white shadow-md transition-all hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:ring-offset-2 dark:bg-emerald-500 dark:hover:bg-emerald-600"
             >
-              <Navigation className="h-4 w-4" />
-              Get Directions
+              <Navigation className="h-4 w-4 shrink-0" />
+              <span>Get Directions</span>
             </a>
 
           </div>

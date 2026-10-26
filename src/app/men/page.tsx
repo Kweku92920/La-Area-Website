@@ -1,4 +1,4 @@
-import { sanityFetch } from '@/src/sanity/client';
+import { sanityFetch } from '@/src/sanity/fetch';
 import {
   ministryGalleryQuery,
   ministryLeadershipQuery,
@@ -14,7 +14,7 @@ const ministry: MinistryPageContent = {
   showTagline: false,
   image: '/Pemem.png',
   gradient: 'from-amber-800/80 via-stone-900/75 to-stone-950',
-  accent: 'text-amber-700',
+  accent: 'text-amber-700 dark:text-amber-300',
   accentBg: 'bg-amber-600',
   intro: 'A community equipping men to grow as disciples of Christ and lead their families, church and communities with godly character and integrity.',
   scripture: {
@@ -38,6 +38,7 @@ export default async function MenMinistryPage() {
       ministry={ministry}
       gallery={gallery ?? []}
       leader={null}
+      leaders={leadership?.leaders ?? []}
       leadership={[
         { title: 'Leader', profile: leadership?.leadershipByCategory?.men?.leader ?? null },
         { title: 'Assistant Leader', profile: leadership?.leadershipByCategory?.men?.assistantLeader ?? null },

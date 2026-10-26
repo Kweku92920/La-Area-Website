@@ -1,4 +1,4 @@
-import { sanityFetch } from '@/src/sanity/client';
+import { sanityFetch } from '@/src/sanity/fetch';
 import {
   ministryGalleryQuery,
   ministryLeadershipQuery,
@@ -14,7 +14,7 @@ const ministry: MinistryPageContent = {
   showTagline: false,
   image: '/Children.jpg',
   gradient: 'from-sky-700/80 via-indigo-950/70 to-stone-950',
-  accent: 'text-sky-600',
+  accent: 'text-sky-700 dark:text-sky-300',
   accentBg: 'bg-sky-500',
   intro: 'A safe, joyful place where children come to know Jesus through stories, songs and play, taught by caring leaders who love them.',
   scripture: {
@@ -38,6 +38,7 @@ export default async function ChildrenMinistryPage() {
       ministry={ministry}
       gallery={gallery ?? []}
       leader={null}
+      leaders={leadership?.leaders ?? []}
       leadership={[
         { title: 'Leader', profile: leadership?.leadershipByCategory?.children?.leader ?? null },
         { title: 'Assistant Leader', profile: leadership?.leadershipByCategory?.children?.assistantLeader ?? null },

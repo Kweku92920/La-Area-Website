@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { sanityFetch } from '@/src/sanity/client';
+import { sanityFetch } from '@/src/sanity/fetch';
 import {
   ministryDetailQuery,
   type MinistryDetailItem,
@@ -25,17 +25,13 @@ export default async function MinistryDetailPage({
   const categoryLeadership = category
     ? ministry.leadershipByCategory?.[category]
     : null;
-  const leadership = categoryLeadership
+  const legacyLeadership = categoryLeadership
     ? [
         { title: 'Leader', profile: categoryLeadership.leader },
         { title: 'Assistant Leader', profile: categoryLeadership.assistantLeader },
         { title: 'Secretary', profile: categoryLeadership.secretary },
       ]
-    : [
-        { title: ministry.leader?.role ?? 'Ministry Leader', profile: ministry.leader },
-        { title: 'Assistant Leader', profile: ministry.assistantLeader },
-        { title: 'Secretary', profile: ministry.secretary },
-      ].filter((slot) => slot.profile);
+    : undefined;
 
   return (
     <MinistryPageClient
@@ -45,13 +41,15 @@ export default async function MinistryDetailPage({
         tagline: ministry.description || 'A place to grow, serve and belong.',
         image: ministry.heroImage ?? ministry.image ?? '/theme.jpg',
         gradient: 'from-slate-900/80 via-slate-900/70 to-slate-950',
-        accent: 'text-amber-700',
+        accent: 'text-amber-700 dark:text-amber-300',
         accentBg: 'bg-amber-500',
         intro: ministry.description || 'Discover this ministry and find a place to grow, serve, and belong.',
+        body: ministry.body,
       }}
       gallery={ministry.gallery}
-      leader={ministry.leader}
-      leadership={leadership}
+      leader={null}
+      leadership={ministry.leaders.length > 0 ? undefined : legacyLeadership}
+      leaders={ministry.leaders}
     />
   );
 }
