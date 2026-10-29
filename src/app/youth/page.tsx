@@ -15,8 +15,8 @@ const ministry: MinistryPageContent = {
 
   image: '/Youth.jpg',
   gradient: 'from-slate-900/80 via-slate-900/70 to-slate-950',
-  accent: 'text-amber-700 dark:text-amber-300',
-  accentBg: 'bg-amber-500',
+  accent: 'text-yellow-700 dark:text-yellow-300',
+  accentBg: 'bg-yellow-500',
   intro: 'A vibrant community of young people discovering their purpose in Christ, building real friendships and rising up as leaders in church and society.',
   scripture: {
     text: 'Let no one despise your youth, but be an example to the believers in word, in conduct, in love, in spirit, in faith, in purity.',

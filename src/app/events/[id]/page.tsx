@@ -3,7 +3,6 @@ import Link from 'next/link';
 import {
   ArrowLeft,
   Calendar,
-  CheckCircle2,
   Clock,
   MapPin,
   Navigation,
@@ -12,7 +11,18 @@ import Breadcrumb from '../../components/Breadcrumb';
 import { sanityFetchSafe } from '@/src/sanity/fetch';
 import { formatDate } from '@/src/sanity/format';
 import { eventByIdQuery, type HomeEvent } from '@/src/sanity/queries';
-import { FALLBACK_EVENTS } from '@/src/data/events';
+
+export const dynamic = 'force-dynamic';
+
+function formatEventTime(isoDate?: string | null) {
+  if (!isoDate) return null;
+  const parsed = new Date(isoDate);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return parsed.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+}
 
 export default async function EventDetailPage({
   params,
@@ -29,38 +39,21 @@ export default async function EventDetailPage({
     { revalidate: false, documentType: 'event' }
   );
 
-  const fallbackMatch =
-    FALLBACK_EVENTS.find((item) => item.id === decodedId) ??
-    (decodedId === 'featured' ? FALLBACK_EVENTS[0] : null);
-
-  if (!sanityEvent && !fallbackMatch) {
+  if (!sanityEvent) {
     notFound();
   }
 
-  const title = sanityEvent?.title || fallbackMatch?.title || 'Upcoming Event';
-  const category = sanityEvent?.category || fallbackMatch?.category || 'Area Gathering';
-  const dateDisplay = sanityEvent?.startDate
+  const title = sanityEvent.title;
+  const category = sanityEvent.category || 'Area Gathering';
+  const dateDisplay = sanityEvent.startDate
     ? sanityEvent.endDate
       ? `${formatDate(sanityEvent.startDate)} – ${formatDate(sanityEvent.endDate)}`
       : formatDate(sanityEvent.startDate)
-    : fallbackMatch?.id === 'officers-retreat'
-      ? 'April 18 – 20, 2025'
-      : fallbackMatch?.startDate
-        ? formatDate(fallbackMatch.startDate)
-        : 'Upcoming';
-  const timeDisplay = fallbackMatch?.time || '9:00 AM';
-  const locationDisplay =
-    sanityEvent?.location || fallbackMatch?.location || 'La Area, Accra';
-  const descriptionDisplay =
-    sanityEvent?.description ||
-    fallbackMatch?.description ||
-    'Join believers and leaders across the La Area for a time of worship, teaching, prayer, and fellowship.';
-  const imageDisplay = sanityEvent?.image || fallbackMatch?.image || '/theme.jpg';
-  const highlights = fallbackMatch?.highlights ?? [
-    'Spirit-filled praise, worship, and intercession',
-    'Sound biblical teaching and ministry impartation',
-    'Fellowship with members and leaders across the La Area',
-  ];
+    : 'Date TBA';
+  const timeDisplay = formatEventTime(sanityEvent.startDate);
+  const locationDisplay = sanityEvent.location || 'La Area, Accra';
+  const descriptionDisplay = sanityEvent.description?.trim() || '';
+  const imageDisplay = sanityEvent.image;
 
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 dark:bg-slate-950 dark:text-slate-50">
@@ -68,7 +61,7 @@ export default async function EventDetailPage({
       <section className="relative flex min-h-[380px] w-full items-center justify-center overflow-hidden bg-[#0f172a] px-6 py-20 text-white sm:min-h-[430px]">
         {imageDisplay && (
           <img
-            src={imageDisplay}
+            src={`${imageDisplay}?w=1600&auto=format`}
             alt={title}
             className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-35"
           />
@@ -91,7 +84,7 @@ export default async function EventDetailPage({
             ]}
           />
           <div className="mt-2 flex flex-col items-center">
-            <span className="mb-4 inline-flex items-center rounded-md bg-amber-500 px-3.5 py-1 text-xs font-bold uppercase tracking-[0.16em] text-slate-950">
+            <span className="mb-4 inline-flex items-center rounded-md bg-yellow-500 px-3.5 py-1 text-xs font-bold uppercase tracking-[0.16em] text-slate-950">
               {category}
             </span>
             <h1 className="font-serif text-3xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
@@ -99,11 +92,11 @@ export default async function EventDetailPage({
             </h1>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-xs font-medium text-slate-200 sm:text-sm">
               <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-amber-400" />
+                <Calendar className="h-4 w-4 text-yellow-400" />
                 <span>{dateDisplay}</span>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-amber-400" />
+                <MapPin className="h-4 w-4 text-yellow-400" />
                 <span>{locationDisplay}</span>
               </div>
             </div>
@@ -117,38 +110,29 @@ export default async function EventDetailPage({
           {/* Left Column: Event Details */}
           <div className="space-y-8 lg:col-span-8">
             <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
-              <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#0f172a]">
-                <img
-                  src={imageDisplay}
-                  alt={title}
-                  className="h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/50 via-transparent to-transparent" />
-              </div>
+              {imageDisplay && (
+                <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#0f172a]">
+                  <img
+                    src={`${imageDisplay}?w=1400&auto=format`}
+                    alt={title}
+                    className="h-full w-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/50 via-transparent to-transparent" />
+                </div>
+              )}
               <div className="p-6 sm:p-10">
                 <h2 className="font-serif text-2xl font-bold text-slate-900 dark:text-slate-50">
                   About This Gathering
                 </h2>
-                <p className="mt-4 whitespace-pre-line text-base leading-relaxed text-slate-600 dark:text-slate-300">
-                  {descriptionDisplay}
-                </p>
-
-                <div className="mt-8 border-t border-slate-200 pt-8 dark:border-slate-800">
-                  <h3 className="font-serif text-lg font-bold text-slate-900 dark:text-slate-50">
-                    What to Expect
-                  </h3>
-                  <ul className="mt-4 space-y-3">
-                    {highlights.map((point, index) => (
-                      <li
-                        key={index}
-                        className="flex items-start gap-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300"
-                      >
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {descriptionDisplay ? (
+                  <p className="mt-4 whitespace-pre-line text-base leading-relaxed text-slate-600 dark:text-slate-300">
+                    {descriptionDisplay}
+                  </p>
+                ) : (
+                  <p className="mt-4 text-sm italic text-slate-500 dark:text-slate-400">
+                    Additional details for this event will be announced soon.
+                  </p>
+                )}
               </div>
             </div>
 
@@ -172,7 +156,7 @@ export default async function EventDetailPage({
 
               <div className="mt-6 space-y-5">
                 <div className="flex items-start gap-3.5">
-                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-slate-100 text-[#0f172a] dark:bg-slate-800 dark:text-amber-300">
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-slate-100 text-[#0f172a] dark:bg-slate-800 dark:text-yellow-300">
                     <Calendar className="h-5 w-5" />
                   </div>
                   <div>
@@ -185,22 +169,24 @@ export default async function EventDetailPage({
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3.5">
-                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-slate-100 text-[#0f172a] dark:bg-slate-800 dark:text-amber-300">
-                    <Clock className="h-5 w-5" />
+                {timeDisplay && (
+                  <div className="flex items-start gap-3.5">
+                    <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-slate-100 text-[#0f172a] dark:bg-slate-800 dark:text-yellow-300">
+                      <Clock className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                        Time
+                      </p>
+                      <p className="mt-0.5 text-sm font-semibold text-slate-900 dark:text-slate-100">
+                        {timeDisplay}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                      Time
-                    </p>
-                    <p className="mt-0.5 text-sm font-semibold text-slate-900 dark:text-slate-100">
-                      {timeDisplay}
-                    </p>
-                  </div>
-                </div>
+                )}
 
                 <div className="flex items-start gap-3.5">
-                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-slate-100 text-[#0f172a] dark:bg-slate-800 dark:text-amber-300">
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-slate-100 text-[#0f172a] dark:bg-slate-800 dark:text-yellow-300">
                     <MapPin className="h-5 w-5" />
                   </div>
                   <div>

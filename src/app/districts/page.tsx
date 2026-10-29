@@ -32,10 +32,10 @@ export default async function DistrictListPage() {
 
       <section className="mx-auto max-w-7xl px-6 py-16">
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <div className="mb-2 flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest text-amber-700 dark:text-amber-300">
-            <span className="h-px w-8 bg-amber-500/40" />
+          <div className="mb-2 flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest text-yellow-700 dark:text-yellow-300">
+            <span className="h-px w-8 bg-yellow-500/40" />
             AREA STRUCTURE
-            <span className="h-px w-8 bg-amber-500/40" />
+            <span className="h-px w-8 bg-yellow-500/40" />
           </div>
           <h2 className="font-serif text-3xl font-bold text-slate-900 dark:text-slate-50 md:text-4xl">
             {districts.length} Districts, One Mission

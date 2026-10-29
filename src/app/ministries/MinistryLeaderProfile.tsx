@@ -33,7 +33,7 @@ export default function MinistryLeaderProfile({
   return (
     <section className="mx-auto max-w-7xl px-6 pb-16 sm:pb-20">
       <div className="mb-8">
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-300">
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-yellow-700 dark:text-yellow-300">
           Servant leadership
         </p>
         <h2 className="mt-2 font-serif text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl">
@@ -59,7 +59,7 @@ export default function MinistryLeaderProfile({
             key={title}
             className="group overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white/80 shadow-[0_18px_50px_-24px_rgba(15,23,42,0.24)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_-22px_rgba(15,23,42,0.3)] dark:border-slate-800 dark:bg-slate-900/70"
           >
-            <div className="relative aspect-[4/3] overflow-hidden bg-[radial-gradient(ellipse_at_18%_8%,rgba(245,158,11,0.15),transparent_38%),linear-gradient(135deg,#334155_0%,#1e293b_58%,#0f172a_100%)]">
+            <div className="relative aspect-[4/3] overflow-hidden bg-[radial-gradient(ellipse_at_18%_8%,rgba(250, 204, 21,0.15),transparent_38%),linear-gradient(135deg,#334155_0%,#1e293b_58%,#0f172a_100%)]">
               {profile && imageUrl ? (
                 <Image
                   src={imageUrl}
@@ -75,7 +75,7 @@ export default function MinistryLeaderProfile({
                       {profile.name.split(' ').filter(Boolean).slice(0, 2).map((part) => part[0]).join('')}
                     </span>
                   ) : (
-                    <span className="grid h-16 w-16 place-items-center rounded-full border border-white/20 bg-white/[0.07] text-amber-300 backdrop-blur-md">
+                    <span className="grid h-16 w-16 place-items-center rounded-full border border-white/20 bg-white/[0.07] text-yellow-300 backdrop-blur-md">
                       <UserRound aria-hidden="true" className="h-7 w-7" />
                     </span>
                   )}
@@ -94,8 +94,8 @@ export default function MinistryLeaderProfile({
                     {profile.name}
                   </h3>
                   {profileTitle && (
-                    <span className="mt-3 inline-flex max-w-full items-center gap-2 rounded-full border border-amber-600/15 bg-amber-500/[0.08] px-3 py-2 text-xs font-medium text-amber-900 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-200">
-                    <UserRound aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-amber-700 dark:text-amber-300" />
+                    <span className="mt-3 inline-flex max-w-full items-center gap-2 rounded-full border border-yellow-600/15 bg-yellow-500/[0.08] px-3 py-2 text-xs font-medium text-yellow-900 dark:border-yellow-400/20 dark:bg-yellow-400/10 dark:text-yellow-200">
+                    <UserRound aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-yellow-700 dark:text-yellow-300" />
                     <span className="truncate">{profileTitle}</span>
                     </span>
                   )}

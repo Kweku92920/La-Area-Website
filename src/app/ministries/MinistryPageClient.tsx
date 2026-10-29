@@ -59,7 +59,7 @@ export default function MinistryPageClient({
               { label: ministry.title },
             ]}
           />
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-300">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-yellow-300">
             A community to grow in
           </p>
           <h1 className="max-w-4xl font-serif text-5xl font-bold tracking-tight md:text-7xl">
@@ -76,7 +76,7 @@ export default function MinistryPageClient({
       {mottoStatements.length > 0 && (
         <section
           aria-label={`${ministry.title} motto and vision`}
-          className="overflow-hidden border-y border-slate-800 bg-[#0f172a] py-4 text-amber-300"
+          className="overflow-hidden border-y border-slate-800 bg-[#0f172a] py-4 text-yellow-300"
         >
           <p className="sr-only">{mottoStatements.join(' · ')}</p>
           <div
@@ -91,7 +91,7 @@ export default function MinistryPageClient({
                     className="mx-5 inline-flex items-center gap-5 text-xs font-semibold uppercase tracking-[0.2em] sm:mx-8 sm:text-sm"
                   >
                     {statement}
-                    <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
                   </span>
                 ))}
               </div>
@@ -103,7 +103,7 @@ export default function MinistryPageClient({
       <section className="mx-auto max-w-7xl px-6 py-16 sm:py-20">
         <div className={`grid gap-8 ${ministry.meets?.length ? 'lg:grid-cols-[1fr_1.1fr] lg:items-center' : ''}`}>
           <div>
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-300">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-yellow-700 dark:text-yellow-300">
               Our purpose
             </p>
             <p className="max-w-3xl text-base leading-relaxed text-slate-600 dark:text-slate-300 md:text-lg">
@@ -150,7 +150,7 @@ export default function MinistryPageClient({
             className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(59,130,246,0.2),transparent_65%)]"
           />
           <div className="relative">
-            <blockquote className="mx-auto max-w-3xl font-serif text-xl italic leading-relaxed text-amber-100/90 md:text-2xl">
+            <blockquote className="mx-auto max-w-3xl font-serif text-xl italic leading-relaxed text-yellow-100/90 md:text-2xl">
               “{ministry.scripture.text}”
             </blockquote>
             <p className="mt-3 text-xs font-medium uppercase tracking-widest text-slate-400">

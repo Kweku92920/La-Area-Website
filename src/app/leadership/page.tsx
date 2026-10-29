@@ -28,10 +28,10 @@ export default async function LeadershipPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 pb-12 pt-16 text-center">
-        <div className="mb-2 flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest text-amber-700 dark:text-amber-300">
-          <span className="h-px w-8 bg-amber-500/40" />
+        <div className="mb-2 flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest text-yellow-700 dark:text-yellow-300">
+          <span className="h-px w-8 bg-yellow-500/40" />
           Servant Leaders
-          <span className="h-px w-8 bg-amber-500/40" />
+          <span className="h-px w-8 bg-yellow-500/40" />
         </div>
         <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-600 dark:text-slate-300 md:text-base">
           Our leaders are committed to shepherding the La Area with humility, wisdom, and a heart for the Gospel.
@@ -103,7 +103,7 @@ export default async function LeadershipPage() {
       </section>
 
       <section className="border-t border-slate-800 bg-[#0f172a] px-6 py-12 text-center text-white">
-        <blockquote className="mx-auto max-w-3xl font-serif text-lg italic text-amber-100/90 md:text-xl">
+        <blockquote className="mx-auto max-w-3xl font-serif text-lg italic text-yellow-100/90 md:text-xl">
           “Go into all the world and preach the gospel to every creature.”
         </blockquote>
         <p className="mt-2 text-xs font-medium uppercase tracking-widest text-slate-400">— Mark 16:15</p>

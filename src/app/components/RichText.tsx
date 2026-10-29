@@ -28,7 +28,7 @@ type CodeValue = {
 const calloutToneClass: Record<string, string> = {
   info: 'border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-200',
   faith: 'border-emerald-200 bg-emerald-50 text-emerald-900 dark:border-emerald-900 dark:bg-emerald-950/50 dark:text-emerald-100',
-  warning: 'border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-100',
+  warning: 'border-yellow-200 bg-yellow-50 text-yellow-900 dark:border-yellow-900 dark:bg-yellow-950/40 dark:text-yellow-100',
 };
 
 const components: PortableTextComponents = {
@@ -57,7 +57,7 @@ const components: PortableTextComponents = {
       <p className="my-5 leading-8 text-slate-600 dark:text-slate-300">{children}</p>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="my-8 border-l-4 border-amber-500 bg-slate-50 px-5 py-4 font-serif text-xl italic text-slate-700 dark:border-amber-400 dark:bg-slate-900/70 dark:text-slate-200">
+      <blockquote className="my-8 border-l-4 border-yellow-500 bg-slate-50 px-5 py-4 font-serif text-xl italic text-slate-700 dark:border-yellow-400 dark:bg-slate-900/70 dark:text-slate-200">
         {children}
       </blockquote>
     ),

@@ -51,7 +51,7 @@ export default function ScriptureTicker({ scriptures }: { scriptures?: Scripture
   return (
     <section aria-label="Scripture of the moment" className="relative mb-12 overflow-hidden border-y border-white/10 py-7">
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-2 px-4 text-center">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-amber-300">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-yellow-300">
           Scripture of the moment
         </p>
         <div key={scripture.id} className="animate-[scripture-fade-in_500ms_ease-out]">

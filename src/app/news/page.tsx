@@ -25,7 +25,7 @@ export default async function NewsPage() {
         <div aria-hidden="true" className="absolute -right-12 -top-32 h-[22rem] w-[22rem] rounded-full border border-blue-400/[0.14]" />
         <div className="relative z-10 mx-auto max-w-3xl text-center">
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'News' }]} />
-          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.28em] text-amber-300 sm:text-xs">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.28em] text-yellow-300 sm:text-xs">
             Dispatches · Bulletins · Community
           </p>
           <h1 className="mb-4 font-serif text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">

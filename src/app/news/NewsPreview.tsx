@@ -67,8 +67,8 @@ export default function NewsPreview({ articles }: { articles: NewsItem[] }) {
         <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-2xl text-left">
             <div className="mb-2.5 flex items-center gap-2.5">
-              <span className="h-px w-6 bg-amber-500" />
-              <span className="font-sans text-xs font-bold uppercase tracking-[0.22em] text-amber-600 dark:text-amber-400">
+              <span className="h-px w-6 bg-yellow-500" />
+              <span className="font-sans text-xs font-bold uppercase tracking-[0.22em] text-yellow-600 dark:text-yellow-400">
                 DISPATCHES &amp; BULLETINS
               </span>
             </div>
@@ -84,7 +84,7 @@ export default function NewsPreview({ articles }: { articles: NewsItem[] }) {
             href="/news"
             className="inline-flex items-center gap-2.5 self-start rounded-full bg-[#173262] px-5 py-2.5 font-sans text-xs font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#1e3f7a] dark:bg-blue-600 dark:hover:bg-blue-500 md:self-auto"
           >
-            <Archive aria-hidden="true" className="h-3.5 w-3.5 text-amber-300 transition-colors" />
+            <Archive aria-hidden="true" className="h-3.5 w-3.5 text-yellow-300 transition-colors" />
             <span>READ NEWS ARCHIVE</span>
           </Link>
         </div>
@@ -138,7 +138,7 @@ export default function NewsPreview({ articles }: { articles: NewsItem[] }) {
                       </time>
 
                       {/* Title */}
-                      <h3 className="mt-2.5 font-serif text-xl font-extrabold leading-snug tracking-tight text-slate-900 transition-colors group-hover:text-[#0f172a] dark:text-slate-50 dark:group-hover:text-amber-300">
+                      <h3 className="mt-2.5 font-serif text-xl font-extrabold leading-snug tracking-tight text-slate-900 transition-colors group-hover:text-[#0f172a] dark:text-slate-50 dark:group-hover:text-yellow-300">
                         <Link href={`/news/${article.slug}`}>{article.title}</Link>
                       </h3>
 
@@ -153,7 +153,7 @@ export default function NewsPreview({ articles }: { articles: NewsItem[] }) {
                       <div className="mt-auto pt-6">
                         <Link
                           href={`/news/${article.slug}`}
-                          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0f172a] transition-colors hover:text-amber-600 dark:text-slate-200 dark:hover:text-amber-400"
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0f172a] transition-colors hover:text-yellow-600 dark:text-slate-200 dark:hover:text-yellow-400"
                         >
                           <span>Full Story</span>
                           <ArrowRight
@@ -201,7 +201,7 @@ export default function NewsPreview({ articles }: { articles: NewsItem[] }) {
                     </time>
 
                     {/* Title */}
-                    <h3 className="mt-2.5 font-serif text-xl font-bold leading-snug tracking-tight text-slate-900 transition-colors group-hover:text-[#173262] dark:text-slate-50 dark:group-hover:text-amber-300">
+                    <h3 className="mt-2.5 font-serif text-xl font-bold leading-snug tracking-tight text-slate-900 transition-colors group-hover:text-[#173262] dark:text-slate-50 dark:group-hover:text-yellow-300">
                       <Link href="/news">{article.title}</Link>
                     </h3>
 
@@ -214,7 +214,7 @@ export default function NewsPreview({ articles }: { articles: NewsItem[] }) {
                     <div className="mt-auto pt-6">
                       <Link
                         href="/news"
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#173262] transition-colors hover:text-amber-600 dark:text-slate-200 dark:hover:text-amber-400"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#173262] transition-colors hover:text-yellow-600 dark:text-slate-200 dark:hover:text-yellow-400"
                       >
                         <span>Full Story</span>
                         <ArrowRight

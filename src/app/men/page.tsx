@@ -13,9 +13,9 @@ const ministry: MinistryPageContent = {
   tagline: 'Man!! The Image and the Glory of God.  Be Strong And Courageous. We are Firmly Established',
   showTagline: false,
   image: '/Pemem.png',
-  gradient: 'from-amber-800/80 via-stone-900/75 to-stone-950',
-  accent: 'text-amber-700 dark:text-amber-300',
-  accentBg: 'bg-amber-600',
+  gradient: 'from-yellow-800/80 via-stone-900/75 to-stone-950',
+  accent: 'text-yellow-700 dark:text-yellow-300',
+  accentBg: 'bg-yellow-600',
   intro: 'A community equipping men to grow as disciples of Christ and lead their families, church and communities with godly character and integrity.',
   scripture: {
     text: 'Be watchful, stand firm in the faith, act like men, be strong.',

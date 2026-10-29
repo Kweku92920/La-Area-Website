@@ -42,12 +42,12 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ sl
         <div className="relative mx-auto max-w-5xl">
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'News', href: '/news' }, { label: article.category }]} />
           <div className="mt-10 max-w-4xl">
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-amber-300">{article.category}</p>
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-yellow-300">{article.category}</p>
             <h1 className="font-serif text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
               {article.title}
             </h1>
             <div className="mt-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-300">
-              <CalendarDays className="h-4 w-4 text-amber-300" /> {formatDate(article.publishedAt)}
+              <CalendarDays className="h-4 w-4 text-yellow-300" /> {formatDate(article.publishedAt)}
             </div>
           </div>
         </div>

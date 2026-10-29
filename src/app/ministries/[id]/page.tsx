@@ -41,8 +41,8 @@ export default async function MinistryDetailPage({
         tagline: ministry.description || 'A place to grow, serve and belong.',
         image: ministry.heroImage ?? ministry.image ?? '/theme.jpg',
         gradient: 'from-slate-900/80 via-slate-900/70 to-slate-950',
-        accent: 'text-amber-700 dark:text-amber-300',
-        accentBg: 'bg-amber-500',
+        accent: 'text-yellow-700 dark:text-yellow-300',
+        accentBg: 'bg-yellow-500',
         intro: ministry.description || 'Discover this ministry and find a place to grow, serve, and belong.',
         body: ministry.body,
       }}

@@ -208,7 +208,7 @@ export default function GalleryView({ items }: { items: GalleryItem[] }) {
           </p>
           <Link
             href="/assemblies"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-amber-500 px-7 py-3 text-xs font-bold text-slate-950 shadow-[0_12px_36px_-12px_rgba(245,158,11,0.55)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-400"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-yellow-500 px-7 py-3 text-xs font-bold text-slate-950 shadow-[0_12px_36px_-12px_rgba(250, 204, 21,0.55)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-yellow-400"
           >
             <span>Find a Local Assembly</span>
             <ArrowRight className="h-4 w-4" />

@@ -52,7 +52,7 @@ export default async function AssemblyDetailPage({
 
           <div className="flex flex-col items-center">
             {assembly.district && (
-              <span className="mb-4 inline-block rounded-full border border-amber-400/30 bg-amber-400/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-amber-300">
+              <span className="mb-4 inline-block rounded-full border border-yellow-400/30 bg-yellow-400/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-yellow-300">
                 {assembly.district} District
               </span>
             )}
@@ -60,7 +60,7 @@ export default async function AssemblyDetailPage({
               {assembly.name}
             </h1>
             <p className="mt-4 flex items-center justify-center gap-1.5 text-sm text-slate-300 md:text-base">
-              <MapPin className="h-4 w-4 shrink-0 text-amber-400" />
+              <MapPin className="h-4 w-4 shrink-0 text-yellow-400" />
               {assembly.location}
             </p>
           </div>

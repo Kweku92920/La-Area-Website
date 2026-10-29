@@ -52,7 +52,7 @@ export default function NewsCard({ article, compact = false }: { article: NewsIt
         <h3
           className={`${
             compact ? 'text-lg' : 'text-xl'
-          } mt-2.5 font-serif font-extrabold leading-snug tracking-tight text-slate-900 transition-colors group-hover:text-[#0f172a] dark:text-slate-50 dark:group-hover:text-amber-300`}
+          } mt-2.5 font-serif font-extrabold leading-snug tracking-tight text-slate-900 transition-colors group-hover:text-[#0f172a] dark:text-slate-50 dark:group-hover:text-yellow-300`}
         >
           <Link href={`/news/${article.slug}`}>{article.title}</Link>
         </h3>
@@ -64,7 +64,7 @@ export default function NewsCard({ article, compact = false }: { article: NewsIt
         <div className="mt-auto pt-6">
           <Link
             href={`/news/${article.slug}`}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0f172a] transition-colors hover:text-amber-600 dark:text-slate-200 dark:hover:text-amber-400"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0f172a] transition-colors hover:text-yellow-600 dark:text-slate-200 dark:hover:text-yellow-400"
           >
             <span>Full Story</span>
             <ArrowRight aria-hidden="true" className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />

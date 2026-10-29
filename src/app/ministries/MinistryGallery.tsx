@@ -92,7 +92,7 @@ export default function MinistryGallery({
             type="button"
             onClick={close}
             aria-label="Close"
-            className="absolute right-4 top-4 rounded-full border border-white/15 bg-white/10 p-2.5 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+            className="absolute right-4 top-4 rounded-full border border-white/15 bg-white/10 p-2.5 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400"
           >
             <X className="h-5 w-5" />
           </button>
@@ -102,7 +102,7 @@ export default function MinistryGallery({
                 type="button"
                 onClick={(e) => { e.stopPropagation(); step(-1); }}
                 aria-label="Previous photo"
-                className="absolute left-3 rounded-full border border-white/15 bg-white/10 p-2.5 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+                className="absolute left-3 rounded-full border border-white/15 bg-white/10 p-2.5 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400"
               >
                 <ChevronLeft className="h-6 w-6" />
               </button>
@@ -110,7 +110,7 @@ export default function MinistryGallery({
                 type="button"
                 onClick={(e) => { e.stopPropagation(); step(1); }}
                 aria-label="Next photo"
-                className="absolute right-3 rounded-full border border-white/15 bg-white/10 p-2.5 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+                className="absolute right-3 rounded-full border border-white/15 bg-white/10 p-2.5 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400"
               >
                 <ChevronRight className="h-6 w-6" />
               </button>

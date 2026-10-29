@@ -86,7 +86,7 @@ export default function DistrictDirectory({ districts }: { districts: DistrictIt
                 )}
                 <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-[#0f172a]/10 to-black/10" />
                 <div className="absolute bottom-5 left-5 right-5">
-                  <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-300">
+                  <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-yellow-300">
                     District
                   </p>
                   <h3 className="text-2xl font-semibold leading-tight tracking-tight text-white sm:text-[1.7rem]">

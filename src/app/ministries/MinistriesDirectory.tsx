@@ -164,7 +164,7 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
                     )}
                     <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-[#0f172a]/15 to-black/10" />
                     <div className="absolute bottom-5 left-5 right-5">
-                      <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-300">
+                      <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-yellow-300">
                         {sectorNames[sector] ?? 'Community'} ministry
                       </p>
                       <h3 className="text-2xl font-semibold leading-tight tracking-tight text-white sm:text-[1.8rem]">
@@ -183,8 +183,8 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
                         {sectorNames[sector] ?? 'Community'}
                       </span>
                       {primaryLeader && (
-                        <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-amber-600/15 bg-amber-500/[0.08] px-3 py-2 text-xs font-medium text-amber-900 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-200">
-                          <UserRound aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-amber-700 dark:text-amber-300" />
+                        <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-yellow-600/15 bg-yellow-500/[0.08] px-3 py-2 text-xs font-medium text-yellow-900 dark:border-yellow-400/20 dark:bg-yellow-400/10 dark:text-yellow-200">
+                          <UserRound aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-yellow-700 dark:text-yellow-300" />
                           <span className="truncate">{primaryLeader.name}</span>
                         </span>
                       )}

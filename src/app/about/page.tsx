@@ -37,8 +37,8 @@ export default function AboutPage() {
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16">
           <div className="space-y-6">
-            <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-300">
-              <span className="h-px w-8 bg-amber-500/50" />
+            <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-yellow-700 dark:text-yellow-300">
+              <span className="h-px w-8 bg-yellow-500/50" />
               Who We Are
             </div>
             <h2 className="max-w-2xl font-serif text-3xl font-bold leading-tight tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl md:text-[2.75rem]">
@@ -52,7 +52,7 @@ export default function AboutPage() {
           <div className="relative mx-auto w-full max-w-xl">
             <div
               aria-hidden="true"
-              className="absolute -right-4 -top-4 h-28 w-28 rounded-full border border-amber-500/20 bg-amber-500/[0.06] sm:-right-6 sm:-top-6 sm:h-36 sm:w-36"
+              className="absolute -right-4 -top-4 h-28 w-28 rounded-full border border-yellow-500/20 bg-yellow-500/[0.06] sm:-right-6 sm:-top-6 sm:h-36 sm:w-36"
             />
             <div className="relative grid grid-cols-[1.1fr_0.9fr] items-center gap-3 sm:gap-4">
               <div className="group relative aspect-[4/5] overflow-hidden rounded-[1.6rem] border border-white bg-white shadow-[0_24px_60px_-24px_rgba(15,23,42,0.28)]">
@@ -77,7 +77,7 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="absolute -bottom-5 left-3 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/95 px-4 py-3 text-xs font-semibold text-slate-700 shadow-xl backdrop-blur-md dark:border-slate-700 dark:bg-slate-900/95 dark:text-slate-200 sm:left-6">
-              <span className="grid h-7 w-7 place-items-center rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-300">
+              <span className="grid h-7 w-7 place-items-center rounded-full bg-yellow-500/10 text-yellow-700 dark:text-yellow-300">
                 <MapPin aria-hidden="true" className="h-3.5 w-3.5" />
               </span>
               La Area, Accra
@@ -93,10 +93,10 @@ export default function AboutPage() {
             className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(59,130,246,0.2),transparent_62%)]"
           />
           <div className="relative mx-auto max-w-3xl">
-            <span className="mx-auto mb-5 grid h-12 w-12 place-items-center rounded-2xl border border-white/10 bg-white/[0.06] text-amber-300">
+            <span className="mx-auto mb-5 grid h-12 w-12 place-items-center rounded-2xl border border-white/10 bg-white/[0.06] text-yellow-300">
               <Church aria-hidden="true" className="h-5 w-5" />
             </span>
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-amber-300">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-yellow-300">
               Growing together
             </p>
             <h2 className="font-serif text-3xl font-bold tracking-tight text-white sm:text-4xl">

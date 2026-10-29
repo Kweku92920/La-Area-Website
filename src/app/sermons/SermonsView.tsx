@@ -91,7 +91,7 @@ export default function SermonsView({ sermons }: { sermons: Sermon[] }) {
         <div aria-hidden="true" className="absolute -right-12 -top-32 h-[22rem] w-[22rem] rounded-full border border-blue-400/[0.14]" />
         <div className="relative z-10 mx-auto max-w-3xl text-center">
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Sermons' }]} />
-          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.28em] text-amber-300 sm:text-xs">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.28em] text-yellow-300 sm:text-xs">
             Messages · Worship · Teaching
           </p>
           <h1 className="mb-4 font-serif text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
@@ -104,10 +104,10 @@ export default function SermonsView({ sermons }: { sermons: Sermon[] }) {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 pb-8 pt-16 text-center">
-        <div className="mb-2 flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400">
-          <span className="h-[1px] w-8 bg-amber-500/40" />
+        <div className="mb-2 flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest text-yellow-600 dark:text-yellow-400">
+          <span className="h-[1px] w-8 bg-yellow-500/40" />
           THE WORD
-          <span className="h-[1px] w-8 bg-amber-500/40" />
+          <span className="h-[1px] w-8 bg-yellow-500/40" />
         </div>
         <h2 className="font-serif text-3xl font-bold text-slate-900 dark:text-slate-50 md:text-4xl">
           Sermon Library
@@ -196,7 +196,7 @@ export default function SermonsView({ sermons }: { sermons: Sermon[] }) {
                 <div className="flex flex-grow flex-col p-5 sm:p-6">
                   <div className="mb-3 flex flex-wrap items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
                     <span className="inline-flex items-center gap-1.5">
-                      <Calendar aria-hidden="true" className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+                      <Calendar aria-hidden="true" className="h-3.5 w-3.5 text-yellow-600 dark:text-yellow-400" />
                       {formatDate(sermon.date)}
                     </span>
                     <span aria-hidden="true">·</span>
@@ -256,7 +256,7 @@ export default function SermonsView({ sermons }: { sermons: Sermon[] }) {
             <div className="p-6">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
-                  <div className="mb-2 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400">
+                  <div className="mb-2 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-yellow-600 dark:text-yellow-400">
                     <Calendar className="h-3 w-3" />
                     <span>{formatDate(activeSermon.date)}</span>
                     {activeSermon.duration && <span>· {activeSermon.duration}</span>}
@@ -284,7 +284,7 @@ export default function SermonsView({ sermons }: { sermons: Sermon[] }) {
                 href={activeSermon.youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-[#0f172a] hover:underline dark:text-amber-300"
+                className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-[#0f172a] hover:underline dark:text-yellow-300"
               >
                 <ExternalLink className="h-3.5 w-3.5" />
                 Watch on YouTube
