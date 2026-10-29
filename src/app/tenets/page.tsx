@@ -217,47 +217,69 @@ export default function TenetsPage() {
                     onClick={() => toggleTenet(tenet.id)}
                     aria-expanded={isExpanded}
                     aria-controls={detailsId}
-                    className="flex w-full items-start justify-between gap-4 p-5 text-left sm:items-center sm:p-6"
+                    className="flex w-full flex-col gap-4 p-4 text-left sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:p-6"
                   >
-                    <div className="flex items-start gap-4 sm:items-center sm:gap-6">
-                      {/* Number Badge */}
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-yellow-50 font-serif text-base font-bold text-yellow-800 dark:bg-yellow-950/50 dark:text-yellow-300 sm:h-12 sm:w-12 sm:text-lg">
+                    <div className="flex w-full flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+                      {/* Number Badge (Desktop) */}
+                      <span className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-yellow-50 font-serif text-lg font-bold text-yellow-800 dark:bg-yellow-950/50 dark:text-yellow-300 sm:flex">
                         {String(tenet.id).padStart(2, "0")}
                       </span>
 
-                      {/* Image Thumbnail */}
-                      <div className="relative aspect-video w-20 shrink-0 overflow-hidden rounded-lg bg-slate-100 shadow-sm dark:bg-slate-800 sm:w-28">
+                      {/* Large Responsive Image */}
+                      <div className="relative h-52 w-full shrink-0 overflow-hidden rounded-xl bg-slate-100 shadow-sm dark:bg-slate-800 sm:h-28 sm:w-44 md:h-32 md:w-52">
                         <Image
                           src={tenet.image}
                           alt={tenet.title}
                           fill
                           unoptimized
-                          sizes="(max-width: 640px) 80px, 112px"
+                          sizes="(max-width: 640px) 100vw, 208px"
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-transparent sm:hidden" />
+                        {/* Number Badge (Mobile Overlay) */}
+                        <span className="absolute left-3 top-3 flex h-9 w-9 items-center justify-center rounded-lg bg-[#0f172a]/85 font-serif text-sm font-bold text-yellow-300 shadow-md backdrop-blur-sm sm:hidden">
+                          {String(tenet.id).padStart(2, "0")}
+                        </span>
                       </div>
 
-                      {/* Title & Scripture Pills */}
-                      <div className="space-y-1.5">
-                        <h3 className="font-serif text-lg font-bold text-slate-900 transition-colors group-hover:text-yellow-800 dark:text-slate-100 dark:group-hover:text-yellow-300 sm:text-xl">
-                          {tenet.title}
-                        </h3>
-                        <div className="flex flex-wrap gap-1.5">
-                          {tenet.scriptures.map((scripture) => (
-                            <span
-                              key={scripture}
-                              className="inline-flex items-center rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600 transition group-hover:bg-yellow-50 group-hover:text-yellow-800 dark:bg-slate-800 dark:text-slate-300 dark:group-hover:bg-yellow-950/40 dark:group-hover:text-yellow-300"
-                            >
-                              {scripture}
-                            </span>
-                          ))}
+                      {/* Title, Scripture Pills & Mobile Chevron */}
+                      <div className="flex w-full items-start justify-between gap-3 sm:block">
+                        <div className="space-y-2">
+                          <h3 className="font-serif text-xl font-bold text-slate-900 transition-colors group-hover:text-yellow-800 dark:text-slate-100 dark:group-hover:text-yellow-300 sm:text-2xl">
+                            {tenet.title}
+                          </h3>
+                          <div className="flex flex-wrap gap-1.5">
+                            {tenet.scriptures.map((scripture) => (
+                              <span
+                                key={scripture}
+                                className="inline-flex items-center rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 transition group-hover:bg-yellow-50 group-hover:text-yellow-800 dark:bg-slate-800 dark:text-slate-300 dark:group-hover:bg-yellow-950/40 dark:group-hover:text-yellow-300"
+                              >
+                                {scripture}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Chevron Indicator (Mobile) */}
+                        <div
+                          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all duration-300 sm:hidden ${
+                            isExpanded
+                              ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300"
+                              : "bg-slate-100 text-slate-500 group-hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400"
+                          }`}
+                        >
+                          <ChevronDown
+                            className={`h-5 w-5 transition-transform duration-300 ${
+                              isExpanded ? "rotate-180" : ""
+                            }`}
+                          />
                         </div>
                       </div>
                     </div>
 
-                    {/* Chevron Indicator Button */}
+                    {/* Chevron Indicator Button (Desktop) */}
                     <div
-                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
+                      className={`hidden h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all duration-300 sm:flex ${
                         isExpanded
                           ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300"
                           : "bg-slate-100 text-slate-500 group-hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:group-hover:bg-slate-700"

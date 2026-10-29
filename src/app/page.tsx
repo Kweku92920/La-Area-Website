@@ -85,16 +85,16 @@ export default async function HomePage() {
           <div className="mb-14 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/assemblies"
-              className="group inline-flex w-full items-center justify-center gap-3 rounded-md border border-white/45 bg-white/10 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20 sm:w-auto"
+              className="group inline-flex w-full items-center justify-center gap-3 rounded-full border border-white/45 bg-white/10 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20 sm:w-auto"
             >
               <span>Find a Local Assembly</span>
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
             <Link
               href="/sermons"
-              className="group inline-flex w-full items-center justify-center gap-3 rounded-md border border-white/45 bg-white/10 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20 sm:w-auto"
+              className="group inline-flex w-full items-center justify-center gap-3 rounded-full border border-white/45 bg-white/10 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20 sm:w-auto"
             >
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-yellow-400 text-slate-950">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-[#0f172a]">
                 <Play className="ml-0.5 h-3 w-3 fill-current" />
               </div>
               <span>Watch Latest Sermons</span>
