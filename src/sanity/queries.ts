@@ -287,19 +287,37 @@ export const latestSermonsQuery = groq`*[_type=="sermon"] | order(date desc)[0..
 export type HomeSermon = Pick<RawSermon, 'id' | 'title' | 'speaker' | 'date' | 'duration' | 'youtubeUrl' | 'customThumb'>;
 
 export type HomeEvent = {
+  id: string;
   title: string;
   slug?: string | null;
   startDate: string;
   endDate?: string | null;
   location: string | null;
   description?: string | null;
+  category?: string | null;
   featured?: boolean;
   image: string | null;
   imageAlt?: string;
 };
 export const nextEventQuery = groq`*[_type=="event" && startDate >= now()] | order(featured desc, startDate asc)[0]{
+  "id": coalesce(slug.current, _id),
   "title": coalesce(title, "Upcoming event"), "slug": slug.current, startDate, endDate,
-  "location": coalesce(location, ""), "description": coalesce(description, ""), featured,
+  "location": coalesce(location, ""), "description": coalesce(description, ""),
+  "category": coalesce(category, "Area-Wide Convention"), featured,
+  "image": image.asset->url, "imageAlt": coalesce(image.alt, title, "Event image")
+}`;
+export const eventsQuery = groq`*[_type=="event"] | order(featured desc, startDate asc){
+  "id": coalesce(slug.current, _id),
+  "title": coalesce(title, "Upcoming event"), "slug": slug.current, startDate, endDate,
+  "location": coalesce(location, ""), "description": coalesce(description, ""),
+  "category": coalesce(category, "Area Gathering"), featured,
+  "image": image.asset->url, "imageAlt": coalesce(image.alt, title, "Event image")
+}`;
+export const eventByIdQuery = groq`*[_type=="event" && (slug.current == $id || _id == $id)][0]{
+  "id": coalesce(slug.current, _id),
+  "title": coalesce(title, "Upcoming event"), "slug": slug.current, startDate, endDate,
+  "location": coalesce(location, ""), "description": coalesce(description, ""),
+  "category": coalesce(category, "Area Gathering"), featured,
   "image": image.asset->url, "imageAlt": coalesce(image.alt, title, "Event image")
 }`;
 

@@ -56,7 +56,7 @@ export default function ScriptureTicker({ scriptures }: { scriptures?: Scripture
         </p>
         <div key={scripture.id} className="animate-[scripture-fade-in_500ms_ease-out]">
           <p className="font-serif text-xl leading-relaxed text-white sm:text-2xl">&ldquo;{scripture.text}&rdquo;</p>
-          <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-100/60">
+          <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-300/75">
             {scripture.reference} · {scripture.translation}
           </p>
         </div>

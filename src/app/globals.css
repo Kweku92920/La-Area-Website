@@ -3,18 +3,25 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-
 :root {
-  --background: #f7f4ed;
-  --foreground: #1c2923;
-  --surface: #fffdf8;
-  --muted: #6b746d;
-  --line: rgba(28, 41, 35, 0.13);
-  --church-forest: #17362c;
-  --church-forest-deep: #10251e;
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --surface: #ffffff;
+  --muted: #64748b;
+  --line: rgba(15, 23, 42, 0.1);
+  --church-navy: #0f172a;
+  --church-navy-deep: #0a1120;
+  --church-royal: #1e293b;
   --church-brass: #b8860b;
   --church-brass-soft: #f0dfb5;
-  --church-cream: #f7f4ed;
+}
+
+.dark {
+  --background: #020617;
+  --foreground: #f8fafc;
+  --surface: #0f172a;
+  --muted: #94a3b8;
+  --line: rgba(248, 250, 252, 0.12);
 }
 
 @theme inline {
@@ -40,66 +47,21 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.12;
 }
 
-button, a { -webkit-tap-highlight-color: transparent; }
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
 
 .church-page {
-  background: var(--background);
-}
-
-/* Keep legacy page wrappers on the same surface and text system. */
-:where([class~="min-h-screen"]) {
-  background-color: var(--background) !important;
-  color: var(--foreground);
-}
-
-/* Every route uses the same calm forest-and-brass church palette. */
-:where(.min-h-screen > section:first-child, main > section:first-child) {
-  background-color: var(--church-forest) !important;
-}
-
-:where(.min-h-screen > section:first-child > [class*="bg-gradient"],
-  main > section:first-child > [class*="bg-gradient"]) {
-  background-image: linear-gradient(to bottom, rgb(23 54 44 / 0.35), rgb(16 37 30 / 0.96)) !important;
-}
-
-:where(.text-emerald-700, .text-emerald-800, .text-emerald-900,
-  .text-green-700, .text-green-800, .text-green-900,
-  .text-rose-700, .text-rose-800, .text-rose-900,
-  .text-red-700, .text-red-800, .text-red-900,
-  .text-fuchsia-700, .text-fuchsia-800, .text-fuchsia-900) {
-  color: var(--church-forest) !important;
-}
-
-:where(.text-emerald-300, .text-emerald-400, .text-green-300, .text-green-400,
-  .text-amber-300, .text-amber-400, .text-amber-500, .text-amber-600,
-  .text-amber-700, .text-amber-800) {
-  color: var(--church-brass) !important;
-}
-
-:where(.bg-emerald-700, .bg-emerald-800, .bg-emerald-900,
-  .bg-green-700, .bg-green-800, .bg-green-900,
-  .bg-rose-500, .bg-rose-600, .bg-rose-700,
-  .bg-red-700, .bg-fuchsia-950) {
-  background-color: var(--church-forest) !important;
-}
-
-:where(.bg-amber-500, .bg-amber-600, .bg-amber-700) {
-  background-color: var(--church-brass) !important;
-}
-
-:where(.border-emerald-200, .border-emerald-300, .border-emerald-500,
-  .border-emerald-700, .border-emerald-800, .border-green-500,
-  .border-rose-500, .border-red-500, .border-fuchsia-500) {
-  border-color: color-mix(in srgb, var(--church-forest) 35%, transparent) !important;
+  background-color: var(--background);
 }
 
 ::selection {
-  background: #d5a94e;
-  color: #17211f;
+  background: #f59e0b;
+  color: #0f172a;
 }
 
 *:focus-visible {
-  outline: 3px solid rgba(168, 117, 45, 0.55);
+  outline: 3px solid rgba(245, 158, 11, 0.55);
   outline-offset: 3px;
 }
 

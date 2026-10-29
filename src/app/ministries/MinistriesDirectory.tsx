@@ -8,7 +8,6 @@ import {
   Baby,
   HeartHandshake,
   Search,
-  Sparkles,
   UsersRound,
   UserRound,
 } from 'lucide-react';
@@ -59,10 +58,11 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSector, setSelectedSector] = useState('all');
   const sectors = useMemo(
-    () => [...new Set(ministries.map(getSector))].sort((a, b) => {
-      const order = ['youth', 'women', 'men', 'children', 'other'];
-      return order.indexOf(a) - order.indexOf(b);
-    }),
+    () =>
+      [...new Set(ministries.map(getSector))].sort((a, b) => {
+        const order = ['youth', 'women', 'men', 'children', 'other'];
+        return order.indexOf(a) - order.indexOf(b);
+      }),
     [ministries],
   );
   const query = searchQuery.trim().toLowerCase();
@@ -92,7 +92,7 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
               placeholder="Search ministries or sectors..."
-              className="w-full rounded-full border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-emerald-700/40 focus:bg-white focus:ring-2 focus:ring-emerald-800/10 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+              className="w-full rounded-full border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-600/40 focus:bg-white focus:ring-2 focus:ring-blue-600/15 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
             />
           </label>
           <div className="flex w-full flex-wrap items-center gap-2 md:w-auto md:justify-end" aria-label="Filter by ministry sector">
@@ -102,8 +102,8 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
               onClick={() => setSelectedSector('all')}
               className={`rounded-full border px-4 py-2 text-xs font-semibold transition-all ${
                 selectedSector === 'all'
-                  ? 'border-emerald-800 bg-emerald-800 text-white shadow-sm'
-                  : 'border-slate-200 bg-white text-slate-600 hover:border-emerald-800/30 hover:bg-emerald-50'
+                  ? 'border-[#0f172a] bg-[#0f172a] text-white shadow-sm dark:border-blue-500 dark:bg-blue-600'
+                  : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300'
               }`}
             >
               All ministries
@@ -116,8 +116,8 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
                 onClick={() => setSelectedSector(sector)}
                 className={`rounded-full border px-4 py-2 text-xs font-semibold transition-all ${
                   selectedSector === sector
-                    ? 'border-emerald-800 bg-emerald-800 text-white shadow-sm'
-                    : 'border-slate-200 bg-white text-slate-600 hover:border-emerald-800/30 hover:bg-emerald-50'
+                    ? 'border-[#0f172a] bg-[#0f172a] text-white shadow-sm dark:border-blue-500 dark:bg-blue-600'
+                    : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300'
                 }`}
               >
                 {sectorNames[sector] ?? sector}
@@ -125,8 +125,8 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
             ))}
           </div>
         </div>
-        <p aria-live="polite" className="mt-4 text-center text-xs font-medium text-slate-500 md:text-left">
-          Showing <span className="font-bold text-slate-800">{filteredMinistries.length}</span>{' '}
+        <p aria-live="polite" className="mt-4 text-center text-xs font-medium text-slate-500 dark:text-slate-400 md:text-left">
+          Showing <span className="font-bold text-slate-800 dark:text-slate-200">{filteredMinistries.length}</span>{' '}
           {filteredMinistries.length === 1 ? 'ministry' : 'ministries'}
         </p>
       </section>
@@ -143,9 +143,9 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
                 <article
                   key={ministry.id}
                   id={ministry.id}
-                  className="group flex w-full min-w-0 flex-col overflow-hidden rounded-[1.4rem] border border-slate-200/80 bg-white shadow-[0_18px_50px_-24px_rgba(50,35,28,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-emerald-700/25 hover:shadow-[0_24px_60px_-22px_rgba(50,35,28,0.26)] dark:border-slate-800 dark:bg-slate-900 sm:rounded-[1.6rem]"
+                  className="group flex w-full min-w-0 flex-col overflow-hidden rounded-[1.4rem] border border-slate-200/80 bg-white shadow-[0_18px_50px_-24px_rgba(15,23,42,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-600/30 hover:shadow-[0_24px_60px_-22px_rgba(15,23,42,0.26)] dark:border-slate-800 dark:bg-slate-900 sm:rounded-[1.6rem]"
                 >
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-[radial-gradient(ellipse_at_18%_8%,rgba(255,255,255,0.24),transparent_38%),linear-gradient(135deg,#31514a_0%,#1e3433_58%,#171821_100%)]">
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-[radial-gradient(ellipse_at_18%_8%,rgba(59,130,246,0.24),transparent_38%),linear-gradient(135deg,#1e293b_0%,#0f172a_58%,#0a1120_100%)]">
                     {ministry.image && (
                       <Image
                         src={ministry.image}
@@ -157,42 +157,44 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
                     )}
                     {!ministry.image && (
                       <>
-                        <div aria-hidden="true" className="absolute -right-12 -top-20 h-64 w-64 rounded-full border border-white/10 bg-white/[0.04] shadow-[0_0_90px_rgba(218,175,112,0.16)]" />
-                        <div aria-hidden="true" className="absolute -bottom-28 -left-8 h-64 w-64 rounded-full border border-[#d9b777]/25 bg-[#d9b777]/[0.08]" />
+                        <div aria-hidden="true" className="absolute -right-12 -top-20 h-64 w-64 rounded-full border border-white/10 bg-white/[0.04] shadow-[0_0_90px_rgba(59,130,246,0.16)]" />
+                        <div aria-hidden="true" className="absolute -bottom-28 -left-8 h-64 w-64 rounded-full border border-blue-400/20 bg-blue-400/[0.06]" />
                         <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(120deg,transparent_20%,rgba(255,255,255,0.08)_50%,transparent_70%)]" />
                       </>
                     )}
-                    <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#101715]/80 via-[#101715]/10 to-black/10" />
+                    <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-[#0f172a]/15 to-black/10" />
                     <div className="absolute bottom-5 left-5 right-5">
-                      <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/65">
+                      <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-300">
                         {sectorNames[sector] ?? 'Community'} ministry
                       </p>
-                    <h3 className="text-2xl font-semibold leading-tight tracking-tight text-white sm:text-[1.8rem]">
+                      <h3 className="text-2xl font-semibold leading-tight tracking-tight text-white sm:text-[1.8rem]">
                         {ministry.title}
                       </h3>
                     </div>
                   </div>
 
                   <div className="flex flex-grow flex-col p-5 sm:p-6">
-                    <p className="flex-grow text-sm leading-relaxed text-stone-600 dark:text-slate-300">{ministry.description}</p>
+                    <p className="flex-grow text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                      {ministry.description}
+                    </p>
                     <div className="mt-4 flex flex-wrap items-center gap-2">
-                      <span className="inline-flex items-center gap-2 rounded-full border border-emerald-800/10 bg-emerald-800/[0.05] px-3 py-2 text-xs font-medium text-emerald-900 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200">
-                        <SectorIcon aria-hidden="true" className="h-3.5 w-3.5 text-emerald-700" />
+                      <span className="inline-flex items-center gap-2 rounded-full border border-blue-900/15 bg-blue-900/[0.06] px-3 py-2 text-xs font-medium text-[#0f172a] dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-200">
+                        <SectorIcon aria-hidden="true" className="h-3.5 w-3.5 text-blue-700 dark:text-blue-300" />
                         {sectorNames[sector] ?? 'Community'}
                       </span>
                       {primaryLeader && (
                         <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-amber-600/15 bg-amber-500/[0.08] px-3 py-2 text-xs font-medium text-amber-900 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-200">
-                          <UserRound aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-amber-700" />
+                          <UserRound aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-amber-700 dark:text-amber-300" />
                           <span className="truncate">{primaryLeader.name}</span>
                         </span>
                       )}
                     </div>
                     <Link
                       href={href}
-                      className="mt-5 inline-flex w-full items-center justify-between rounded-full border border-emerald-800/15 bg-emerald-800/[0.04] py-2 pl-4 pr-2 text-sm font-semibold text-emerald-900 transition-all duration-300 hover:border-emerald-800/20 hover:bg-emerald-800 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-800/40 focus-visible:ring-offset-2 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200"
+                      className="mt-5 inline-flex w-full items-center justify-between rounded-full border border-slate-200 bg-slate-50 py-2 pl-4 pr-2 text-sm font-semibold text-[#0f172a] transition-all duration-300 hover:border-[#0f172a] hover:bg-[#0f172a] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-blue-600"
                     >
                       <span>Get involved</span>
-                      <span className="grid h-8 w-8 place-items-center rounded-full bg-white text-emerald-800 shadow-sm transition-transform duration-300 group-hover:translate-x-0.5">
+                      <span className="grid h-8 w-8 place-items-center rounded-full bg-white text-[#0f172a] shadow-sm transition-transform duration-300 group-hover:translate-x-0.5 dark:bg-slate-900 dark:text-blue-300">
                         <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
                       </span>
                     </Link>
@@ -202,7 +204,7 @@ export default function MinistriesDirectory({ ministries }: { ministries: Minist
             })}
           </div>
         ) : (
-          <p className="rounded-2xl border border-dashed border-slate-300 bg-white/70 px-6 py-12 text-center text-sm text-slate-500">
+          <p className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-12 text-center text-sm text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
             No ministries match your search. Try another keyword or sector.
           </p>
         )}

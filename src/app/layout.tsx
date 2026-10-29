@@ -59,9 +59,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${bricolage.variable} h-full antialiased`}>
       <head />
-      <body className="flex min-h-full flex-col bg-[#f7f4ed] text-[#1c2923] antialiased">
+      <body className="flex min-h-full flex-col bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-50">
         <SiteHeader logoUrl={settings.logo} />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 bg-white dark:bg-slate-950">{children}</main>
         <SiteFooter settings={settings} scriptures={scriptures} />
       </body>
     </html>

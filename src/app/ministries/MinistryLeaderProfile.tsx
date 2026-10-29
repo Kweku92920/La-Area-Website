@@ -123,7 +123,7 @@ export default function MinistryLeaderProfile({
                               href={document.url}
                               target="_blank"
                               rel="noreferrer"
-                              className="text-sm font-medium text-emerald-800 underline-offset-4 hover:underline dark:text-emerald-300"
+                              className="text-sm font-medium text-blue-900 underline-offset-4 hover:underline dark:text-blue-300"
                             >
                               {document.title}
                             </a>

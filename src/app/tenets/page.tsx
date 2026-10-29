@@ -120,12 +120,15 @@ export default function TenetsPage() {
   );
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
-      {/* Hero Banner with reduced deep blue and more visible background graphics */}
-      <section className="relative flex min-h-[380px] items-center justify-center overflow-hidden bg-[#131922] px-6 py-20 text-white sm:min-h-[420px]">
-        {/* Slightly brighter background rings to make them pop out more */}
+    <div className="min-h-screen bg-white text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
+      {/* Hero Banner with deep blue palette */}
+      <section className="relative flex min-h-[380px] items-center justify-center overflow-hidden bg-[#0f172a] px-6 py-20 text-white sm:min-h-[420px]">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(59,130,246,0.22),transparent_54%)]"
+        />
         <div aria-hidden="true" className="absolute -right-20 -top-28 h-[34rem] w-[34rem] rounded-full border border-white/[0.08]" />
-        <div aria-hidden="true" className="absolute -right-4 -top-12 h-[24rem] w-[24rem] rounded-full border border-amber-400/[0.12]" />
+        <div aria-hidden="true" className="absolute -right-4 -top-12 h-[24rem] w-[24rem] rounded-full border border-blue-400/[0.14]" />
 
         <div className="relative z-10 mx-auto max-w-3xl text-center">
           {/* Breadcrumb Pill */}
@@ -291,6 +294,6 @@ export default function TenetsPage() {
           </div>
         )}
       </section>
-    </main>
+    </div>
   );
 }
