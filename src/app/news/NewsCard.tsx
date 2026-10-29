@@ -52,19 +52,19 @@ export default function NewsCard({ article, compact = false }: { article: NewsIt
         <h3
           className={`${
             compact ? 'text-lg' : 'text-xl'
-          } mt-2.5 font-serif font-bold leading-snug tracking-tight text-slate-900 transition-colors group-hover:text-[#173262] dark:text-slate-50 dark:group-hover:text-amber-300`}
+          } mt-2.5 font-serif font-extrabold leading-snug tracking-tight text-slate-900 transition-colors group-hover:text-[#0f172a] dark:text-slate-50 dark:group-hover:text-amber-300`}
         >
           <Link href={`/news/${article.slug}`}>{article.title}</Link>
         </h3>
         {article.excerpt && (
-          <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+          <p className="mt-3 line-clamp-3 font-serif text-sm font-bold leading-snug text-slate-900 dark:text-slate-100">
             {article.excerpt}
           </p>
         )}
         <div className="mt-auto pt-6">
           <Link
             href={`/news/${article.slug}`}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#173262] transition-colors hover:text-amber-600 dark:text-slate-200 dark:hover:text-amber-400"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0f172a] transition-colors hover:text-amber-600 dark:text-slate-200 dark:hover:text-amber-400"
           >
             <span>Full Story</span>
             <ArrowRight aria-hidden="true" className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />

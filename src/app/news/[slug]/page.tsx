@@ -43,7 +43,7 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ sl
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'News', href: '/news' }, { label: article.category }]} />
           <div className="mt-10 max-w-4xl">
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-amber-300">{article.category}</p>
-            <h1 className="font-serif text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl">
+            <h1 className="font-serif text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
               {article.title}
             </h1>
             <div className="mt-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-300">
@@ -65,9 +65,9 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ sl
           </div>
         )}
         {article.excerpt && (
-          <p className="mx-auto mb-10 max-w-3xl font-serif text-xl leading-relaxed text-slate-700 dark:text-slate-300 sm:text-2xl">
+          <h2 className="mx-auto mb-10 max-w-3xl font-serif text-2xl font-extrabold leading-snug tracking-tight text-slate-900 dark:text-slate-50 sm:text-3xl">
             {article.excerpt}
-          </p>
+          </h2>
         )}
         <div className="mx-auto max-w-3xl">
           <RichText value={article.body} />
@@ -75,7 +75,7 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ sl
         <div className="mx-auto mt-14 max-w-3xl border-t border-slate-200 pt-6 dark:border-slate-800">
           <Link
             href="/news"
-            className="inline-flex items-center gap-2 rounded-full bg-[#173262] px-5 py-2.5 text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:bg-[#1e3f7a] dark:bg-blue-600 dark:hover:bg-blue-500"
+            className="inline-flex items-center gap-2 rounded-full bg-[#0f172a] px-5 py-2.5 text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:bg-[#1e293b] dark:bg-blue-600 dark:hover:bg-blue-500"
           >
             <ArrowLeft className="h-4 w-4" /> Back to news
           </Link>

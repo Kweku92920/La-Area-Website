@@ -34,22 +34,22 @@ const calloutToneClass: Record<string, string> = {
 const components: PortableTextComponents = {
   block: {
     h1: ({ children }) => (
-      <h1 className="mt-10 font-serif text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
+      <h1 className="mt-10 font-serif text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50">
         {children}
       </h1>
     ),
     h2: ({ children }) => (
-      <h2 className="mt-10 font-serif text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
+      <h2 className="mt-10 font-serif text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="mt-8 font-serif text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
+      <h3 className="mt-8 font-serif text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50">
         {children}
       </h3>
     ),
     h4: ({ children }) => (
-      <h4 className="mt-6 font-serif text-xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
+      <h4 className="mt-6 font-serif text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50">
         {children}
       </h4>
     ),

@@ -62,10 +62,10 @@ export default function SiteFooter({ settings, scriptures = [] }: { settings?: S
   ];
 
   return (
-    <footer className="relative overflow-hidden border-t border-white/10 bg-[#173262] px-4 py-14 text-xs text-slate-200 md:px-8 md:py-16">
+    <footer className="relative overflow-hidden border-t border-white/10 bg-[#0f172a] px-4 py-14 text-xs text-slate-200 md:px-8 md:py-16">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_0%,rgba(59,130,246,0.22),transparent_48%),radial-gradient(ellipse_at_85%_100%,rgba(245,158,11,0.12),transparent_45%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_0%,rgba(59,130,246,0.2),transparent_48%),radial-gradient(ellipse_at_85%_100%,rgba(245,158,11,0.1),transparent_45%)]"
       />
       <div className="relative mx-auto max-w-7xl">
         <ScriptureTicker scriptures={scriptures} />
