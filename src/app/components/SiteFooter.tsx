@@ -109,7 +109,7 @@ export default function SiteFooter({ settings, scriptures = [] }: { settings?: S
                   The Church of Pentecost
                 </div>
                 <div className="mt-0.5 text-[9px] font-bold uppercase tracking-[0.2em] text-yellow-400">
-                  LA AREA
+                  La Area
                 </div>
               </div>
             </Link>
@@ -144,6 +144,8 @@ export default function SiteFooter({ settings, scriptures = [] }: { settings?: S
             </h2>
             <ul className="space-y-1">
               <li><Link href="/about" className="inline-flex rounded-lg py-1.5 transition-colors hover:text-yellow-300">About Us</Link></li>
+              <li><Link href="/about/history-of-pentecost" className="inline-flex rounded-lg py-1.5 transition-colors hover:text-yellow-300">History of The Church of Pentecost</Link></li>
+              <li><Link href="/about/history-of-la-area" className="inline-flex rounded-lg py-1.5 transition-colors hover:text-yellow-300">History of The Area</Link></li>
               <li><Link href="/leadership" className="inline-flex rounded-lg py-1.5 transition-colors hover:text-yellow-300">Leadership</Link></li>
               <li><Link href="/districts" className="inline-flex rounded-lg py-1.5 transition-colors hover:text-yellow-300">Districts</Link></li>
               <li><Link href="/assemblies" className="inline-flex rounded-lg py-1.5 transition-colors hover:text-yellow-300">Local Assemblies</Link></li>
@@ -195,9 +197,9 @@ export default function SiteFooter({ settings, scriptures = [] }: { settings?: S
       </div>
 
       <div className="relative mx-auto mt-12 flex max-w-7xl flex-col gap-4 border-t border-white/10 pt-6 text-[11px] text-slate-400 sm:flex-row sm:items-center sm:justify-between">
-        <span>© {new Date().getFullYear()} The Church of Pentecost · LA Area</span>
+        <span>© {new Date().getFullYear()} The Church of Pentecost · La Area</span>
         <div className="flex items-center gap-4">
-          <span>Rooted in Christ. Ready to serve.</span>
+          <span>The Church Unleashed to Transform Society through the Gospel and the Power of the Holy Spirit </span>
         </div>
       </div>
     </footer>

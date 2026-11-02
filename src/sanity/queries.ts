@@ -503,3 +503,121 @@ export const newsBySlugQuery = groq`*[_type=="newsItem" && slug.current==$slug &
 }`;
 
 export const newsSlugsQuery = groq`*[_type=="newsItem" && defined(slug.current) && defined(publishedAt) && publishedAt <= now()]{"slug": slug.current}`;
+
+export type HistoryStat = {
+  _key?: string;
+  value: string;
+  label: string;
+  detail?: string | null;
+};
+
+export type HistorySection = {
+  _key?: string;
+  kicker?: string | null;
+  title: string;
+  paragraphs: string[];
+  highlight?: string | null;
+  image?: string | null;
+  imageAlt?: string | null;
+  imageCaption?: string | null;
+};
+
+export type HistoryMilestone = {
+  _key?: string;
+  year: string;
+  era: string;
+  title: string;
+  location?: string | null;
+  description: string;
+};
+
+export type HistoryLeaderEntry = {
+  _key?: string;
+  name: string;
+  role: string;
+  tenure: string;
+  note?: string | null;
+  photo?: string | null;
+};
+
+export type HistoryQuote = {
+  text: string;
+  attribution: string;
+  role?: string | null;
+};
+
+export type HistoryPageData = {
+  id: string;
+  slug: string;
+  kicker: string;
+  title: string;
+  subtitle: string;
+  intro: string;
+  heroImage: string | null;
+  heroImageAlt?: string | null;
+  heroImageCaption?: string | null;
+  quote?: HistoryQuote | null;
+  stats: HistoryStat[];
+  sections: HistorySection[];
+  milestones: HistoryMilestone[];
+  leadershipLegacy: HistoryLeaderEntry[];
+  body?: PortableTextBlock[] | null;
+  gallery?: GalleryPhotoItem[];
+  updatedAt?: string | null;
+};
+
+export const historyPageBySlugQuery = groq`*[_type in ["historyPage", "history"] && (slug.current in $slugs || _id in $ids)][0]{
+  "id": _id,
+  "slug": coalesce(slug.current, _id),
+  "kicker": kicker,
+  "title": title,
+  "subtitle": subtitle,
+  "intro": coalesce(intro, summary),
+  "heroImage": heroImage.asset->url,
+  "heroImageAlt": coalesce(heroImage.alt, title),
+  "heroImageCaption": heroImage.caption,
+  "quote": quote{
+    "text": text,
+    "attribution": attribution,
+    "role": role
+  },
+  "stats": coalesce(stats, keyFacts)[]{
+    _key,
+    "value": coalesce(value, ""),
+    "label": coalesce(label, ""),
+    "detail": detail
+  },
+  "sections": coalesce(sections, chapters)[]{
+    _key,
+    "kicker": kicker,
+    "title": coalesce(title, ""),
+    "paragraphs": coalesce(paragraphs, select(defined(content) => [content], [])),
+    "highlight": coalesce(highlight, pullQuote),
+    "image": image.asset->url,
+    "imageAlt": coalesce(image.alt, title),
+    "imageCaption": coalesce(image.caption, caption)
+  },
+  "milestones": coalesce(milestones, timeline)[]{
+    _key,
+    "year": coalesce(year, period, ""),
+    "era": coalesce(era, "Historical Era"),
+    "title": coalesce(title, ""),
+    "location": location,
+    "description": coalesce(description, "")
+  },
+  "leadershipLegacy": coalesce(leadershipLegacy, pastLeaders)[]{
+    _key,
+    "name": coalesce(name, ""),
+    "role": coalesce(role, ""),
+    "tenure": coalesce(tenure, ""),
+    "note": note,
+    "photo": photo.asset->url
+  },
+  "body": body${newsBodyProjection},
+  "gallery": gallery[defined(asset)]{
+    "url": asset->url,
+    "caption": coalesce(caption, ""),
+    "alt": coalesce(alt, caption, "Historical archival photo")
+  },
+  "updatedAt": _updatedAt
+}`;

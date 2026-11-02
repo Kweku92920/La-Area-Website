@@ -82,7 +82,20 @@ export async function POST(request: NextRequest) {
   }
 
   const { _type, _id, slug, operation } = extractDocumentInfo(payload);
-  const watchList = new Set(['district', 'assembly', 'leader', 'event', 'sermon', 'siteSettings', 'ministryLeader', 'ministry']);
+  const watchList = new Set([
+    'district',
+    'assembly',
+    'leader',
+    'event',
+    'sermon',
+    'siteSettings',
+    'ministryLeader',
+    'ministry',
+    'newsItem',
+    'galleryItem',
+    'historyPage',
+    'history',
+  ]);
 
   if (!_type || !watchList.has(_type)) {
     return NextResponse.json({ message: `Ignored unsupported type: ${_type || 'unknown'}` }, { status: 200 });

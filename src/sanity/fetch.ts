@@ -34,21 +34,29 @@ export function buildSanityTags(
 }
 
 async function getClientForRequest() {
+  if (!readToken) {
+    return client;
+  }
+
   try {
     const { isEnabled } = await draftMode();
     if (isEnabled) {
-      if (!readToken) {
-        throw new Error('Draft mode requires SANITY_API_READ_TOKEN.');
-      }
       return previewClient;
     }
-  } catch (error) {
-    if (error instanceof Error && error.message.includes('SANITY_API_READ_TOKEN')) {
-      throw error;
-    }
+  } catch {
+    // Ignore draftMode errors outside request scope or during static generation
   }
 
   return client;
+}
+
+function isNextDynamicServerError(error: unknown): boolean {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'digest' in error &&
+    (error as { digest?: string }).digest === 'DYNAMIC_SERVER_USAGE'
+  );
 }
 
 export async function sanityFetch<T>(
@@ -75,18 +83,20 @@ export async function sanityFetchWithOptions<T>(
   const cacheTags = buildSanityTags(documentType, documentId, tags);
 
   try {
-    if (process.env.NODE_ENV === 'development' || revalidate === false) {
+    if (process.env.NODE_ENV === 'development') {
       return await requestClient.fetch<T>(query, params, { cache: 'no-store' });
     }
 
     return await requestClient.fetch<T>(query, params, {
-      cache: 'force-cache',
       next: {
         tags: cacheTags,
-        revalidate,
+        revalidate: revalidate === false ? 60 : revalidate,
       },
     });
   } catch (error) {
+    if (isNextDynamicServerError(error)) {
+      throw error;
+    }
     const message = error instanceof Error ? error.message : 'Unknown Sanity fetch error';
     throw new Error(`Sanity fetch failed: ${message}`);
   }
@@ -102,7 +112,10 @@ export async function sanityFetchSafe<T>(
     const result = await sanityFetch<T | null>(query, params, options);
     return result ?? fallback;
   } catch (error) {
-    console.error('Sanity fetch failed; using fallback.', error);
+    if (isNextDynamicServerError(error)) {
+      throw error;
+    }
+    console.warn('Sanity fetch failed; using fallback.', error);
     return fallback;
   }
 }

@@ -49,7 +49,7 @@ For immediate cache refresh after publishing, unpublishing, or deleting:
 
    ```groq
    !(_id in path("drafts.**")) &&
-   _type in ["district", "assembly", "event", "leader", "ministry", "sermon", "galleryItem", "newsItem"]
+   _type in ["district", "assembly", "event", "leader", "ministry", "sermon", "galleryItem", "newsItem", "historyPage", "history"]
    ```
 
 3. Set its URL to `https://<your-site-host>/api/revalidate` and add an

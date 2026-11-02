@@ -9,6 +9,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pages = [
     '/',
     '/about',
+    '/about/history-of-pentecost',
+    '/about/history-of-la-area',
     '/leadership',
     '/districts',
     '/assemblies',

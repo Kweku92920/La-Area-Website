@@ -116,8 +116,63 @@ function patchDocument(id: string, changes: Record<string, unknown>) {
   return patch.commit({ visibility: 'sync' });
 }
 
-async function commitAndRevalidate<T>(mutation: Promise<T>) {
+async function commitAndRevalidate<T>(mutation: Promise<T>, documentType?: string, slug?: string) {
   const result = await mutation;
-  revalidateSanityContent();
+  revalidateSanityContent(documentType, slug);
   return result;
+}
+
+export type HistoryPageChanges = Partial<{
+  title: string;
+  kicker: string | null;
+  subtitle: string | null;
+  intro: string | null;
+  quote: { text: string; attribution: string; role?: string | null } | null;
+  stats: Array<{ _key: string; value: string; label: string; detail?: string | null }>;
+  sections: Array<{
+    _key: string;
+    kicker?: string | null;
+    title: string;
+    paragraphs: string[];
+    highlight?: string | null;
+  }>;
+  milestones: Array<{
+    _key: string;
+    year: string;
+    era: string;
+    title: string;
+    location?: string | null;
+    description: string;
+  }>;
+  leadershipLegacy: Array<{
+    _key: string;
+    name: string;
+    role: string;
+    tenure: string;
+    note?: string | null;
+  }>;
+}>;
+
+export function updateHistoryPage(id: string, changes: HistoryPageChanges, slug?: string) {
+  return commitAndRevalidate(patchDocument(id, changes), 'historyPage', slug);
+}
+
+export function upsertHistoryPage(
+  id: string,
+  slug: string,
+  data: Record<string, unknown>,
+) {
+  return commitAndRevalidate(
+    sanityWriteClient.createOrReplace(
+      {
+        _id: id,
+        _type: 'historyPage',
+        slug: { _type: 'slug', current: slug },
+        ...data,
+      },
+      { visibility: 'sync' },
+    ),
+    'historyPage',
+    slug,
+  );
 }

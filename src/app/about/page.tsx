@@ -86,6 +86,66 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ---------------- OUR HERITAGE & HISTORY SECTION ---------------- */}
+      <section className="mx-auto max-w-7xl border-t border-slate-200/80 px-4 py-16 dark:border-slate-800 md:px-8 md:py-20">
+        <div className="mb-10 max-w-2xl">
+          <div className="mb-2 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-yellow-700 dark:text-yellow-300">
+            <span className="h-px w-8 bg-yellow-500/50" />
+            Our Apostolic Heritage
+          </div>
+          <h2 className="font-serif text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl">
+            Explore Our History
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base">
+            Trace the spiritual journey of The Church of Pentecost from 1937 to a worldwide movement, and discover how the La Area grew into 24 districts and 81 assemblies across Accra.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <Link
+            href="/about/history-of-pentecost"
+            className="group flex flex-col justify-between rounded-[1.6rem] border border-slate-200 bg-white p-7 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700 sm:p-8"
+          >
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-yellow-700 dark:text-yellow-400">
+                Est. 1937 · Global Movement
+              </p>
+              <h3 className="mt-2 font-serif text-2xl font-bold text-slate-900 transition-colors group-hover:text-blue-900 dark:text-slate-50 dark:group-hover:text-yellow-300 sm:text-3xl">
+                History of The Church of Pentecost
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                From the Asamankese revival and the arrival of Rev. James McKeown at Takoradi Harbour on March 4, 1937, to the 1953 autonomy, the 1962 naming, and global missions in 170+ nations.
+              </p>
+            </div>
+            <div className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#0f172a] dark:text-yellow-300">
+              <span>Read Full Church History</span>
+              <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </div>
+          </Link>
+
+          <Link
+            href="/about/history-of-la-area"
+            className="group flex flex-col justify-between rounded-[1.6rem] border border-slate-200 bg-white p-7 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700 sm:p-8"
+          >
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-yellow-700 dark:text-yellow-400">
+                Accra Metropolis · 24 Districts · 81 Assemblies
+              </p>
+              <h3 className="mt-2 font-serif text-2xl font-bold text-slate-900 transition-colors group-hover:text-blue-900 dark:text-slate-50 dark:group-hover:text-yellow-300 sm:text-3xl">
+                History of The Area (La Area)
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                Discover the pioneering roots in La (Labadi), Osu, Adabraka, and Accra Newtown, the birth of historic temples and Worship Centres, and the modern La Area presbytery.
+              </p>
+            </div>
+            <div className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#0f172a] dark:text-yellow-300">
+              <span>Read La Area History</span>
+              <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </div>
+          </Link>
+        </div>
+      </section>
+
       <section className="px-4 pb-20 md:px-8 md:pb-24">
         <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[1.8rem] border border-slate-800 bg-[#0f172a] px-6 py-12 text-center text-white shadow-[0_24px_60px_-24px_rgba(15,23,42,0.4)] sm:px-10 sm:py-16">
           <div

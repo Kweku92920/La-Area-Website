@@ -16,13 +16,15 @@ const navLinkClass =
 const dropdownLinkClass =
   'group/link flex items-center justify-between rounded-lg px-3 py-2.5 text-slate-700 transition hover:bg-slate-100 hover:text-[#0f172a] dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-yellow-300';
 const dropdownPanelBaseClass =
-  'absolute left-0 top-full z-50 w-56 rounded-xl border border-slate-200 bg-white p-2 shadow-[0_24px_60px_-20px_rgba(15,23,42,0.28)] transition-all duration-200 dark:border-slate-800 dark:bg-slate-900';
+  'absolute left-0 top-full z-50 w-72 rounded-xl border border-slate-200 bg-white p-2 shadow-[0_24px_60px_-20px_rgba(15,23,42,0.28)] transition-all duration-200 dark:border-slate-800 dark:bg-slate-900';
 const mobileLinkClass =
   'flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0f172a] dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-yellow-300';
 
 export default function SiteHeader({ logoUrl }: { logoUrl?: string | null }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [isAboutUsOpen, setIsAboutUsOpen] = useState(true);
+  const [isMobileAboutUsOpen, setIsMobileAboutUsOpen] = useState(true);
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
 
@@ -99,7 +101,11 @@ export default function SiteHeader({ logoUrl }: { logoUrl?: string | null }) {
             <button
               type="button"
               onClick={() => toggleDropdown('about')}
-              className="flex items-center gap-1.5 rounded-full border border-slate-200 px-5 py-2 font-sans font-semibold transition-all duration-200 hover:border-yellow-500 hover:text-[#0f172a] focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:border-slate-800 dark:hover:border-yellow-400 dark:hover:text-white"
+              className={`flex items-center gap-1.5 rounded-full border px-5 py-2 font-sans font-semibold transition-all duration-200 hover:border-yellow-500 hover:text-[#0f172a] focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:hover:border-yellow-400 dark:hover:text-white ${
+                isActive('/about') || isActive('/leadership') || isActive('/tenets')
+                  ? 'border-blue-900/20 bg-slate-100 text-[#0f172a] dark:border-blue-400/25 dark:bg-slate-800 dark:text-white'
+                  : 'border-slate-200 dark:border-slate-800'
+              }`}
               aria-haspopup="true"
               aria-expanded={activeDropdown === 'about'}
             >
@@ -120,10 +126,77 @@ export default function SiteHeader({ logoUrl }: { logoUrl?: string | null }) {
               <p className="px-3 pb-2 pt-2 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
                 Discover
               </p>
-              <Link href="/about" onClick={closeMenu} className={dropdownLinkClass}>
-                <span>About Us</span>
-                <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5 text-slate-300 transition group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-hover/link:text-blue-700 dark:text-slate-500 dark:group-hover/link:text-yellow-300" />
-              </Link>
+
+              {/* About Us Nested Dropdown */}
+              <div
+                className="rounded-lg"
+                onMouseEnter={() => setIsAboutUsOpen(true)}
+              >
+                <div className="flex items-center justify-between rounded-lg transition hover:bg-slate-100 dark:hover:bg-slate-800">
+                  <Link
+                    href="/about"
+                    onClick={closeMenu}
+                    className="flex-1 px-3 py-2.5 text-slate-700 hover:text-[#0f172a] dark:text-slate-300 dark:hover:text-yellow-300"
+                  >
+                    About Us
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsAboutUsOpen((prev) => !prev);
+                    }}
+                    aria-label="Toggle About Us history submenu"
+                    aria-expanded={isAboutUsOpen}
+                    className="mr-1.5 grid h-7 w-7 place-items-center rounded-md text-slate-400 transition hover:bg-slate-200/70 hover:text-slate-700 dark:hover:bg-slate-700 dark:hover:text-slate-200"
+                  >
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 transition-transform duration-200 ${
+                        isAboutUsOpen ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                </div>
+
+                {isAboutUsOpen && (
+                  <div className="my-1 ml-3 space-y-0.5 border-l border-slate-200 pl-2.5 dark:border-slate-800">
+                    <Link
+                      href="/about"
+                      onClick={closeMenu}
+                      className="group/sub flex items-center justify-between rounded-lg px-2.5 py-2 text-xs font-medium text-slate-600 transition hover:bg-slate-100 hover:text-[#0f172a] dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-yellow-300"
+                    >
+                      <span>About La Area Overview</span>
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="h-3 w-3 shrink-0 text-slate-300 transition group-hover/sub:text-blue-700 dark:text-slate-600 dark:group-hover/sub:text-yellow-300"
+                      />
+                    </Link>
+                    <Link
+                      href="/about/history-of-pentecost"
+                      onClick={closeMenu}
+                      className="group/sub flex items-center justify-between rounded-lg px-2.5 py-2 text-xs font-medium text-slate-600 transition hover:bg-slate-100 hover:text-[#0f172a] dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-yellow-300"
+                    >
+                      <span>History of The Church of Pentecost</span>
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="h-3 w-3 shrink-0 text-slate-300 transition group-hover/sub:text-blue-700 dark:text-slate-600 dark:group-hover/sub:text-yellow-300"
+                      />
+                    </Link>
+                    <Link
+                      href="/about/history-of-la-area"
+                      onClick={closeMenu}
+                      className="group/sub flex items-center justify-between rounded-lg px-2.5 py-2 text-xs font-medium text-slate-600 transition hover:bg-slate-100 hover:text-[#0f172a] dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-yellow-300"
+                    >
+                      <span>History of The Area</span>
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="h-3 w-3 shrink-0 text-slate-300 transition group-hover/sub:text-blue-700 dark:text-slate-600 dark:group-hover/sub:text-yellow-300"
+                      />
+                    </Link>
+                  </div>
+                )}
+              </div>
+
               <Link href="/leadership" onClick={closeMenu} className={dropdownLinkClass}>
                 <span>Leadership</span>
                 <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5 text-slate-300 transition group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-hover/link:text-blue-700 dark:text-slate-500 dark:group-hover/link:text-yellow-300" />
@@ -304,27 +377,67 @@ export default function SiteHeader({ logoUrl }: { logoUrl?: string | null }) {
               <p className="mb-1.5 px-3 text-[11px] font-bold uppercase tracking-[0.2em] text-yellow-600 dark:text-yellow-400">
                 About &amp; Directory
               </p>
-              <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
-                <Link href="/about" onClick={closeMenu} className={mobileLinkClass}>
-                  <span>About Us</span>
-                  <ArrowUpRight className="h-4 w-4 text-slate-400" />
-                </Link>
-                <Link href="/leadership" onClick={closeMenu} className={mobileLinkClass}>
-                  <span>Leadership</span>
-                  <ArrowUpRight className="h-4 w-4 text-slate-400" />
-                </Link>
-                <Link href="/tenets" onClick={closeMenu} className={mobileLinkClass}>
-                  <span>Tenets</span>
-                  <ArrowUpRight className="h-4 w-4 text-slate-400" />
-                </Link>
-                <Link href="/districts" onClick={closeMenu} className={mobileLinkClass}>
-                  <span>Districts</span>
-                  <ArrowUpRight className="h-4 w-4 text-slate-400" />
-                </Link>
-                <Link href="/assemblies" onClick={closeMenu} className={mobileLinkClass}>
-                  <span>Local Assemblies</span>
-                  <ArrowUpRight className="h-4 w-4 text-slate-400" />
-                </Link>
+              <div className="space-y-1">
+                <div className="rounded-lg border border-slate-100 bg-slate-50/60 p-1 dark:border-slate-800/80 dark:bg-slate-900/40">
+                  <div className="flex items-center justify-between">
+                    <Link
+                      href="/about"
+                      onClick={closeMenu}
+                      className="flex-1 rounded-lg px-2.5 py-2 text-sm font-semibold text-slate-800 hover:text-[#0f172a] dark:text-slate-100 dark:hover:text-yellow-300"
+                    >
+                      About Us
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setIsMobileAboutUsOpen((prev) => !prev)}
+                      aria-expanded={isMobileAboutUsOpen}
+                      aria-label="Toggle About Us submenu"
+                      className="grid h-8 w-8 place-items-center rounded-md text-slate-500 hover:bg-slate-200/70 dark:text-slate-400 dark:hover:bg-slate-800"
+                    >
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform duration-200 ${
+                          isMobileAboutUsOpen ? 'rotate-180' : ''
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {isMobileAboutUsOpen && (
+                    <div className="mt-1 ml-2.5 space-y-1 border-l border-slate-200 pl-2.5 dark:border-slate-800">
+                      <Link href="/about" onClick={closeMenu} className={mobileLinkClass}>
+                        <span>About La Area Overview</span>
+                        <ArrowUpRight className="h-4 w-4 text-slate-400" />
+                      </Link>
+                      <Link href="/about/history-of-pentecost" onClick={closeMenu} className={mobileLinkClass}>
+                        <span>History of The Church of Pentecost</span>
+                        <ArrowUpRight className="h-4 w-4 text-slate-400" />
+                      </Link>
+                      <Link href="/about/history-of-la-area" onClick={closeMenu} className={mobileLinkClass}>
+                        <span>History of The Area</span>
+                        <ArrowUpRight className="h-4 w-4 text-slate-400" />
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-1 gap-1 pt-1 sm:grid-cols-2">
+                  <Link href="/leadership" onClick={closeMenu} className={mobileLinkClass}>
+                    <span>Leadership</span>
+                    <ArrowUpRight className="h-4 w-4 text-slate-400" />
+                  </Link>
+                  <Link href="/tenets" onClick={closeMenu} className={mobileLinkClass}>
+                    <span>Tenets</span>
+                    <ArrowUpRight className="h-4 w-4 text-slate-400" />
+                  </Link>
+                  <Link href="/districts" onClick={closeMenu} className={mobileLinkClass}>
+                    <span>Districts</span>
+                    <ArrowUpRight className="h-4 w-4 text-slate-400" />
+                  </Link>
+                  <Link href="/assemblies" onClick={closeMenu} className={mobileLinkClass}>
+                    <span>Local Assemblies</span>
+                    <ArrowUpRight className="h-4 w-4 text-slate-400" />
+                  </Link>
+                </div>
               </div>
             </div>
 
