@@ -67,6 +67,7 @@ export default function HistoryArticleView({
   const [activeChapterIdx, setActiveChapterIdx] = useState<number>(0);
   const [lightboxPhoto, setLightboxPhoto] = useState<GalleryPhotoItem | null>(null);
 
+  const heroImage = history.heroImage;
   const isAreaHistory = history.slug === 'la-area';
   const normalizedQuery = searchQuery.trim().toLowerCase();
 
@@ -473,40 +474,43 @@ export default function HistoryArticleView({
 
               {/* Featured Archival Photograph Card */}
               <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
-                <button
-                  type="button"
-                  onClick={() =>
-                    setLightboxPhoto({
-                      url: history.heroImage || '/theme.jpg',
-                      alt: history.heroImageAlt || history.title,
-                      caption: history.heroImageCaption || history.title,
-                    })
-                  }
-                  className="group relative block aspect-[4/3] w-full overflow-hidden bg-[#0f172a] text-left"
-                >
-                  <Image
-                    src={history.heroImage || '/theme.jpg'}
-                    alt={history.heroImageAlt || history.title}
-                    fill
-                    sizes="(min-width: 1024px) 360px, 100vw"
-                    referrerPolicy="no-referrer"
-                    className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-transparent to-transparent" />
-                  <span className="absolute bottom-2.5 right-2.5 inline-flex items-center gap-1 rounded-lg bg-slate-950/75 px-2.5 py-1 text-[11px] font-medium text-white">
-                    <Expand className="h-3 w-3" />
-                    <span>Enlarge</span>
-                  </span>
-                </button>
-                <div className="p-5">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-yellow-700 dark:text-yellow-400">
-                    Official Photograph
-                  </p>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
-                    {history.heroImageCaption ||
-                      'Preserving the verified apostolic heritage and leadership of The Church of Pentecost.'}
-                  </p>
-                </div>
+                {heroImage && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setLightboxPhoto({
+                        url: heroImage,
+                        alt: history.heroImageAlt || history.title,
+                        caption: history.heroImageCaption || history.title,
+                      })
+                    }
+                    className="group relative block aspect-[4/3] w-full overflow-hidden bg-[#0f172a] text-left"
+                  >
+                    <Image
+                      src={heroImage}
+                      alt={history.heroImageAlt || history.title}
+                      fill
+                      sizes="(min-width: 1024px) 360px, 100vw"
+                      referrerPolicy="no-referrer"
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-transparent to-transparent" />
+                    <span className="absolute bottom-2.5 right-2.5 inline-flex items-center gap-1 rounded-lg bg-slate-950/75 px-2.5 py-1 text-[11px] font-medium text-white">
+                      <Expand className="h-3 w-3" />
+                      <span>Enlarge</span>
+                    </span>
+                  </button>
+                )}
+                {history.heroImageCaption && (
+                  <div className="p-5">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-yellow-700 dark:text-yellow-400">
+                      Official Photograph
+                    </p>
+                    <p className="mt-1.5 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                      {history.heroImageCaption}
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Companion History Card */}

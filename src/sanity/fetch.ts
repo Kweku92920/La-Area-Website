@@ -10,6 +10,7 @@ export type SanityFetchOptions = {
   tags?: string[];
   documentType?: string;
   documentId?: string;
+  useCdn?: boolean;
 };
 
 export function buildSanityTags(
@@ -77,9 +78,13 @@ export async function sanityFetchWithOptions<T>(
     tags = [],
     documentType,
     documentId,
+    useCdn,
   } = options;
 
-  const requestClient = await getClientForRequest();
+  const defaultClient = await getClientForRequest();
+  const requestClient = useCdn === undefined
+    ? defaultClient
+    : defaultClient.withConfig({ useCdn });
   const cacheTags = buildSanityTags(documentType, documentId, tags);
 
   try {

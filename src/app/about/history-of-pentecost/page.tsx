@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import { sanityFetchSafe } from '@/src/sanity/fetch';
+import { notFound } from 'next/navigation';
+import { sanityFetch } from '@/src/sanity/fetch';
 import { historyPageBySlugQuery, type HistoryPageData } from '@/src/sanity/queries';
-import { CHURCH_OF_PENTECOST_HISTORY, mergeHistoryWithSanity } from '@/src/data/history';
 import HistoryArticleView from '../HistoryArticleView';
 
 const SLUG_CANDIDATES = [
@@ -17,18 +17,20 @@ const ID_CANDIDATES = [
 ];
 
 async function getChurchHistory(): Promise<HistoryPageData> {
-  const sanityDoc = await sanityFetchSafe<Partial<HistoryPageData> | null>(
+  const history = await sanityFetch<HistoryPageData | null>(
     historyPageBySlugQuery,
     { slugs: SLUG_CANDIDATES, ids: ID_CANDIDATES },
-    null,
     {
       documentType: 'historyPage',
-      documentId: 'church-of-pentecost',
+      documentId: 'history-church-of-pentecost',
       tags: ['sanity:history', 'sanity:historyPage:church-of-pentecost'],
+      revalidate: 0,
+      useCdn: false,
     },
   );
 
-  return mergeHistoryWithSanity(CHURCH_OF_PENTECOST_HISTORY, sanityDoc);
+  if (!history) notFound();
+  return history;
 }
 
 export async function generateMetadata(): Promise<Metadata> {

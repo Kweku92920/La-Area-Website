@@ -569,10 +569,10 @@ export type HistoryPageData = {
 export const historyPageBySlugQuery = groq`*[_type in ["historyPage", "history"] && (slug.current in $slugs || _id in $ids)][0]{
   "id": _id,
   "slug": coalesce(slug.current, _id),
-  "kicker": kicker,
-  "title": title,
-  "subtitle": subtitle,
-  "intro": coalesce(intro, summary),
+  "kicker": coalesce(kicker, ""),
+  "title": coalesce(title, ""),
+  "subtitle": coalesce(subtitle, ""),
+  "intro": coalesce(intro, summary, ""),
   "heroImage": heroImage.asset->url,
   "heroImageAlt": coalesce(heroImage.alt, title),
   "heroImageCaption": heroImage.caption,
@@ -581,13 +581,13 @@ export const historyPageBySlugQuery = groq`*[_type in ["historyPage", "history"]
     "attribution": attribution,
     "role": role
   },
-  "stats": coalesce(stats, keyFacts)[]{
+  "stats": coalesce(stats, keyFacts, [])[]{
     _key,
     "value": coalesce(value, ""),
     "label": coalesce(label, ""),
     "detail": detail
   },
-  "sections": coalesce(sections, chapters)[]{
+  "sections": coalesce(sections, chapters, [])[]{
     _key,
     "kicker": kicker,
     "title": coalesce(title, ""),
@@ -597,7 +597,7 @@ export const historyPageBySlugQuery = groq`*[_type in ["historyPage", "history"]
     "imageAlt": coalesce(image.alt, title),
     "imageCaption": coalesce(image.caption, caption)
   },
-  "milestones": coalesce(milestones, timeline)[]{
+  "milestones": coalesce(milestones, timeline, [])[]{
     _key,
     "year": coalesce(year, period, ""),
     "era": coalesce(era, "Historical Era"),
@@ -605,7 +605,7 @@ export const historyPageBySlugQuery = groq`*[_type in ["historyPage", "history"]
     "location": location,
     "description": coalesce(description, "")
   },
-  "leadershipLegacy": coalesce(leadershipLegacy, pastLeaders)[]{
+  "leadershipLegacy": coalesce(leadershipLegacy, pastLeaders, [])[]{
     _key,
     "name": coalesce(name, ""),
     "role": coalesce(role, ""),
@@ -614,7 +614,7 @@ export const historyPageBySlugQuery = groq`*[_type in ["historyPage", "history"]
     "photo": photo.asset->url
   },
   "body": body${newsBodyProjection},
-  "gallery": gallery[defined(asset)]{
+  "gallery": coalesce(gallery, [])[defined(asset)]{
     "url": asset->url,
     "caption": coalesce(caption, ""),
     "alt": coalesce(alt, caption, "Historical archival photo")

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import { sanityFetchSafe } from '@/src/sanity/fetch';
+import { notFound } from 'next/navigation';
+import { sanityFetch } from '@/src/sanity/fetch';
 import { historyPageBySlugQuery, type HistoryPageData } from '@/src/sanity/queries';
-import { LA_AREA_HISTORY, mergeHistoryWithSanity } from '@/src/data/history';
 import HistoryArticleView from '../HistoryArticleView';
 
 const SLUG_CANDIDATES = [
@@ -18,18 +18,20 @@ const ID_CANDIDATES = [
 ];
 
 async function getLaAreaHistory(): Promise<HistoryPageData> {
-  const sanityDoc = await sanityFetchSafe<Partial<HistoryPageData> | null>(
+  const history = await sanityFetch<HistoryPageData | null>(
     historyPageBySlugQuery,
     { slugs: SLUG_CANDIDATES, ids: ID_CANDIDATES },
-    null,
     {
       documentType: 'historyPage',
-      documentId: 'la-area',
+      documentId: 'history-la-area',
       tags: ['sanity:history', 'sanity:historyPage:la-area'],
+      revalidate: 0,
+      useCdn: false,
     },
   );
 
-  return mergeHistoryWithSanity(LA_AREA_HISTORY, sanityDoc);
+  if (!history) notFound();
+  return history;
 }
 
 export async function generateMetadata(): Promise<Metadata> {
