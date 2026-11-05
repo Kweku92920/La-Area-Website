@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -9,7 +9,6 @@ import {
   Clock,
   ArrowUpRight,
   X,
-  Sparkles,
 } from 'lucide-react';
 import { MINISTER_TBA } from '@/src/sanity/format';
 import type { DirectoryAssembly, DirectoryDistrict } from '@/src/sanity/queries';
@@ -33,8 +32,11 @@ export default function LocalAssembliesPage({
     [districtList]
   );
 
-  const getDistrictMinister = (name: string) =>
-    districtList.find((d) => d.name === name)?.minister ?? MINISTER_TBA;
+  const getDistrictMinister = useCallback(
+    (name: string) =>
+      districtList.find((d) => d.name === name)?.minister ?? MINISTER_TBA,
+    [districtList]
+  );
 
   const [selectedDistrict, setSelectedDistrict] = useState(initialDistrict);
   const [searchQuery, setSearchQuery] = useState('');
@@ -85,7 +87,7 @@ export default function LocalAssembliesPage({
       minister: getDistrictMinister(districtName),
       assemblies: matchingAssemblies.filter((a) => a.district === districtName),
     }));
-  }, [isFiltering, allDistrictNames, assembliesData, matchingAssemblies, districtList]);
+  }, [isFiltering, allDistrictNames, assembliesData, matchingAssemblies, getDistrictMinister]);
 
   // District pills to show in the filter bar (never dump all 24 districts at once)
   const visibleDistrictPills = useMemo(() => {
@@ -317,15 +319,6 @@ export default function LocalAssembliesPage({
             </p>
           </div>
         )}
-      </section>
-
-      <section className="border-t border-slate-800 bg-[#0f172a] px-6 py-12 text-center text-white">
-        <blockquote className="mx-auto max-w-3xl font-serif text-lg italic text-yellow-100/90 md:text-xl">
-          &ldquo;Go into all the world and preach the gospel to every creature.&rdquo;
-        </blockquote>
-        <p className="mt-2 text-xs font-medium uppercase tracking-widest text-slate-400">
-          &mdash; Mark 16:15
-        </p>
       </section>
     </div>
   );

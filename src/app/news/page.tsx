@@ -26,7 +26,7 @@ export default async function NewsPage() {
         <div className="relative z-10 mx-auto max-w-3xl text-center">
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'News' }]} />
           <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.28em] text-yellow-300 sm:text-xs">
-            Dispatches · Bulletins · Community
+            Our Area News &amp; Updates · Community
           </p>
           <h1 className="mb-4 font-serif text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
             Area News &amp; Updates

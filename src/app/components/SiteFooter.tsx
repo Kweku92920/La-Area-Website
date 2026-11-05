@@ -144,6 +144,7 @@ export default function SiteFooter({ settings, scriptures = [] }: { settings?: S
             </h2>
             <ul className="space-y-1">
               <li><Link href="/about" className="inline-flex rounded-lg py-1.5 transition-colors hover:text-yellow-300">About Us</Link></li>
+              <li><Link href="/tenets" className="inline-flex rounded-lg py-1.5 transition-colors hover:text-yellow-300">Our Tenets</Link></li>
               <li><Link href="/about/history-of-pentecost" className="inline-flex rounded-lg py-1.5 transition-colors hover:text-yellow-300">History of The Church of Pentecost</Link></li>
               <li><Link href="/about/history-of-la-area" className="inline-flex rounded-lg py-1.5 transition-colors hover:text-yellow-300">History of The Area</Link></li>
               <li><Link href="/leadership" className="inline-flex rounded-lg py-1.5 transition-colors hover:text-yellow-300">Leadership</Link></li>

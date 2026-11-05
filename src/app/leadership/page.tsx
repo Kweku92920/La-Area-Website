@@ -101,13 +101,6 @@ export default async function LeadershipPage() {
           ))}
         </div>
       </section>
-
-      <section className="border-t border-slate-800 bg-[#0f172a] px-6 py-12 text-center text-white">
-        <blockquote className="mx-auto max-w-3xl font-serif text-lg italic text-yellow-100/90 md:text-xl">
-          “Go into all the world and preach the gospel to every creature.”
-        </blockquote>
-        <p className="mt-2 text-xs font-medium uppercase tracking-widest text-slate-400">— Mark 16:15</p>
-      </section>
     </div>
   );
 }

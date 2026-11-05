@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { ChevronDown, Search, Layers, BookOpen } from "lucide-react";
 import Breadcrumb from "../components/Breadcrumb";
@@ -18,79 +17,79 @@ const TENETS: Tenet[] = [
   {
     id: 1,
     title: "The Bible",
-    scriptures: ["2 Timothy 3:16-17", "2 Peter 1:20-21"],
-    fullText: "We believe in the divine inspiration and authority of the Holy Scriptures. The Bible is infallible, inerrant, and the final authority for faith, doctrine, and living.",
+    scriptures: ["2 Timothy 3:16", "2 Peter 1:21"],
+    fullText: "We believe in the divine inspiration and authority of the Holy Scriptures. We believe that the Bible is infallible in its declaration, final in its authority, all-sufficient in its provisions and comprehensive in its sufficiency (2 Timothy 3:16; 2 Peter 1:21).",
     image: "/bible.jpg"
   },
   {
     id: 2,
-    title: "The Trinity",
-    scriptures: ["Matthew 28:19", "2 Corinthians 13:14", "1 John 5:7"],
-    fullText: "We believe in the Unity of the Godhead and the Trinity of Persons therein: God the Father, God the Son, and God the Holy Spirit, equal in power and glory.",
+    title: "The One True God",
+    scriptures: ["Genesis 1:1", "Matthew 3:16-17", "Matthew 28:19", "2 Corinthians 13:14"],
+    fullText: "We believe in the existence of the One True God, Elohim, Maker of the whole universe; indefinable, but revealed as Triune Godhead- Father, Son and Holy Spirit-One in nature, essence and attributes; Omniscient, Omnipotent and Omnipresent (Genesis 1:1; Mathew 3:16-17; 28:19; 2 Corinthians 13:14).",
     image: "/trinity.jpg"
   },
   {
     id: 3,
-    title: "Jesus Christ",
-    scriptures: ["John 1:1-14", "1 Corinthians 15:3-4", "Hebrews 4:15"],
-    fullText: "We believe in the deity of Jesus Christ, His virgin birth, His sinless life, His miracles, His vicarious and atoning death through His shed blood, His bodily resurrection, and His ascension to the right hand of the Father.",
-    image: "/Jesus.jpg"
-  },
-  {
-    id: 4,
-    title: "The Fall & Salvation of Man",
-    scriptures: ["Romans 3:23", "Ephesians 2:8-9", "Titus 3:5"],
-    fullText: "We believe all humanity was created good but fell into sin by voluntary transgression. Salvation is received through repentance toward God and faith toward our Lord Jesus Christ.",
+    title: "The Depraved Nature of Humanity",
+    scriptures: ["Genesis 3:1-19", "Isaiah 53:6", "Romans 3:23", "Romans 6:23", "Acts 2:38", "John 3:3, 5", "Titus 3:5"],
+    fullText: "We believe that “all have sinned and come short of the glory of God” (Genesis 3:1-19; Isaiah 53:6; Romans 3:23), and are subject to eternal punishment (Matthew 13:41, 42; Romans 6:23), and need Repentance (Acts 2:38; Matthew 4:17; Acts 20:21) and Regeneration (John 3:3,5; Titus 3:5).",
     image: "/salvation.jpg"
   },
   {
+    id: 4,
+    title: "The Savior",
+    scriptures: ["Matthew 1:21", "John 1:1", "Hebrews 4:15", "1 Corinthians 15", "Acts 1:9-11", "Romans 8:34", "Revelation 22:12"],
+    fullText: "We believe that humanity’s need of a Savior has been met in the person of Jesus Christ (Matthew 1:21; John 4:42; Acts 2:36; Ephesians 5:23; Philippians 2:6-1 1), because of His Deity (Isaiah 9:6; John 1:1; John 20:38; Romans 9:5; Titus 2:13,14), Virgin Birth (Isaiah 7:14; Matthew 1:18; Luke 1:25-27), Sinless Life (John 8:46; Hebrews 4:15; 2 Corinthians 5:21), Atoning Death (Romans 3:25; Hebrews 9:22; 1 John 2:2), Resurrection (Matthew 28:5-7; Acts 2:24; Acts 2:36; Acts 10:39,40; 1 Corinthians 15: and Ascension (Acts 1:9-11; Acts 2:33-36), His Abiding Intercession (Romans 8:34; Hebrews 7:25) and His Second Coming to judge the living and the dead (Acts 1:11; Acts 10:42: 1 Thessalonians 4:16-18; 2 timothy 4:I: Revelation 22:12, 20).",
+    image: "/Jesus.jpg"
+  },
+  {
     id: 5,
-    title: "Ordinances of the Church",
-    scriptures: ["Matthew 28:19", "Acts 2:38", "1 Corinthians 11:23-26"],
-    fullText: "We believe in Water Baptism by immersion in the name of the Father, Son, and Holy Spirit for believers, and the observance of the Lord's Supper as a remembrance of Christ's sacrifice.",
-    image: "/Ordinances.jpg"
-  },
-  {
-    id: 6,
-    title: "Baptism in the Holy Spirit",
-    scriptures: ["Acts 2:4", "Acts 10:44-46", "Acts 19:6"],
-    fullText: "We believe in the Baptism in the Holy Spirit with the initial physical evidence of speaking in other tongues as the Spirit gives utterance, endowing believers with power for life and service.",
-    image: "/HSpirit.jpg"
-  },
-  {
-    id: 7,
-    title: "Sanctification",
-    scriptures: ["1 Thessalonians 4:3", "Hebrews 12:14", "1 Peter 1:15-16"],
-    fullText: "We believe that sanctification is an act of separation from that which is evil, and of dedication unto God, realized through faith in Jesus Christ and obedience to the Word.",
+    title: "Repentance, Justification and Sanctification",
+    scriptures: ["Luke 15:7", "Acts 2:38", "Romans 5:1", "1 Corinthians 6:11", "John 17:2-3", "1 John 5:11-13"],
+    fullText: "We believe all humanity have to repent of and confess their sins before God (Luke 15:7; Acts 2:38; Acts 3:19; Acts 17:30), and believe in the vicarious death of Jesus Christ to be justified before God (Romans 425: Romans 5:1) We believe in the sanctification of the believer through the working of the Holy Spirit (I Corinthians 1:30: 1 Corinthians 6:11) and in God’s gift or eternal life to the believer (John 17:2,3; John 10:27; Romans 6:23b; 1 John 5:11-13).",
     image: "/sanctification.jpg"
   },
   {
+    id: 6,
+    title: "The Ordinances of Baptism and the Lord’s Supper",
+    scriptures: ["Matthew 3:16", "Matthew 28:19", "Mark 10:13-16", "Luke 22:19-20", "1 Corinthians 11:23-33"],
+    fullText: "We believe in the ordinance of Baptism by immersion as a testimony of a convert who has attained a responsible age of about 13 years (Matthew 3:16; Matthew 28:19; Mark 1:9, 10; Mark 16:16; Acts 2:38). Infants and children are not baptized but are dedicated to the Lord (Mark 10:13-16; Luke 2:22-24,34). We believe in the ordinance of the Lord’s Supper or Holy Communion, which should be partaken by all members who are in full fellowship (Luke 22:19-20; Acts 20:7; 1 Corinthians 11:23-33).",
+    image: "/Ordinances.jpg"
+  },
+  {
+    id: 7,
+    title: "Baptism, Gifts and Fruits of the Holy Spirit",
+    scriptures: ["Mark 16:17", "Acts 2:4", "1 Corinthians 12:8-11", "Galatians 5:22-23"],
+    fullText: "We believe in the baptism of the Holy Spirit for believers with signs following; also in the operation of the gifts and the fruit of the Holy Spirit in the lives of believers (Mark 16:17 Acts 2:4;1 Corinthians 12:8-11; Galatians 5:22-23).",
+    image: "/HSpirit.jpg"
+  },
+  {
     id: 8,
-    title: "Divine Healing",
-    scriptures: ["Isaiah 53:4-5", "Matthew 8:16-17", "James 5:14-16"],
-    fullText: "We believe divine healing is provided for all in the Atonement of Christ and is the privilege of all believers through the prayer of faith.",
-    image: "/healing.jpg"
+    title: "Tithes and Offering",
+    scriptures: ["Genesis 14:18-20", "Malachi 3:6-10", "Matthew 23:23", "Acts 20:35", "2 Corinthians 9:1-9"],
+    fullText: "We believe in tithing and in the giving of free-will offerings towards the cause of carrying forward the Kingdom of God. We believe that God blesses a cheerful giver (Genesis 14:18-20; 28:20-22; Malachi 3:6-10; Mathew 23:23; Acts 20:35; 1 Corinthians 16:1-3;2 Corinthians 9:1-9).",
+    image: "/tithes.jpg"
   },
   {
     id: 9,
-    title: "The Second Coming of Christ",
-    scriptures: ["1 Thessalonians 4:16-17", "Titus 2:13", "Revelation 1:7"],
-    fullText: "We believe in the personal, premillennial, and imminent return of our Lord Jesus Christ to gather His Saints and establish His kingdom.",
-    image: "/coming.jpg"
+    title: "Divine Healing",
+    scriptures: ["Isaiah 53:4-5", "2 Kings 20", "Luke 10:34", "Colossians 4:14", "James 5:14-16"],
+    fullText: "We believe that the healing of sickness and disease is provided for God’s people in the atonement. The Church is, however, not opposed to soliciting the help of qualified medical practitioners (2 Kings 20:.; Matthew y: I z, Luke 1 0:34, Colossians 4:14)",
+    image: "/healing.jpg"
   },
   {
     id: 10,
-    title: "The Final Judgment",
-    scriptures: ["Matthew 25:46", "Revelation 20:11-15"],
-    fullText: "We believe there will be a final judgment in which the wicked dead will be raised and judged according to their works, receiving everlasting punishment in the Lake of Fire.",
-    image: "/judgement.jpg"
+    title: "The Second Coming and the Next Life",
+    scriptures: ["Mark 13:26", "Daniel 12:2", "John 5:28-29", "Acts 1:11", "Romans 2:7-11"],
+    fullText: "We believe in the Second Coming of Christ and the Resurrection of the dead, both the saved and the unsaved – they that are saved, to the resurrection of life; and the unsaved, to the resurrection of damnation (Mark 13: 26; Daniel 12:2; John 5: 28-29; Acts 1:11; 10:42; Romans 2:7-11; 6:23).",
+    image: "/coming.jpg"
   },
   {
     id: 11,
-    title: "The New Heavens & New Earth",
-    scriptures: ["2 Peter 3:13", "Revelation 21:1-4"],
-    fullText: "We look forward according to His promise for new heavens and a new earth, wherein dwelleth righteousness, and God will dwell with His people forever.",
-    image: "/he.jpg"
+    title: "Marriage and Family",
+    scriptures: ["Genesis 2:18, 21-25", "Matthew 19:4-6", "1 Corinthians 7:1-2"],
+    fullText: "We believe in the institution of marriage as a union established and ordained by God for the lifelong, intimate relationship between a man as husband and a woman as wife as biologically defined at birth. We believe that God instituted marriage primarily for mutual help, fellowship and comfort that one ought to have for the other and for honorable procreation of children, and their training in love, obedience to the Lord and responsible citizenship. (Genesis 2:18, 21-25; Matthew 19:4-6: 1 Corinthians 741-2).",
+    image: "/marriage.jpg"
   }
 ];
 

@@ -143,23 +143,6 @@ export default function MinistryPageClient({
         leaders={leaders}
       />
 
-      {ministry.scripture && (
-        <section className="relative overflow-hidden bg-[#0f172a] px-6 py-14 text-center text-white">
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(59,130,246,0.2),transparent_65%)]"
-          />
-          <div className="relative">
-            <blockquote className="mx-auto max-w-3xl font-serif text-xl italic leading-relaxed text-yellow-100/90 md:text-2xl">
-              “{ministry.scripture.text}”
-            </blockquote>
-            <p className="mt-3 text-xs font-medium uppercase tracking-widest text-slate-400">
-              — {ministry.scripture.ref}
-            </p>
-          </div>
-        </section>
-      )}
-
       <MinistryGallery
         photos={gallery}
         accent={ministry.accent}

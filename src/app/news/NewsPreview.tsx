@@ -69,7 +69,7 @@ export default function NewsPreview({ articles }: { articles: NewsItem[] }) {
             <div className="mb-2.5 flex items-center gap-2.5">
               <span className="h-px w-6 bg-yellow-500" />
               <span className="font-sans text-xs font-bold uppercase tracking-[0.22em] text-yellow-600 dark:text-yellow-400">
-                DISPATCHES &amp; BULLETINS
+                Our Area News and Updates
               </span>
             </div>
             <h2 className="font-serif text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl">

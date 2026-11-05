@@ -198,7 +198,7 @@ const ministryCategoryLeadershipProjection = `"leadershipByCategory": {
     "secretary": secretary{name, "image": image.asset->url}
   }
 }`;
-const ministryLeaderProjection = `"name": coalesce(name, "Unnamed leader"), "role": coalesce(role, "Leader"), "location": coalesce(location, ""),
+export const ministryLeaderProjection = `"name": coalesce(name, "Unnamed leader"), "role": coalesce(role, "Leader"), "location": coalesce(location, ""),
   "bio": coalesce(bio, ""),
   "photo": photo{..., "url": asset->url, "alt": coalesce(alt, ^.name, "Leader photo")},
   "gallery": gallery[]{..., "url": asset->url, "alt": coalesce(alt, caption, "Leader gallery image"), caption},
